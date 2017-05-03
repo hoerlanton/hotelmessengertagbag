@@ -55,7 +55,6 @@ var priceAllNightsDoppelzimmerDeluxeHolzleo = 0;
 var priceAllNightsDoppelzimmerSuperiorSteinleo = 0;
 var priceAllNightsEinzelzimmerSommerstein = 0;
 var priceAllNightsDoppelzimmerClassicSteinleo = 0;
-var arrivalDateDayCalculationsDisplay = 0;
 var january = 31;
 var february = 28;
 var march = 31;
@@ -638,7 +637,6 @@ function receivedMessage(event) {
     }
 
     if (messageText) {
-
         if (autoAnswerIsOn === false) {
             return
         }
@@ -678,9 +676,8 @@ function receivedMessage(event) {
                 if (typeof quickReplyPayload === "undefined") {
                     sendMenu(senderID);
                 }
-
+            }
         }
-    }
 }
 
 /*
@@ -707,7 +704,6 @@ function receivedDeliveryConfirmation(event) {
 
   console.log("All message before %d were delivered.", watermark);
 }
-
 
 /*
  * Postback Event

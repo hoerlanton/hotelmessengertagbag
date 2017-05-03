@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15425070-098f-4404-9951-184bf0c07154" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/default.json" afterPath="$PROJECT_DIR$/config/default.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,25 +22,25 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="default.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="default.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/default.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="75">
+              <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="657">
-              <caret line="641" column="39" lean-forward="true" selection-start-line="641" selection-start-column="39" selection-end-line="641" selection-end-column="39" />
+            <state relative-caret-position="-3660">
+              <caret line="59" column="15" lean-forward="true" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="15" />
               <folding>
-                <element signature="e#3884#4219#0" expanded="false" />
-                <element signature="e#4540#5841#0" expanded="false" />
-                <element signature="e#6023#6576#0" expanded="false" />
+                <element signature="e#3841#4176#0" expanded="false" />
+                <element signature="e#4497#5798#0" expanded="false" />
+                <element signature="e#5980#6533#0" expanded="false" />
                 <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
                 <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
                 <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
@@ -61,6 +63,7 @@
                 <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
                 <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
                 <element signature="n#!!block;n#sendMenu#0" expanded="false" />
+                <element signature="n#!!block;n#sendPersonRequest#0" expanded="false" />
                 <element signature="n#!!block;n#sendRoomRequest#0" expanded="false" />
                 <element signature="n#!!block;n#sendArrivalDateMonth#0" expanded="false" />
                 <element signature="n#!!block;n#sendArrivalDateMonth2#0" expanded="false" />
@@ -83,7 +86,7 @@
                 <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
                 <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
                 <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
-                <element signature="e#87210#87276#0" expanded="false" />
+                <element signature="e#87172#87238#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -104,8 +107,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/config/default.json" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/config/default.json" />
       </list>
     </option>
   </component>
@@ -195,12 +198,12 @@
       <updated>1493659312010</updated>
       <workItem from="1493659313823" duration="1034000" />
       <workItem from="1493661609052" duration="780000" />
-      <workItem from="1493797904167" duration="11398000" />
+      <workItem from="1493797904167" duration="14292000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13212000" />
+    <option name="totallyTimeSpent" value="16106000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
@@ -233,7 +236,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -251,9 +254,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3884#4219#0" expanded="false" />
-            <element signature="e#4540#5841#0" expanded="false" />
-            <element signature="e#6023#6576#0" expanded="false" />
+            <element signature="e#3841#4176#0" expanded="false" />
+            <element signature="e#4497#5798#0" expanded="false" />
+            <element signature="e#5980#6533#0" expanded="false" />
             <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
             <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
             <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
@@ -276,6 +279,7 @@
             <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
             <element signature="n#!!block;n#sendMenu#0" expanded="false" />
+            <element signature="n#!!block;n#sendPersonRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendRoomRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendArrivalDateMonth#0" expanded="false" />
             <element signature="n#!!block;n#sendArrivalDateMonth2#0" expanded="false" />
@@ -298,7 +302,7 @@
             <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
             <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
             <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
-            <element signature="e#87210#87276#0" expanded="false" />
+            <element signature="e#87172#87238#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -350,25 +354,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/default.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="657">
-          <caret line="641" column="39" lean-forward="true" selection-start-line="641" selection-start-column="39" selection-end-line="641" selection-end-column="39" />
+        <state relative-caret-position="-3660">
+          <caret line="59" column="15" lean-forward="true" selection-start-line="59" selection-start-column="15" selection-end-line="59" selection-end-column="15" />
           <folding>
-            <element signature="e#3884#4219#0" expanded="false" />
-            <element signature="e#4540#5841#0" expanded="false" />
-            <element signature="e#6023#6576#0" expanded="false" />
+            <element signature="e#3841#4176#0" expanded="false" />
+            <element signature="e#4497#5798#0" expanded="false" />
+            <element signature="e#5980#6533#0" expanded="false" />
             <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
             <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
             <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
@@ -391,6 +387,7 @@
             <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
             <element signature="n#!!block;n#sendMenu#0" expanded="false" />
+            <element signature="n#!!block;n#sendPersonRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendRoomRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendArrivalDateMonth#0" expanded="false" />
             <element signature="n#!!block;n#sendArrivalDateMonth2#0" expanded="false" />
@@ -413,8 +410,16 @@
             <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
             <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
             <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
-            <element signature="e#87210#87276#0" expanded="false" />
+            <element signature="e#87172#87238#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/default.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
