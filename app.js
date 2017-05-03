@@ -491,7 +491,7 @@ function receivedMessage(event) {
             arrivalDateDay = arrivalDayDateSplitted[1];
             arrivalDateDayCalculations = parseInt(arrivalDayDateSplitted[1]);
             arrivalDate = "2017-" + arrivalDateMonth + "-" + arrivalDateDay;
-            //departure date is suggested and sent to the user
+            //departure date is suggested and sent to the use
 
                  console.log(arrivalDateMonthCalculations);
                  if(arrivalDateMonthCalculations === 1) {
@@ -606,6 +606,7 @@ function receivedMessage(event) {
         // the text we received.
 
         switch (messageText) {
+
 
             case 'Menü':
                 sendMenu(senderID);
@@ -765,6 +766,7 @@ function receivedAccountLink(event) {
 }
 //Employee will soon take care of users request
 function sendPersonalFeedback(recipientId) {
+
     var messageData = {
         recipient: {
             id: recipientId
@@ -920,6 +922,7 @@ function sendMenu(recipientId) {
 }
 
 function sendPersonRequest(recipientId) {
+
     var messageData = {
         recipient: {
             id: recipientId
