@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15425070-098f-4404-9951-184bf0c07154" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -34,12 +33,12 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="532" column="2" lean-forward="true" selection-start-line="532" selection-start-column="2" selection-end-line="532" selection-end-column="2" />
+            <state relative-caret-position="657">
+              <caret line="641" column="39" lean-forward="true" selection-start-line="641" selection-start-column="39" selection-end-line="641" selection-end-column="39" />
               <folding>
-                <element signature="e#3857#4192#0" expanded="false" />
-                <element signature="e#4513#5814#0" expanded="false" />
-                <element signature="e#5996#6549#0" expanded="false" />
+                <element signature="e#3884#4219#0" expanded="false" />
+                <element signature="e#4540#5841#0" expanded="false" />
+                <element signature="e#6023#6576#0" expanded="false" />
                 <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
                 <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
                 <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
@@ -58,12 +57,10 @@
                 <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
                 <element signature="n#!!block;n#sendErrorMessageNoRoom#0" expanded="false" />
                 <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
-                <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
                 <element signature="n#!!block;n#sendWelcomeMessage#0" expanded="false" />
                 <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
                 <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
                 <element signature="n#!!block;n#sendMenu#0" expanded="false" />
-                <element signature="n#!!block;n#sendPersonRequest#0" expanded="false" />
                 <element signature="n#!!block;n#sendRoomRequest#0" expanded="false" />
                 <element signature="n#!!block;n#sendArrivalDateMonth#0" expanded="false" />
                 <element signature="n#!!block;n#sendArrivalDateMonth2#0" expanded="false" />
@@ -86,7 +83,7 @@
                 <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
                 <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
                 <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
-                <element signature="e#87056#87122#0" expanded="false" />
+                <element signature="e#87210#87276#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -198,12 +195,12 @@
       <updated>1493659312010</updated>
       <workItem from="1493659313823" duration="1034000" />
       <workItem from="1493661609052" duration="780000" />
-      <workItem from="1493797904167" duration="10243000" />
+      <workItem from="1493797904167" duration="11398000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12057000" />
+    <option name="totallyTimeSpent" value="13212000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
@@ -254,9 +251,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3857#4192#0" expanded="false" />
-            <element signature="e#4513#5814#0" expanded="false" />
-            <element signature="e#5996#6549#0" expanded="false" />
+            <element signature="e#3884#4219#0" expanded="false" />
+            <element signature="e#4540#5841#0" expanded="false" />
+            <element signature="e#6023#6576#0" expanded="false" />
             <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
             <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
             <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
@@ -275,12 +272,10 @@
             <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
             <element signature="n#!!block;n#sendErrorMessageNoRoom#0" expanded="false" />
             <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
-            <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
             <element signature="n#!!block;n#sendWelcomeMessage#0" expanded="false" />
             <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
             <element signature="n#!!block;n#sendMenu#0" expanded="false" />
-            <element signature="n#!!block;n#sendPersonRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendRoomRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendArrivalDateMonth#0" expanded="false" />
             <element signature="n#!!block;n#sendArrivalDateMonth2#0" expanded="false" />
@@ -303,7 +298,7 @@
             <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
             <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
             <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
-            <element signature="e#87056#87122#0" expanded="false" />
+            <element signature="e#87210#87276#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -368,12 +363,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="532" column="2" lean-forward="true" selection-start-line="532" selection-start-column="2" selection-end-line="532" selection-end-column="2" />
+        <state relative-caret-position="657">
+          <caret line="641" column="39" lean-forward="true" selection-start-line="641" selection-start-column="39" selection-end-line="641" selection-end-column="39" />
           <folding>
-            <element signature="e#3857#4192#0" expanded="false" />
-            <element signature="e#4513#5814#0" expanded="false" />
-            <element signature="e#5996#6549#0" expanded="false" />
+            <element signature="e#3884#4219#0" expanded="false" />
+            <element signature="e#4540#5841#0" expanded="false" />
+            <element signature="e#6023#6576#0" expanded="false" />
             <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
             <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
             <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
@@ -392,12 +387,10 @@
             <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
             <element signature="n#!!block;n#sendErrorMessageNoRoom#0" expanded="false" />
             <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
-            <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
             <element signature="n#!!block;n#sendWelcomeMessage#0" expanded="false" />
             <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
             <element signature="n#!!block;n#sendMenu#0" expanded="false" />
-            <element signature="n#!!block;n#sendPersonRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendRoomRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendArrivalDateMonth#0" expanded="false" />
             <element signature="n#!!block;n#sendArrivalDateMonth2#0" expanded="false" />
@@ -420,7 +413,7 @@
             <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
             <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
             <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
-            <element signature="e#87056#87122#0" expanded="false" />
+            <element signature="e#87210#87276#0" expanded="false" />
           </folding>
         </state>
       </provider>

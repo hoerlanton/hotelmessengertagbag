@@ -85,6 +85,7 @@ var bookingLink = "";
 var departureDateForLink = "";
 var arrivalDateForLink = "";
 var dateIsInThePast = false;
+var autoAnswerIsOn = true;
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -638,6 +639,10 @@ function receivedMessage(event) {
 
     if (messageText) {
 
+        if (autoAnswerIsOn === false) {
+            return
+        }
+
         // If we receive a text message, check to see if it matches any special
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
@@ -804,6 +809,8 @@ function receivedAccountLink(event) {
 //Employee will soon take care of users request
 function sendPersonalFeedback(recipientId) {
 
+    autoAnswerIsOn = false;
+
     var messageData = {
         recipient: {
             id: recipientId
@@ -959,6 +966,8 @@ function sendMenu(recipientId) {
 }
 
 function sendPersonRequest(recipientId) {
+
+    autoAnswerIsOn = true;
 
     var messageData = {
         recipient: {
