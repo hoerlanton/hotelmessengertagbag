@@ -84,6 +84,7 @@ var hotelIsClosed = false;
 var bookingLink = "";
 var departureDateForLink = "";
 var arrivalDateForLink = "";
+var dateIsInThePast = false;
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -358,16 +359,6 @@ function calculatePrice(stayRange, numberOfRooms) {
 
 }
 
-function checkIfHotelIsClosed(senderID) {
-    if (parseInt(resultTransferData[0].OTA_HotelAvailRS.RoomStays[0].RoomStay[0].RoomRates[0].RoomRate[1].Rates[0].Rate[0].Base[0].$.AmountAfterTax) > 1000 || resultTransferData === "undefined") {
-        console.log("Hotel is closed!");
-        setTimeout(sendErrorMessageNoRoom, 1500, senderID);
-        hotelIsClosed = true;
-    } else {
-        hotelIsClosed = false;
-    }
-}
-
 function createBookingLink(arrivalDateSplitted, departureDateSplitted, numberOfPersons){
     console.log("ArrivaldateSplitted : " + arrivalDateSplitted + "Departuredate splitted :" + departureDateSplitted);
     arrivalDateForLink = arrivalDateSplitted[2] + "." + arrivalDateSplitted[1] + "." + arrivalDateSplitted[0];
@@ -377,6 +368,166 @@ function createBookingLink(arrivalDateSplitted, departureDateSplitted, numberOfP
     bookingLink = "https://hotel-salzburgerhof.viomassl.com/de/zimmer-angebote/anfrage/vsc.php?calendar_date_from=" + arrivalDateForLink + "&calendar_date_to=" + departureDateForLink + "&persons_adults=" + numberOfPersons + "&submitbook=Suchen&step=roomtypes&page=2.page1&PHPSESSID=fif62okvks52atf111b8a237v4";
 }
 
+function resetData(){
+    count++;
+    if (count >= 1) {
+        stayRange = 0;
+        numberOfPersonsSplitted[0] = 0;
+        numberOfRoomsSplitted[0] = 0;
+        numberOfRooms = 0;
+        numberOfPersons = 0;
+        arrivalDate = 0;
+        departureDate = 0;
+        resultTransferData = [];
+        monthDays = 0;
+        daysInFirstMonth = 0;
+        daysInSecondMonth = 0;
+        secondMonth = 0;
+        daysInSecondMonthCount = 0;
+        daysInFirstMonthCount = 0;
+        daysInAllTwoMonths = [];
+        daysInFirstMonthDisplay = [];
+        daysInSecondMonthDisplay = [];
+        arrivalFirstDateMonthDisplay = [];
+        arrivalSecondDateMonthDisplay = [];
+        arrivalAllTwoMonthsDisplay = [];
+        priceAllNightsDoppelzimmerDeluxeHolzleo = 0;
+        priceAllNightsDoppelzimmerSuperiorSteinleo = 0;
+        priceAllNightsEinzelzimmerSommerstein = 0;
+        priceAllNightsDoppelzimmerClassicSteinleo = 0;
+        arrivalDateForLink = "";
+        departureDateForLink = "";
+        bookingLink = "";
+
+    }
+}
+
+function assigningNumberOfPersonsVar(quickReplyPayload){
+    numberOfPersonsSplitted = quickReplyPayload.split(" ");
+    numberOfPersons = parseInt(numberOfPersonsSplitted[0]);
+}
+
+function assigningNumberOfRoomsVar(quickReplyPayload) {
+    numberOfRoomsSplitted = quickReplyPayload.split(" ");
+    console.log("Number of rooms splitted: " + numberOfRoomsSplitted);
+    numberOfRooms = parseInt(numberOfRoomsSplitted[0]);
+    console.log("Number of rooms INT: " + numberOfRooms);
+}
+
+function assigningNumberOfMonthsVar(quickReplyPayload) {
+    arrivalDateMonth = quickReplyPayload;
+    arrivalDateMonthCalculations = parseInt(arrivalDateMonth);
+}
+
+function assigningArrivalDateVar(quickReplyPayload) {
+    arrivalDayDateSplitted = quickReplyPayload.split(" ");
+    arrivalDateDay = arrivalDayDateSplitted[1];
+    arrivalDateDayCalculations = parseInt(arrivalDayDateSplitted[1]);
+    arrivalDate = "2017-" + arrivalDateMonth + "-" + arrivalDateDay;
+}
+
+function createDepartureDateSuggestion(){
+    console.log(arrivalDateMonthCalculations);
+    if(arrivalDateMonthCalculations === 1) {
+        monthDays = january;
+    } else if (arrivalDateMonthCalculations === 2) {
+        monthDays = february;
+    } else if (arrivalDateMonthCalculations === 3) {
+        monthDays = march;
+    } else if (arrivalDateMonthCalculations === 4) {
+        monthDays = april;
+    } else if (arrivalDateMonthCalculations === 5) {
+        monthDays = may;
+    } else if (arrivalDateMonthCalculations === 6) {
+        monthDays = june;
+    } else if (arrivalDateMonthCalculations === 7) {
+        monthDays = july;
+    } else if (arrivalDateMonthCalculations === 8) {
+        monthDays = august;
+    } else if (arrivalDateMonthCalculations === 9) {
+        monthDays = september;
+    } else if (arrivalDateMonthCalculations === 10) {
+        monthDays = oktober;
+    } else if (arrivalDateMonthCalculations === 11) {
+        monthDays = november;
+    } else if (arrivalDateMonthCalculations === 12) {
+        monthDays = december;
+    }
+    daysInFirstMonth = monthDays - arrivalDateDayCalculations;
+    console.log(daysInFirstMonth);
+    console.log(arrivalDateMonthCalculations);
+    if (daysInFirstMonth > 12) {
+        for (daysInFirstMonthCount = (arrivalDateDayCalculations + 1); daysInFirstMonthCount <= (arrivalDateDayCalculations + 12); daysInFirstMonthCount++) {
+            console.log(daysInFirstMonthCount);
+            daysInFirstMonthDisplay.push(daysInFirstMonthCount);
+            arrivalFirstDateMonthDisplay.push(arrivalDateMonthCalculations);
+            daysInFirstMonth = 12;
+        }
+    } else {
+        for (daysInFirstMonthCount = (arrivalDateDayCalculations + 1); daysInFirstMonthCount <= monthDays; daysInFirstMonthCount++) {
+            console.log(daysInFirstMonthCount);
+            daysInFirstMonthDisplay.push(daysInFirstMonthCount);
+            arrivalFirstDateMonthDisplay.push(arrivalDateMonthCalculations);
+        }
+    }
+    console.log(daysInFirstMonthDisplay);
+    console.log(arrivalFirstDateMonthDisplay);
+    console.log(daysInFirstMonth);
+    daysInSecondMonth = 12 - daysInFirstMonth;
+    console.log(daysInSecondMonth);
+    secondMonth = arrivalDateMonthCalculations + 1;
+    console.log(secondMonth);
+    for (daysInSecondMonthCount = 1; daysInSecondMonthCount < daysInSecondMonth; daysInSecondMonthCount++) {
+        console.log(daysInSecondMonthCount);
+        daysInSecondMonthDisplay.push(daysInSecondMonthCount);
+        arrivalSecondDateMonthDisplay.push(secondMonth);
+    }
+    console.log(daysInSecondMonthDisplay);
+    console.log(arrivalSecondDateMonthDisplay);
+    daysInAllTwoMonths = daysInFirstMonthDisplay.concat(daysInSecondMonthDisplay);
+    arrivalAllTwoMonthsDisplay = arrivalFirstDateMonthDisplay.concat(arrivalSecondDateMonthDisplay);
+    console.log(daysInAllTwoMonths);
+    console.log(arrivalDateDayCalculations);
+    console.log(arrivalDateMonthCalculations);
+    console.log(arrivalDateMonth);
+    console.log(arrivalDate);
+}
+
+function assignDepartureDateVar(quickReplyPayload){
+    departureDate = quickReplyPayload;
+    console.log("Departure Date: " + departureDate);
+}
+
+function checkIfDateIsInPast(senderID){
+    var d = new Date();
+    var f = JSON.stringify(d);
+    var i = f.match(/.{1,11}/g);
+    var g = i[0];
+    while(g.charAt(0) === '"')
+    {
+        g = g.substr(1);
+    }
+    var j = g.split("-");
+    var h = arrivalDate.split("-");
+    if (h[0] < j[0] || h[1] <= j[1] && h[2] < j[2] ) {
+        setTimeout(sendErrorMessageNoRoom, 1500, senderID);
+        dateIsInThePast = true;
+    } else {
+        dateIsInThePast = false;
+    }
+}
+
+//If hotel is closed or if there are no availabilities the rest of the receivedMessage is not executed
+function checkIfHotelIsClosed(senderID) {
+    console.log(resultTransferData[0].OTA_HotelAvailRS.RoomStays[0].RoomStay[0].RoomRates[0].RoomRate[1].Rates[0].Rate[0].Base[0].$.AmountAfterTax);
+    if (parseInt(resultTransferData[0].OTA_HotelAvailRS.RoomStays[0].RoomStay[0].RoomRates[0].RoomRate[1].Rates[0].Rate[0].Base[0].$.AmountAfterTax) > 1000 || (parseInt(resultTransferData[0].OTA_HotelAvailRS.RoomStays[0].RoomStay[0].RoomRates[0].RoomRate[1].Rates[0].Rate[0].Base[0].$.AmountAfterTax) === 999.00 || resultTransferData === "undefined")) {
+        console.log("Hotel is closed or fully booked!");
+        setTimeout(sendErrorMessageNoRoom, 1500, senderID);
+        hotelIsClosed = true;
+    } else {
+        hotelIsClosed = false;
+    }
+}
 /*
  * Message Event
  *
@@ -422,61 +573,26 @@ function receivedMessage(event) {
         var quickReplyPayload = quickReply.payload;
         console.log("Quick reply for message %s with payload %s",
             messageId, quickReplyPayload);
-            //First question is how many persons are joining the requested stay.
-            if (quickReplyPayload === "1 person" || quickReplyPayload === "2 persons" || quickReplyPayload === "3 persons" || quickReplyPayload === "4 persons" || quickReplyPayload === "5 persons") {
-                //Every request is counted.
-                count++;
-                //If request is bigger than 2, the basic arguments for the request are reset.
-                if (count >= 1) {
-                    stayRange = 0;
-                    numberOfPersonsSplitted[0] = 0;
-                    numberOfRoomsSplitted[0] = 0;
-                    numberOfRooms = 0;
-                    numberOfPersons = 0;
-                    arrivalDate = 0;
-                    departureDate = 0;
-                    resultTransferData = [];
-                    monthDays = 0;
-                    daysInFirstMonth = 0;
-                    daysInSecondMonth = 0;
-                    secondMonth = 0;
-                    daysInSecondMonthCount = 0;
-                    daysInFirstMonthCount = 0;
-                    daysInAllTwoMonths = [];
-                    daysInFirstMonthDisplay = [];
-                    daysInSecondMonthDisplay = [];
-                    arrivalFirstDateMonthDisplay = [];
-                    arrivalSecondDateMonthDisplay = [];
-                    arrivalAllTwoMonthsDisplay = [];
-                    priceAllNightsDoppelzimmerDeluxeHolzleo = 0;
-                    priceAllNightsDoppelzimmerSuperiorSteinleo = 0;
-                    priceAllNightsEinzelzimmerSommerstein = 0;
-                    priceAllNightsDoppelzimmerClassicSteinleo = 0;
-                    arrivalDateForLink = "";
-                    departureDateForLink = "";
-                    bookingLink = "";
-
-                }
-                //indicated value (how many persons are joining) from the user is added to the numberOfPersons variable
-            numberOfPersonsSplitted = quickReplyPayload.split(" ");
-            numberOfPersons = parseInt(numberOfPersonsSplitted[0]);
+        //First question is how many persons are joining the requested stay.
+        if (quickReplyPayload === "1 person" || quickReplyPayload === "2 persons" || quickReplyPayload === "3 persons" || quickReplyPayload === "4 persons" || quickReplyPayload === "5 persons") {
+            //Every request is counted.
+            //If request is bigger than 2, the basic arguments for the request are reset.
+            resetData();
+            //indicated value (how many persons are joining) from the user is added to the numberOfPersons variable
+            assigningNumberOfPersonsVar(quickReplyPayload);
             //Number of rooms is the next question
             sendRoomRequest(senderID);
         } else if (quickReplyPayload === "1 room" || quickReplyPayload === "2 rooms" || quickReplyPayload === "3 rooms" || quickReplyPayload === "4 rooms" || quickReplyPayload === "5 rooms") {
-            numberOfRoomsSplitted = quickReplyPayload.split(" ");
-            console.log("Number of rooms splitted: " + numberOfRoomsSplitted);
             //indicated value (how many rooms) from the user is added to the numberOfRooms variable
-            numberOfRooms = parseInt(numberOfRoomsSplitted[0]);
-            console.log("Number of rooms INT: " + numberOfRooms);
             //Arrival month is next question
+            assigningNumberOfRoomsVar(quickReplyPayload);
             sendArrivalDateMonth(senderID);
         } else if (quickReplyPayload === "mehr1") {
             //all monthbubbles are not fitting in one question
             sendArrivalDateMonth2(senderID);
         } else if (quickReplyPayload === "01" || quickReplyPayload === "02" || quickReplyPayload === "03" || quickReplyPayload === "04" || quickReplyPayload === "05" || quickReplyPayload === "06" || quickReplyPayload === "07" || quickReplyPayload === "08" || quickReplyPayload === "09" || quickReplyPayload === "10" || quickReplyPayload === "11" || quickReplyPayload === "12") {
             //indicated value (which months is the arrival) from the user is added to the arrivalDateMonth variable
-            arrivalDateMonth = quickReplyPayload;
-            arrivalDateMonthCalculations = parseInt(arrivalDateMonth);
+            assigningNumberOfMonthsVar(quickReplyPayload);
             //Next question is which day the user arrives
             sendArrivalDay(senderID);
         } else if (quickReplyPayload === "mehr2") {
@@ -487,105 +603,25 @@ function receivedMessage(event) {
             sendArrivalDay3(senderID);
         } else if (quickReplyPayload === "d 01" || quickReplyPayload === "d 02" || quickReplyPayload === "d 03" || quickReplyPayload === "d 04" || quickReplyPayload === "d 05" || quickReplyPayload === "d 06" || quickReplyPayload === "d 07" || quickReplyPayload === "d 08" || quickReplyPayload === "d 09" || quickReplyPayload === "d 10" || quickReplyPayload === "d 11" || quickReplyPayload === "d 12" || quickReplyPayload === "d 13" || quickReplyPayload === "d 14" || quickReplyPayload === "d 15" || quickReplyPayload === "d 16" || quickReplyPayload === "d 17" || quickReplyPayload === "d 18" || quickReplyPayload === "d 19" || quickReplyPayload === "d 20" || quickReplyPayload === "d 21" || quickReplyPayload === "d 22" || quickReplyPayload === "d 23" || quickReplyPayload === "d 24" || quickReplyPayload === "d 25" || quickReplyPayload === "d 26" || quickReplyPayload === "d 27" || quickReplyPayload === "d 28" || quickReplyPayload === "d 29" || quickReplyPayload === "d 30" || quickReplyPayload === "d 31") {
             //arrival Day Date is splitted, day is saved in arrivalDateDay variable. Int is saved in arrivalDateDayCalculations varible, whcih is used for stay-range calculations. Arrival date is a string.
-            arrivalDayDateSplitted = quickReplyPayload.split(" ");
-            arrivalDateDay = arrivalDayDateSplitted[1];
-            arrivalDateDayCalculations = parseInt(arrivalDayDateSplitted[1]);
-            arrivalDate = "2017-" + arrivalDateMonth + "-" + arrivalDateDay;
-            //departure date is suggested and sent to the use
-
-                 console.log(arrivalDateMonthCalculations);
-                 if(arrivalDateMonthCalculations === 1) {
-                 monthDays = january;
-                 } else if (arrivalDateMonthCalculations === 2) {
-                 monthDays = february;
-                 } else if (arrivalDateMonthCalculations === 3) {
-                 monthDays = march;
-                 } else if (arrivalDateMonthCalculations === 4) {
-                 monthDays = april;
-                 } else if (arrivalDateMonthCalculations === 5) {
-                 monthDays = may;
-                 } else if (arrivalDateMonthCalculations === 6) {
-                 monthDays = june;
-                 } else if (arrivalDateMonthCalculations === 7) {
-                 monthDays = july;
-                 } else if (arrivalDateMonthCalculations === 8) {
-                 monthDays = august;
-                 } else if (arrivalDateMonthCalculations === 9) {
-                 monthDays = september;
-                 } else if (arrivalDateMonthCalculations === 10) {
-                 monthDays = oktober;
-                 } else if (arrivalDateMonthCalculations === 11) {
-                 monthDays = november;
-                 } else if (arrivalDateMonthCalculations === 12) {
-                 monthDays = december;
-                 }
-                 daysInFirstMonth = monthDays - arrivalDateDayCalculations;
-                 console.log(daysInFirstMonth);
-                 console.log(arrivalDateMonthCalculations);
-                 if (daysInFirstMonth > 12) {
-                     for (daysInFirstMonthCount = (arrivalDateDayCalculations + 1); daysInFirstMonthCount <= (arrivalDateDayCalculations + 12); daysInFirstMonthCount++) {
-                         console.log(daysInFirstMonthCount);
-                         daysInFirstMonthDisplay.push(daysInFirstMonthCount);
-                         arrivalFirstDateMonthDisplay.push(arrivalDateMonthCalculations);
-                         daysInFirstMonth = 12;
-                    }
-                 } else {
-                     for (daysInFirstMonthCount = (arrivalDateDayCalculations + 1); daysInFirstMonthCount <= monthDays; daysInFirstMonthCount++) {
-                         console.log(daysInFirstMonthCount);
-                         daysInFirstMonthDisplay.push(daysInFirstMonthCount);
-                         arrivalFirstDateMonthDisplay.push(arrivalDateMonthCalculations);
-                     }
-                 }
-                 console.log(daysInFirstMonthDisplay);
-                 console.log(arrivalFirstDateMonthDisplay);
-                 console.log(daysInFirstMonth);
-                 daysInSecondMonth = 12 - daysInFirstMonth;
-                 console.log(daysInSecondMonth);
-                 secondMonth = arrivalDateMonthCalculations + 1;
-                 console.log(secondMonth);
-                 for (daysInSecondMonthCount = 1; daysInSecondMonthCount < daysInSecondMonth; daysInSecondMonthCount++) {
-                 console.log(daysInSecondMonthCount);
-                 daysInSecondMonthDisplay.push(daysInSecondMonthCount);
-                 arrivalSecondDateMonthDisplay.push(secondMonth);
-                 }
-                 console.log(daysInSecondMonthDisplay);
-                 console.log(arrivalSecondDateMonthDisplay);
-                 daysInAllTwoMonths = daysInFirstMonthDisplay.concat(daysInSecondMonthDisplay);
-                 arrivalAllTwoMonthsDisplay = arrivalFirstDateMonthDisplay.concat(arrivalSecondDateMonthDisplay);
-                 console.log(daysInAllTwoMonths);
-                 console.log(arrivalDateDayCalculations);
-                 console.log(arrivalDateMonthCalculations);
-                 console.log(arrivalDateMonth);
-                 console.log(arrivalDate);
-
-                 sendDepartureDateSuggestion(senderID);
-                 } else if (quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[0] + "-" + daysInAllTwoMonths[0] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[1] + "-" + daysInAllTwoMonths[1] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[2] + "-" + daysInAllTwoMonths[2] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[3] + "-" + daysInAllTwoMonths[3] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[4] + "-" + daysInAllTwoMonths[4] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[5] + "-" + daysInAllTwoMonths[5] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[6] + "-" + daysInAllTwoMonths[6] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[7] + "-" + daysInAllTwoMonths[7] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[8] + "-" + daysInAllTwoMonths[8] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[9] + "-" + daysInAllTwoMonths[9] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[10] + "-" + daysInAllTwoMonths[10]) {
-                 //Status update feedback is sent, so that the user knows that the offer is created
-                 sendStatusFeedbackRequest(senderID);
-                 //departureDate is assigned
-                 departureDate = quickReplyPayload;
-                 console.log("Departure Date: " + departureDate);
-                 //Range of stay is calculated
-
-                 calculateStayRange(arrivalDate, departureDate);
-                 //Check if date is in the past - if so error message is send
-                    var d = new Date();
-                    var f = JSON.stringify(d);
-                    var i = f.match(/.{1,11}/g);
-                    var g = i[0];
-                    while(g.charAt(0) === '"')
-                    {
-                        g = g.substr(1);
-                    }
-                    var j = g.split("-");
-                    var h = arrivalDate.split("-");
-                    if (h[0] < j[0] || h[1] <= j[1] && h[2] < j[2] ) {
-                        setTimeout(sendErrorMessageNoRoom, 1500, senderID);
-                        return;
-                    }
-            //XML post request to cultuzz channel manager is executed
-            sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departureDate, doppelzimmerClassicSteinleo, einzelzimmerSommerstein, doppelzimmerDeluxeHolzleo, doppelzimmerSuperiorSteinleo);
-            //If hotel is closed, send error message, else create suited offer
+            assigningArrivalDateVar(quickReplyPayload);
+            //departure date is created and sent to the use
+            createDepartureDateSuggestion();
+            sendDepartureDateSuggestion(senderID);
+        } else if (quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[0] + "-" + daysInAllTwoMonths[0] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[1] + "-" + daysInAllTwoMonths[1] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[2] + "-" + daysInAllTwoMonths[2] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[3] + "-" + daysInAllTwoMonths[3] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[4] + "-" + daysInAllTwoMonths[4] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[5] + "-" + daysInAllTwoMonths[5] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[6] + "-" + daysInAllTwoMonths[6] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[7] + "-" + daysInAllTwoMonths[7] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[8] + "-" + daysInAllTwoMonths[8] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[9] + "-" + daysInAllTwoMonths[9] || quickReplyPayload === "2017-" + arrivalAllTwoMonthsDisplay[10] + "-" + daysInAllTwoMonths[10]) {
+            //Status update feedback is sent, so that the user knows that the offer is created
+            sendStatusFeedbackRequest(senderID);
+            //departureDate is assigned
+            assignDepartureDateVar(quickReplyPayload);
+            //Range of stay is calculated
+            calculateStayRange(arrivalDate, departureDate);
+            //Check if date is in the past - if so error message is send
+            checkIfDateIsInPast(senderID);
+            if (dateIsInThePast) {
+                return;
+            }else {
+                //XML post request to cultuzz channel manager is executed
+                sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departureDate, doppelzimmerClassicSteinleo, einzelzimmerSommerstein, doppelzimmerDeluxeHolzleo, doppelzimmerSuperiorSteinleo);
+                //If hotel is closed, send error message, else create suited offer
                 setTimeout(function () {
                     checkIfHotelIsClosed(senderID);
                     if (hotelIsClosed) {
@@ -595,9 +631,10 @@ function receivedMessage(event) {
                         setTimeout(createBookingLink, 40, arrivalDateSplitted, departureDateSplitted, numberOfPersons);
                         setTimeout(checkTypeOfOffer, 100, senderID);
                     }
-                        }, 15000);
-                    }
-                }
+                }, 15000);
+            }
+        }
+    }
 
     if (messageText) {
 
