@@ -22,14 +22,15 @@ const
   parseString = require('xml2js').parseString;
 
 //var localStorage = require('node-localstorage');
+var flash = require('connect-flash');
 var routes = require('./routes/index');
-
 var app = express();
 app.set('port', process.env.PORT || 8000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 app.use('/', routes);
+app.use(flash());
 
 var resultTransferData = [];
 var doppelzimmerClassicSteinleo = "<RatePlanCandidate RatePlanType=\"11\" RatePlanID=\"420424\"/>";
@@ -1542,7 +1543,7 @@ function sendGenericMessageOffer1(recipientId) {
 
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
-    //app.locals.subTitleSummary =
+    app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
 }
 //"1|2" ----> double checked |
 function sendGenericMessageOffer2(recipientId) {
@@ -1608,6 +1609,9 @@ function sendGenericMessageOffer2(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"1|3" ----> double checked |
 function sendGenericMessageOffer3(recipientId) {
@@ -1659,6 +1663,9 @@ function sendGenericMessageOffer3(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"2|3" ----> double checked |
 function sendGenericMessageOffer4(recipientId) {
@@ -1710,6 +1717,9 @@ function sendGenericMessageOffer4(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"1|4" / "2|4" ----> double checked |
 function sendGenericMessageOffer5(recipientId) {
@@ -1775,6 +1785,9 @@ function sendGenericMessageOffer5(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"2|1" / "2|2" ----> double checked |
 function sendGenericMessageOffer6(recipientId) {
@@ -1811,6 +1824,9 @@ function sendGenericMessageOffer6(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"2|5" / "3|1" / "3|2" / "3|5" ----> double checked |
 function sendGenericMessageOffer7(recipientId) {
@@ -1862,6 +1878,9 @@ function sendGenericMessageOffer7(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"3|3" ----> double checked |
 function sendGenericMessageOffer8(recipientId) {
@@ -1898,6 +1917,9 @@ function sendGenericMessageOffer8(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"4|1" / "4|2" / "4|3" / "4|4" ----> double checked |
 function sendGenericMessageOffer9(recipientId) {
@@ -1934,6 +1956,9 @@ function sendGenericMessageOffer9(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"5|1" / "5|2" / "5|3" / "5|4" / "5|5" ----> double checked |
 function sendGenericMessageOffer10(recipientId) {
@@ -1970,6 +1995,10 @@ function sendGenericMessageOffer10(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
+
 }
 //"3|4" ----> double checked |
 function sendGenericMessageOffer11(recipientId) {
@@ -2020,6 +2049,9 @@ function sendGenericMessageOffer11(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 //"4|5" ----> double checked
 function sendGenericMessageOffer12(recipientId) {
@@ -2071,6 +2103,9 @@ function sendGenericMessageOffer12(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 }
 
 /*

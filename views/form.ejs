@@ -16,8 +16,8 @@
             <h5><%= titleSummary %> </h5>
             <h5><%= subTitleSummary %></h5>
         </div>
-        <div id="charge-error" class="alert alert-danger hidden">
-
+        <div id="charge-error" class="alert alert-danger <% if ( !errMsg ) { %> hidden <% } %>">
+            <%= errMsg  %>
         </div>
         <div class="modal-body">
 
