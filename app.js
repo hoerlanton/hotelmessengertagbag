@@ -22,13 +22,14 @@ const
   parseString = require('xml2js').parseString;
 
 //var localStorage = require('node-localstorage');
-
+var routes = require('./routes/index');
 
 var app = express();
 app.set('port', process.env.PORT || 8000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+app.use('/', routes);
 
 var resultTransferData = [];
 var doppelzimmerClassicSteinleo = "<RatePlanCandidate RatePlanType=\"11\" RatePlanID=\"420424\"/>";
@@ -85,6 +86,8 @@ var departureDateForLink = "";
 var arrivalDateForLink = "";
 var dateIsInThePast = false;
 var autoAnswerIsOn = true;
+app.locals.titleSummary = "";
+app.locals.subTitleSummary = "";
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -119,7 +122,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 }
 
 /*
- * Use your own validation token. Check that the token used in the Webhook 
+ * Use your own validation token. Check that the token used in the Webhook
  * setup is the same token used here.
  *
  */
@@ -130,15 +133,15 @@ app.get('/webhook', function(req, res) {
     res.status(200).send(req.query['hub.challenge']);
   } else {
     console.error("Failed validation. Make sure the validation tokens match.");
-    res.sendStatus(403);          
-  }  
+    res.sendStatus(403);
+  }
 });
 
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
  * webhook. Be sure to subscribe your app to your page to receive callbacks
- * for your page. 
+ * for your page.
  * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
  *
  */
@@ -175,7 +178,7 @@ app.post('/webhook', function (req, res) {
 
     // Assume all went well.
     //
-    // You must send back a 200, within 20 seconds, to let us know you've 
+    // You must send back a 200, within 20 seconds, to let us know you've
     // successfully received the callback. Otherwise, the request will time out.
     res.sendStatus(200);
   }
@@ -183,14 +186,14 @@ app.post('/webhook', function (req, res) {
 
 /*
  * This path is used for account linking. The account linking call-to-action
- * (sendAccountLinking) is pointed to this URL. 
- * 
+ * (sendAccountLinking) is pointed to this URL.
+ *
  */
 app.get('/authorize', function(req, res) {
   var accountLinkingToken = req.query.account_linking_token;
   var redirectURI = req.query.redirect_uri;
 
-  // Authorization Code should be generated per user by the developer. This will 
+  // Authorization Code should be generated per user by the developer. This will
   // be passed to the Account Linking callback.
   var authCode = "1234567890";
 
@@ -203,6 +206,7 @@ app.get('/authorize', function(req, res) {
     redirectURISuccess: redirectURISuccess
   });
 });
+
 
 //localStorage Setup
 /*
@@ -398,7 +402,8 @@ function resetData(){
         arrivalDateForLink = "";
         departureDateForLink = "";
         bookingLink = "";
-
+        app.locals.titleSummary = "";
+        app.locals.subTitleSummary = "";
     }
 }
 
@@ -618,7 +623,7 @@ function receivedMessage(event) {
             checkIfDateIsInPast(senderID);
             if (dateIsInThePast) {
                 return;
-            }else {
+            } else {
                 //XML post request to cultuzz channel manager is executed
                 sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departureDate, doppelzimmerClassicSteinleo, einzelzimmerSommerstein, doppelzimmerDeluxeHolzleo, doppelzimmerSuperiorSteinleo);
                 //If hotel is closed, send error message, else create suited offer
@@ -670,6 +675,10 @@ function receivedMessage(event) {
 
             case 'Persönliche Beratung':
                 sendPersonalFeedback(senderID);
+                break;
+
+            case "pay":
+                sendPaymentButton(senderID);
                 break;
 
             default:
@@ -734,8 +743,13 @@ function receivedPostback(event) {
        sendPersonRequest(senderID);
    }    else if (payload === "personal") {
        sendPersonalFeedback(senderID);
+   } else if (payload === "DEVELOPER_DEFINED_PAYLOAD") {
+
    }
 }
+
+
+
 /*
  * Message Read Event
  *
@@ -1431,8 +1445,9 @@ function checkTypeOfOffer(senderID) {
             break;
     }
 }
-//"1|1" ----> double checked |
-function sendGenericMessageOffer1(recipientId) {
+
+//Send Payment button
+function sendPaymentButton(recipientId) {
     var messageData = {
         recipient: {
             id: recipientId
@@ -1449,10 +1464,68 @@ function sendGenericMessageOffer1(recipientId) {
                             subtitle: String(priceAllNightsEinzelzimmerSommerstein) + ",00 EUR | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsenen ",
                             item_url: bookingLink,
                             image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Einzelzimmer-Sommerstein1-1.9.png",
+                            "buttons":[
+                                {
+                                    "type":"payment",
+                                    "title":"buy",
+                                    "payload":"DEVELOPER_DEFINED_PAYLOAD",
+                                    "payment_summary":{
+                                        "currency":"USD",
+                                        "payment_type":"FIXED_AMOUNT",
+                                        "is_test_payment" : true,
+                                        "merchant_name":"Peter's Apparel",
+                                        "requested_user_info":[
+                                            "shipping_address",
+                                            "contact_name",
+                                            "contact_phone",
+                                            "contact_email"
+                                        ],
+                                        "price_list":[
+                                            {
+                                                "label":"Subtotal",
+                                                "amount":"29.99"
+                                            },
+                                            {
+                                                "label":"Taxes",
+                                                "amount":"2.47"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    };
+
+    callSendAPI(messageData);
+}
+//"1|1" ----> double checked |
+function sendGenericMessageOffer1(recipientId) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            attachment: {
+                type: "template",
+                payload: {
+                    template_type: "generic",
+
+                    elements: [
+                        {
+                            title: String(numberOfRooms) + " Einzelzimmer Sommerstein | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + ".2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
+                            subtitle: String(priceAllNightsEinzelzimmerSommerstein) + ",00 EUR | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsenen ",
+                            item_url: "https://5fc3f404.ngrok.io/checkout",
+                            image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Einzelzimmer-Sommerstein1-1.9.png",
                             buttons: [{
                                 type: "web_url",
-                                url: bookingLink,
-                                title: "Buchen & Details"
+                                url: "https://5fc3f404.ngrok.io/checkout",
+                                title: "Buchen & Details",
+                                webview_height_ratio: "full",
+                                messenger_extensions: true
                             }, {
                                 type: "postback",
                                 title: "Persönliche Beratung",
@@ -1466,6 +1539,10 @@ function sendGenericMessageOffer1(recipientId) {
     };
 
     callSendAPI(messageData);
+
+    app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
+    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
+    //app.locals.subTitleSummary =
 }
 //"1|2" ----> double checked |
 function sendGenericMessageOffer2(recipientId) {
