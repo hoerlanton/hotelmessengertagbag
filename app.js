@@ -272,6 +272,42 @@ function sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departu
 
 
 
+function sendHotelResRQ() {
+
+    var buffer = '';
+    var postRequest = {
+        hostname: "cultswitch.cultuzz.de",
+        path: "/cultswitch/processOTA",
+        method: "POST",
+        port: 8080,
+        headers: {
+            'Cookie': 'cookie',
+            'Content-type': 'application/x-www-form-urlencoded'
+        }
+    };
+    var body = '<?xml version="1.0" encoding="UTF-8"?><OTA_HotelResRQ xmlns="http://www.opentravel.org/OTA/2003/05" TimeStamp="2012-05-10T09:30:47" Target="Production" Version="3.30" PrimaryLangID="en" ResStatus="Initiate"><POS><Source AgentSine="49082" AgentDutyCode="513f3eb9b082756f"><RequestorID Type="10" ID="50114" ID_Context="CLTZ" /><BookingChannel Type="7" /></Source></POS><HotelReservations><HotelReservation RoomStayReservation="true"><UniqueID Type="10" ID_Context="CLTZ" ID="50114" /><RoomStays><RoomStay IndexNumber="11"><RoomRates><RoomRate NumberOfUnits="1" RatePlanID="420596" RatePlanType="11" /></RoomRates><GuestCounts IsPerRoom="0"><GuestCount Count="1" AgeQualifyingCode="10" /></GuestCounts><TimeSpan Start="2017-09-12" End="2017-09-13" /><Comments><Comment GuestViewable="1" Name="GuestMessage"><Text Formatted="1" Language="en"><![CDATA[Test Booking]]></Text></Comment></Comments></RoomStay></RoomStays><ResGuests><ResGuest ResGuestRPH="1"><Profiles><ProfileInfo><Profile><Customer Gender="Male"><PersonName><NameTitle>Anton</NameTitle><GivenName>AntonTest</GivenName><Surname>HoerlTest</Surname></PersonName><Telephone PhoneNumber="06649219838" /><Email>anton.hoerl@gmx.at</Email><Address FormattedInd="false"><StreetNmbr>Sonnberg 170</StreetNmbr><CityName>Leogang</CityName><PostalCode>5771</PostalCode><CountryName Code="AU">Austria</CountryName><StateProv StateCode="2">Leogang</StateProv><CompanyName CompanyShortName="Bon">HotelSalzburgerhofLeogang</CompanyName> </Address></Customer></Profile></ProfileInfo></Profiles></ResGuest></ResGuests><ResGlobalInfo><Guarantee GuaranteeCode="3" GuaranteeType="CC/DC/Voucher"><GuaranteesAccepted><GuaranteeAccepted><PaymentCard CardCode="MA" CardNumber="0545582292" CardType="1" ExpireDate="2020" SeriesCode="123"><CardHolderName>Anton Hoerl</CardHolderName></PaymentCard></GuaranteeAccepted></GuaranteesAccepted></Guarantee><HotelReservationIDs><HotelReservationID ResID_SourceContext="TransactionNumber" ResID_Source="AntonHoerlResID" ResID_Value="12587424885" /><HotelReservationID ResID_SourceContext="eBayItemID" ResID_Source="eBay" ResID_Value="12547895" /></HotelReservationIDs></ResGlobalInfo></HotelReservation></HotelReservations></OTA_HotelResRQ>';
+    var req = http.request(postRequest, function (res) {
+        console.log(res.statusCode);
+        res.on("data", function (data) {
+            buffer += data;
+        });
+        res.on("end", function () {
+            parseString(buffer, function (err, result) {
+                (JSON.stringify(result));
+                resultTransferData2.push(result);
+                console.log(resultTransferData2);
+                console.log("function called")
+            });
+        });
+    });
+    req.on('error', function (e) {
+        console.log('problem with request: ' + e.message);
+    });
+    req.write(body);
+    req.end();
+}
+
+
 
 
 
