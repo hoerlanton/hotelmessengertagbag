@@ -96,6 +96,7 @@ app.locals.titleSummary = "";
 app.locals.subTitleSummary = "";
 app.locals.totalPrice = "";
 
+
 /*
  * Be sure to setup your config values before running this code. You can 
  * set them using environment variables or modifying the config file in /config.
@@ -270,6 +271,12 @@ function sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departu
 };
 
 
+
+
+
+
+
+
 /*
  * Verify that the callback came from Facebook. Using the App Secret from 
  * the App Dashboard, we can verify the signature that is sent with each 
@@ -418,6 +425,7 @@ function resetData(){
 function assigningNumberOfPersonsVar(quickReplyPayload){
     numberOfPersonsSplitted = quickReplyPayload.split(" ");
     numberOfPersons = parseInt(numberOfPersonsSplitted[0]);
+    app.locals.numberOfPersons = numberOfPersons;
 }
 
 function assigningNumberOfRoomsVar(quickReplyPayload) {
@@ -425,6 +433,7 @@ function assigningNumberOfRoomsVar(quickReplyPayload) {
     console.log("Number of rooms splitted: " + numberOfRoomsSplitted);
     numberOfRooms = parseInt(numberOfRoomsSplitted[0]);
     console.log("Number of rooms INT: " + numberOfRooms);
+    app.locals.numberOfRooms = numberOfRooms;
 }
 
 function assigningNumberOfMonthsVar(quickReplyPayload) {
@@ -437,6 +446,7 @@ function assigningArrivalDateVar(quickReplyPayload) {
     arrivalDateDay = arrivalDayDateSplitted[1];
     arrivalDateDayCalculations = parseInt(arrivalDayDateSplitted[1]);
     arrivalDate = "2017-" + arrivalDateMonth + "-" + arrivalDateDay;
+    app.locals.arrivalDate = arrivalDate;
 }
 
 function createDepartureDateSuggestion(){
@@ -509,6 +519,7 @@ function createDepartureDateSuggestion(){
 function assignDepartureDateVar(quickReplyPayload){
     departureDate = quickReplyPayload;
     console.log("Departure Date: " + departureDate);
+    app.locals.departureDate = departureDate;
 }
 
 function checkIfDateIsInPast(senderID){
@@ -1526,11 +1537,11 @@ function sendGenericMessageOffer1(recipientId) {
                         {
                             title: String(numberOfRooms) + " Einzelzimmer Sommerstein | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + ".2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
                             subtitle: String(priceAllNightsEinzelzimmerSommerstein) + ",00 EUR | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsenen ",
-                            item_url: "https://5fc3f404.ngrok.io/checkout",
+                            item_url: "https://e42de8e8.ngrok.io/checkout",
                             image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Einzelzimmer-Sommerstein1-1.9.png",
                             buttons: [{
                                 type: "web_url",
-                                url: "https://46c83a63.ngrok.io/checkout",
+                                url: "https://e42de8e8.ngrok.io/checkout",
                                 title: "Buchen & Details",
                                 webview_height_ratio: "full",
                                 messenger_extensions: true
@@ -1551,6 +1562,7 @@ function sendGenericMessageOffer1(recipientId) {
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
     app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
+    app.locals.ratePlanID = 420596;
 }
 //"1|2" ----> double checked |
 function sendGenericMessageOffer2(recipientId) {
