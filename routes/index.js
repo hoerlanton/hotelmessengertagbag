@@ -38,6 +38,14 @@ router.get('/checkout', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
 });
 
+router.get('/checkout/DoppelzimmerSuperiorSteinleo', function(req, res, next) {
+    res.render('formDoppelzimmerSuperiorSteinleo', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+});
+
+router.get('/checkout/DoppelzimmerClassicSteinleo', function(req, res, next) {
+    res.render('formDoppelzimmerClassicSteinleo', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+});
+
 router.get('/bookingsuccess', function(req, res, next) {
     res.render('success', { title: 'Jetzt buchen', successMsg: successMsg, noMessage: !successMsg});
     console.log(req.body);
@@ -51,7 +59,7 @@ router.post('/checkout', function(req, res, next){
     );
 
     stripe.charges.create({
-        amount: 100, //req.app.locals.totalPrice * 100,
+        amount: req.app.locals.totalPrice * 100,
         currency: "eur",
         source: req.body.stripeToken, // obtained with Stripe.js
         description: "Test charge"
@@ -94,21 +102,11 @@ router.post('/checkout', function(req, res, next){
         checkoutDataCardCvc = checkoutDataSplittedTwiceCardCvc[1].slice(1, -1);
         console.log(checkoutDataCardCvc);
 
-        console.log("number of persons transferred: " + req.app.locals.numberOfPersons);
-        console.log("number of rooms transferred: " + req.app.locals.numberOfRooms);
-        console.log("arrivalDate: " + req.app.locals.arrivalDate);
-        console.log("departureDate: " + req.app.locals.departureDate);
-        console.log("ratePlanID: " + req.app.locals.ratePlanID);
-
         numberOfPersonsReservation = req.app.locals.numberOfPersons;
         numberOfRoomsReservation = req.app.locals.numberOfRooms;
         arrivalDateReservation = req.app.locals.arrivalDate;
         departureDateReservation = req.app.locals.departureDate;
         ratePlanIDReservation = req.app.locals.ratePlanID;
-
-        console.log("lastcheck: " + numberOfPersonsReservation + numberOfRoomsReservation + arrivalDateReservation + departureDateReservation + ratePlanIDReservation);
-
-
 
         // asynchronously called
 
@@ -125,21 +123,16 @@ router.post('/checkout', function(req, res, next){
                     'Content-type': 'application/x-www-form-urlencoded'
                 }
             };
-            var body = 'otaRQ=<?xml version="1.0" encoding="UTF-8"?><OTA_HotelResRQ xmlns="http://www.opentravel.org/OTA/2003/05" TimeStamp="2012-05-10T09:30:47" Target="Production" Version="3.30" PrimaryLangID="en" ResStatus="Initiate"><POS><Source AgentSine="49082" AgentDutyCode="513f3eb9b082756f"><RequestorID Type="10" ID="50114" ID_Context="CLTZ" /><BookingChannel Type="7" /></Source></POS><HotelReservations><HotelReservation RoomStayReservation="true"><UniqueID Type="10" ID_Context="CLTZ" ID="50114" /><RoomStays><RoomStay IndexNumber="11"><RoomRates><RoomRate NumberOfUnits="' + numberOfRoomsReservation + '" RatePlanID="' + ratePlanIDReservation + '" RatePlanType="11" /></RoomRates><GuestCounts IsPerRoom="0"><GuestCount Count="' + numberOfPersonsReservation + '" AgeQualifyingCode="10" /></GuestCounts><TimeSpan Start="' + arrivalDateReservation + '" End="' + departureDateReservation + '" /><Comments><Comment GuestViewable="1" Name="GuestMessage"><Text Formatted="1" Language="en"><![CDATA[Test Booking]]></Text></Comment></Comments></RoomStay></RoomStays><ResGuests><ResGuest ResGuestRPH="1"><Profiles><ProfileInfo><Profile><Customer Gender="Male"><PersonName><NameTitle>mr</NameTitle><GivenName>' + checkoutDataName + '</GivenName><Surname>' + checkoutDataName + '</Surname></PersonName><Telephone PhoneNumber="06649219838"/><Email>anton.hoerl@gmx.at</Email><Address FormattedInd="false"><StreetNmbr>' + checkoutDataAddress + '</StreetNmbr><CityName>' + checkoutDataAddress + '</CityName><PostalCode>' + checkoutDataAddress + '</PostalCode><CountryName Code="AU">' + checkoutDataAddress + '</CountryName><StateProv StateCode="2">' + checkoutDataAddress + '</StateProv><CompanyName CompanyShortName="Bon">HotelSalzburgerhofLeogang</CompanyName></Address></Customer></Profile></ProfileInfo></Profiles></ResGuest></ResGuests><ResGlobalInfo><Guarantee GuaranteeCode="3" GuaranteeType="CC/DC/Voucher"><GuaranteesAccepted><GuaranteeAccepted><PaymentCard CardCode="MA" CardNumber="' + checkoutDataCardNumber + '" CardType="1" ExpireDate="' + checkoutDataCardExpiryYear + '" SeriesCode="' + checkoutDataCardCvc + '"><CardHolderName>' + checkoutDataCardName + '</CardHolderName></PaymentCard></GuaranteeAccepted></GuaranteesAccepted></Guarantee><HotelReservationIDs><HotelReservationID ResID_SourceContext="TransactionNumber" ResID_Source="AntonHoerlResID" ResID_Value="12587424885" /><HotelReservationID ResID_SourceContext="eBayItemID" ResID_Source="eBay" ResID_Value="12547895" /></HotelReservationIDs></ResGlobalInfo></HotelReservation></HotelReservations></OTA_HotelResRQ>';            var req = http.request(postRequest, function (res) {
+            var body = 'otaRQ=<?xml version="1.0" encoding="UTF-8"?><OTA_HotelResRQ xmlns="http://www.opentravel.org/OTA/2003/05" TimeStamp="2012-05-10T09:30:47" Target="Production" Version="3.30" PrimaryLangID="en" ResStatus="Initiate"><POS><Source AgentSine="49082" AgentDutyCode="513f3eb9b082756f"><RequestorID Type="10" ID="50114" ID_Context="CLTZ" /><BookingChannel Type="7" /></Source></POS><HotelReservations><HotelReservation RoomStayReservation="true"><UniqueID Type="10" ID_Context="CLTZ" ID="50114" /><RoomStays><RoomStay IndexNumber="11"><RoomRates><RoomRate NumberOfUnits="' + numberOfRoomsReservation + '" RatePlanID="' + ratePlanIDReservation + '" RatePlanType="11" /></RoomRates><GuestCounts IsPerRoom="0"><GuestCount Count="' + numberOfPersonsReservation + '" AgeQualifyingCode="10" /></GuestCounts><TimeSpan Start="' + arrivalDateReservation + '" End="' + departureDateReservation + '" /><Comments><Comment GuestViewable="1" Name="GuestMessage"><Text Formatted="1" Language="en"><![CDATA[Test Booking]]></Text></Comment></Comments></RoomStay></RoomStays><ResGuests><ResGuest ResGuestRPH="1"><Profiles><ProfileInfo><Profile><Customer Gender="Male"><PersonName><NameTitle>mr</NameTitle><GivenName>' + checkoutDataName + '</GivenName><Surname>' + checkoutDataName + '</Surname></PersonName><Telephone PhoneNumber="06649219838"/><Email>anton.hoerl@gmx.at</Email><Address FormattedInd="false"><StreetNmbr>' + checkoutDataAddress + '</StreetNmbr><CityName>' + checkoutDataAddress + '</CityName><PostalCode>' + checkoutDataAddress + '</PostalCode><CountryName Code="AU">' + checkoutDataAddress + '</CountryName><StateProv StateCode="2">' + checkoutDataAddress + '</StateProv><CompanyName CompanyShortName="Bon">HotelSalzburgerhofLeogang</CompanyName></Address></Customer></Profile></ProfileInfo></Profiles></ResGuest></ResGuests><ResGlobalInfo><Guarantee GuaranteeCode="3" GuaranteeType="CC/DC/Voucher"><GuaranteesAccepted><GuaranteeAccepted><PaymentCard CardCode="MA" CardNumber="' + checkoutDataCardNumber + '" CardType="1" ExpireDate="' + checkoutDataCardExpiryYear + '" SeriesCode="' + checkoutDataCardCvc + '"><CardHolderName>' + checkoutDataCardName + '</CardHolderName></PaymentCard></GuaranteeAccepted></GuaranteesAccepted></Guarantee><HotelReservationIDs><HotelReservationID ResID_SourceContext="TransactionNumber" ResID_Source="AntonHoerlResID" ResID_Value="12587424885" /><HotelReservationID ResID_SourceContext="eBayItemID" ResID_Source="eBay" ResID_Value="12547895" /></HotelReservationIDs></ResGlobalInfo></HotelReservation></HotelReservations></OTA_HotelResRQ>';
+            var req = http.request(postRequest, function (res) {
                 console.log(res.statusCode);
                 res.on("data", function (data) {
                     buffer += data;
-                    console.log(buffer);
                 });
                 res.on("end", function () {
                     parseString(buffer, function (err, result) {
-                        console.log(buffer);
                         (JSON.stringify(result));
-                        console.log(result);
                         resultTransferData2.push(result);
-                        console.log(resultTransferData2);
-                        console.log("function called");
-                        console.log(buffer);
                     });
                 });
             });
