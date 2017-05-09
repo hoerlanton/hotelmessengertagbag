@@ -1631,6 +1631,8 @@ function sendGenericMessageOffer2(recipientId) {
     app.locals.titleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].title;
     app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].subtitle;
 
+    app.locals.totalPrice = priceAllNightsDoppelzimmerDeluxeHolzleo;
+
 }
 //"1|3" ----> double checked |
 function sendGenericMessageOffer3(recipientId) {
@@ -1687,6 +1689,9 @@ function sendGenericMessageOffer3(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
     app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
+
+    app.locals.totalPrice = priceAllNightsDoppelzimmerClassicSteinleo + priceAllNightsEinzelzimmerSommerstein;
+
 }
 //"2|3" ----> double checked |
 function sendGenericMessageOffer4(recipientId) {
@@ -1743,6 +1748,8 @@ function sendGenericMessageOffer4(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
     app.locals.titleSummary = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[1].subtitle;
+
+    app.locals.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
 }
 //"1|4" / "2|4" ----> double checked | not displaying on checkout form properly
 function sendGenericMessageOffer5(recipientId) {
@@ -1817,6 +1824,8 @@ function sendGenericMessageOffer5(recipientId) {
 
     app.locals.titleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].title;
     app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].subtitle;
+
+    app.locals.totalPrice = priceAllNightsDoppelzimmerDeluxeHolzleo;
 }
 //"2|1" / "2|2" ----> double checked |
 function sendGenericMessageOffer6(recipientId) {
@@ -1856,6 +1865,8 @@ function sendGenericMessageOffer6(recipientId) {
 
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
+
+    app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
 }
 //"2|5" / "3|1" / "3|2" / "3|5" ----> double checked |
 function sendGenericMessageOffer7(recipientId) {
@@ -1911,6 +1922,8 @@ function sendGenericMessageOffer7(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
     app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
+
+    app.locals.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) * 2) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
 }
 //"3|3" ----> double checked |
 function sendGenericMessageOffer8(recipientId) {
@@ -1927,8 +1940,8 @@ function sendGenericMessageOffer8(recipientId) {
                     elements: [
                         {
                             title: String(numberOfRooms) + " Einzelzimmer Sommerstein | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
-                            subtitle: String(priceAllNightsEinzelzimmerSommerstein) + ",00 EUR + " + String(priceAllNightsEinzelzimmerSommerstein) + ",00 EUR + " + String(priceAllNightsEinzelzimmerSommerstein) + ",00 EUR = " + String(priceAllNightsEinzelzimmerSommerstein * 3) +  ",00 EUR | Preis ist kalkuliert für " + numberOfPersons + " Erwachsene",
-                            item_url: bookingLink,
+                            subtitle: String(priceAllNightsEinzelzimmerSommerstein / 3) + ",00 EUR + " + String(priceAllNightsEinzelzimmerSommerstein / 3) + ",00 EUR + " + String(priceAllNightsEinzelzimmerSommerstein / 3) + ",00 EUR = " + String(priceAllNightsEinzelzimmerSommerstein) +  ",00 EUR | Preis ist kalkuliert für " + numberOfPersons + " Erwachsene",
+                            item_url: "https://e42de8e8.ngrok.io/checkout",
                             image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Einzelzimmer-Sommerstein1-1.9.png",
                             buttons: [{
                                 type: "web_url",
@@ -1950,6 +1963,9 @@ function sendGenericMessageOffer8(recipientId) {
 
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
+
+    app.locals.totalPrice = (priceAllNightsEinzelzimmerSommerstein);
+
 }
 //"4|1" / "4|2" / "4|3" / "4|4" ----> double checked |
 function sendGenericMessageOffer9(recipientId) {
@@ -1989,6 +2005,8 @@ function sendGenericMessageOffer9(recipientId) {
 
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
+
+    app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
 }
 //"5|1" / "5|2" / "5|3" / "5|4" / "5|5" ----> double checked |
 function sendGenericMessageOffer10(recipientId) {
@@ -2028,6 +2046,8 @@ function sendGenericMessageOffer10(recipientId) {
 
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
+
+    app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
 
 }
 //"3|4" ----> double checked |
@@ -2084,6 +2104,9 @@ function sendGenericMessageOffer11(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
     app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
+
+    app.locals.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 2));
+
 }
 //"4|5" ----> double checked
 function sendGenericMessageOffer12(recipientId) {
@@ -2140,6 +2163,8 @@ function sendGenericMessageOffer12(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
     app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
+
+    app.locals.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 3));
 }
 
 /*
