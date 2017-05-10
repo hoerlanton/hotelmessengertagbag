@@ -373,6 +373,7 @@ function calculatePrice(stayRange, numberOfRooms) {
 
     exports.priceAllNightsDoppelzimmerSuperiorSteinleo = priceAllNightsDoppelzimmerSuperiorSteinleo;
     exports.priceAllNightsDoppelzimmerClassicSteinleo = priceAllNightsDoppelzimmerClassicSteinleo;
+    exports.priceAllNightsDoppelzimmerDeluxeHolzleo = priceAllNightsDoppelzimmerDeluxeHolzleo;
 }
 
 function createBookingLink(arrivalDateSplitted, departureDateSplitted, numberOfPersons){
@@ -1559,7 +1560,7 @@ function sendGenericMessageOffer1(recipientId) {
 
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
-    app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
+    exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
     app.locals.ratePlanID = 420596;
 }
 //"1|2" ----> double checked | not charging price right
@@ -1577,11 +1578,11 @@ function sendGenericMessageOffer2(recipientId) {
                     elements: [{
                         title: String(numberOfRooms) + " Doppelzimmer Deluxe Holzleo | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
                         subtitle: String(priceAllNightsDoppelzimmerDeluxeHolzleo) + ",00 EUR  | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsene ",
-                        item_url: "https://e42de8e8.ngrok.io/checkout",
+                        item_url: "https://e42de8e8.ngrok.io/DoppelzimmerDeluxeHolzleo",
                         image_url: "https://gettagbag.com/wp-content/uploads/2017/04/zimmer_holzleo_uebersicht.jpg",
                         buttons: [{
                             type: "web_url",
-                            url: "https://e42de8e8.ngrok.io/checkout",
+                            url: "https://e42de8e8.ngrok.io/DoppelzimmerDeluxeHolzleo",
                             title: "Buchen & Details"
                         }, {
                             type: "postback",
@@ -1592,11 +1593,11 @@ function sendGenericMessageOffer2(recipientId) {
                         {
                             title: String(numberOfRooms) + " Doppelzimmer Superior Steinleo | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
                             subtitle: String(priceAllNightsDoppelzimmerSuperiorSteinleo) + ",00 EUR  | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsene ",
-                            item_url: "https://e42de8e8.ngrok.io/checkout/DoppelzimmerSuperiorSteinleo",
+                            item_url: "https://e42de8e8.ngrok.io/DoppelzimmerSuperiorSteinleo",
                             image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Doppelzimmer-Superior-Steinleo.png",
                             buttons: [{
                                 type: "web_url",
-                                url: "https://e42de8e8.ngrok.io/checkout/DoppelzimmerSuperiorSteinleo",
+                                url: "https://e42de8e8.ngrok.io/DoppelzimmerSuperiorSteinleo",
                                 title: "Buchen & Details"
                             }, {
                                 type: "postback",
@@ -1607,11 +1608,11 @@ function sendGenericMessageOffer2(recipientId) {
                         {
                             title: String(numberOfRooms) + " Doppelzimmer Classic Steinleo | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
                             subtitle: String(priceAllNightsDoppelzimmerClassicSteinleo + ",00 EUR  | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsene "),
-                            item_url: "https://e42de8e8.ngrok.io/checkout/DoppelzimmerClassicSteinleo",
+                            item_url: "https://e42de8e8.ngrok.io/DoppelzimmerClassicSteinleo",
                             image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Doppelzimmer-classic-Steinleo.png",
                             buttons: [{
                                 type: "web_url",
-                                url: "https://e42de8e8.ngrok.io/checkout/DoppelzimmerClassicSteinleo",
+                                url: "https://e42de8e8.ngrok.io/DoppelzimmerClassicSteinleo",
                                 title: "Buchen & Details"
                             }, {
                                 type: "postback",
@@ -1635,7 +1636,6 @@ function sendGenericMessageOffer2(recipientId) {
 
     app.locals.titleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].title;
     app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].subtitle;
-
 
 }
 //"1|3" ----> double checked |
@@ -1694,7 +1694,7 @@ function sendGenericMessageOffer3(recipientId) {
     app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
-    app.locals.totalPrice = priceAllNightsDoppelzimmerClassicSteinleo + priceAllNightsEinzelzimmerSommerstein;
+    exports.totalPrice = priceAllNightsDoppelzimmerClassicSteinleo + priceAllNightsEinzelzimmerSommerstein;
 
 }
 //"2|3" ----> double checked |
@@ -1753,7 +1753,7 @@ function sendGenericMessageOffer4(recipientId) {
     app.locals.titleSummary = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[1].subtitle;
 
-    app.locals.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
+    exports.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
 }
 //"1|4" / "2|4" ----> double checked | not charging price right
 function sendGenericMessageOffer5(recipientId) {
@@ -1770,11 +1770,11 @@ function sendGenericMessageOffer5(recipientId) {
                     elements: [{
                         title: String(numberOfRooms) + " Doppelzimmer Deluxe Holzleo | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
                         subtitle: String(priceAllNightsDoppelzimmerDeluxeHolzleo + ",00 EUR  | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsene "),
-                        item_url: "https://e42de8e8.ngrok.io/checkout",
+                        item_url: "https://e42de8e8.ngrok.io/DoppelzimmerDeluxeHolzleo",
                         image_url: "https://gettagbag.com/wp-content/uploads/2017/04/zimmer_holzleo_uebersicht.jpg",
                         buttons: [{
                             type: "web_url",
-                            url: "https://e42de8e8.ngrok.io/checkout",
+                            url: "https://e42de8e8.ngrok.io/DoppelzimmerDeluxeHolzleo",
                             title: "Buchen & Details"
                         }, {
                             type: "postback",
@@ -1785,11 +1785,11 @@ function sendGenericMessageOffer5(recipientId) {
                         {
                             title: String(numberOfRooms) + " Doppelzimmer Superior Steinleo | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
                             subtitle: String(priceAllNightsDoppelzimmerSuperiorSteinleo + ",00 EUR  | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsene "),
-                            item_url: "https://e42de8e8.ngrok.io/checkout/DoppelzimmerSuperiorSteinleo",
+                            item_url: "https://e42de8e8.ngrok.io/DoppelzimmerSuperiorSteinleo",
                             image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Doppelzimmer-Superior-Steinleo.png",
                             buttons: [{
                                 type: "web_url",
-                                url: "https://e42de8e8.ngrok.io/checkout/DoppelzimmerSuperiorSteinleo",
+                                url: "https://e42de8e8.ngrok.io/DoppelzimmerSuperiorSteinleo",
                                 title: "Buchen & Details"
                             }, {
                                 type: "postback",
@@ -1800,11 +1800,11 @@ function sendGenericMessageOffer5(recipientId) {
                         {
                             title: String(numberOfRooms) + " Doppelzimmer Classic Steinleo | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
                             subtitle: String(priceAllNightsDoppelzimmerClassicSteinleo + ",00 EUR  | Preis ist kalkuliert für " + (numberOfPersons) + " Erwachsene "),
-                            item_url: "https://e42de8e8.ngrok.io/checkout/DoppelzimmerClassicSteinleo",
+                            item_url: "https://e42de8e8.ngrok.io/DoppelzimmerClassicSteinleo",
                             image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Doppelzimmer-classic-Steinleo.png",
                             buttons: [{
                                 type: "web_url",
-                                url: "https://e42de8e8.ngrok.io/checkout/DoppelzimmerClassicSteinleo",
+                                url: "https://e42de8e8.ngrok.io/DoppelzimmerClassicSteinleo",
                                 title: "Buchen & Details"
                             }, {
                                 type: "postback",
@@ -1828,6 +1828,8 @@ function sendGenericMessageOffer5(recipientId) {
 
     app.locals.titleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].title;
     app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].subtitle;
+
+
 
 }
 //"2|1" / "2|2" ----> double checked |
@@ -1869,7 +1871,7 @@ function sendGenericMessageOffer6(recipientId) {
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
-    app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
+    exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
 }
 //"2|5" / "3|1" / "3|2" / "3|5" ----> double checked |
 function sendGenericMessageOffer7(recipientId) {
@@ -1926,7 +1928,7 @@ function sendGenericMessageOffer7(recipientId) {
     app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
-    app.locals.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) * 2) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
+    exports.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) * 2) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
 }
 //"3|3" ----> double checked |
 function sendGenericMessageOffer8(recipientId) {
@@ -1967,7 +1969,7 @@ function sendGenericMessageOffer8(recipientId) {
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
-    app.locals.totalPrice = (priceAllNightsEinzelzimmerSommerstein);
+    exports.totalPrice = (priceAllNightsEinzelzimmerSommerstein);
 
 }
 //"4|1" / "4|2" / "4|3" / "4|4" ----> double checked |
@@ -2009,7 +2011,7 @@ function sendGenericMessageOffer9(recipientId) {
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
-    app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
+    exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
 }
 //"5|1" / "5|2" / "5|3" / "5|4" / "5|5" ----> double checked |
 function sendGenericMessageOffer10(recipientId) {
@@ -2050,7 +2052,7 @@ function sendGenericMessageOffer10(recipientId) {
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
-    app.locals.totalPrice = priceAllNightsEinzelzimmerSommerstein;
+    exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
 
 }
 //"3|4" ----> double checked |
@@ -2108,7 +2110,7 @@ function sendGenericMessageOffer11(recipientId) {
     app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
-    app.locals.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 2));
+    exports.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 2));
 
 }
 //"4|5" ----> double checked
@@ -2167,7 +2169,7 @@ function sendGenericMessageOffer12(recipientId) {
     app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
-    app.locals.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 3));
+    exports.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 3));
 }
 
 /*

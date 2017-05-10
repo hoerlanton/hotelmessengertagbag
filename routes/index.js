@@ -9,6 +9,7 @@ var http = require('http');
 var parseString = require('xml2js').parseString;
 var sourceFile = require('../app');
 
+var totalPriceCharge = 0;
 var errMsg = "";
 var successMsg = "";
 
@@ -16,25 +17,32 @@ var successMsg = "";
 router.get('/checkout', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
     if (req.route.path === "/checkout") {
+        totalPriceCharge = sourceFile.totalPrice;
         console.log("Works" + req.route.path);
     }
 });
 
-router.get('/checkout/DoppelzimmerSuperiorSteinleo', function(req, res, next) {
-    res.render('formDoppelzimmerSuperiorSteinleo', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
-    if (req.route.path === "/checkout/DoppelzimmerSuperiorSteinleo") {
-        req.app.locals.totalPrice = sourceFile.priceAllNightsDoppelzimmerSuperiorSteinleo;
+router.get('/DoppelzimmerDeluxeHolzleo', function(req, res, next) {
+    res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    if (req.route.path === "/DoppelzimmerDeluxeHolzleo") {
+        totalPriceCharge = sourceFile.priceAllNightsDoppelzimmerDeluxeHolzleo;
         console.log("Works" + req.route.path);
-        console.log(req.app.locals.totalPrice);
     }
 });
 
-router.get('/checkout/DoppelzimmerClassicSteinleo', function(req, res, next) {
-    res.render('formDoppelzimmerClassicSteinleo', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
-    if (req.route.path === "/checkout/DoppelzimmerClassicSteinleo") {
-        req.app.locals.totalPrice = sourceFile.priceAllNightsDoppelzimmerClassicSteinleo;
+router.get('/DoppelzimmerSuperiorSteinleo', function(req, res, next) {
+    res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    if (req.route.path === "/DoppelzimmerSuperiorSteinleo") {
+        totalPriceCharge = sourceFile.priceAllNightsDoppelzimmerSuperiorSteinleo;
         console.log("Works" + req.route.path);
-        console.log(req.app.locals.totalPrice);
+    }
+});
+
+router.get('/DoppelzimmerClassicSteinleo', function(req, res, next) {
+    res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    if (req.route.path === "/DoppelzimmerClassicSteinleo") {
+        totalPriceCharge = sourceFile.priceAllNightsDoppelzimmerClassicSteinleo;
+        console.log("Works" + req.route.path);
     }
 });
 
@@ -44,13 +52,15 @@ router.get('/bookingsuccess', function(req, res, next) {
 });
 
 router.post('/checkout', function(req, res, next){
-console.log(req.app.locals.totalPrice);
+console.log(totalPriceCharge);
+    console.log(req.body.stripeToken);
+    console.log(req.body);
     var stripe = require("stripe")(
         "sk_test_lt0sXEAzs52AA4Nh3PBc3fec"
     );
 
     stripe.charges.create({
-        amount: 100,
+        amount: totalPriceCharge * 100,
         currency: "eur",
         source: req.body.stripeToken, // obtained with Stripe.js
         description: "Test charge"
