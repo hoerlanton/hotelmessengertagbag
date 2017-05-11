@@ -1561,7 +1561,7 @@ function sendGenericMessageOffer1(recipientId) {
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
-    app.locals.ratePlanID = 420596;
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 }
 //"1|2" ----> double checked | not charging price right
 function sendGenericMessageOffer2(recipientId) {
@@ -1637,6 +1637,8 @@ function sendGenericMessageOffer2(recipientId) {
     app.locals.titleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].title;
     app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = messageData.message.attachment.payload.elements[2].subtitle;
 
+
+
 }
 //"1|3" ----> double checked |
 function sendGenericMessageOffer3(recipientId) {
@@ -1696,6 +1698,8 @@ function sendGenericMessageOffer3(recipientId) {
 
     exports.totalPrice = priceAllNightsDoppelzimmerClassicSteinleo + priceAllNightsEinzelzimmerSommerstein;
 
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+
 }
 //"2|3" ----> double checked |
 function sendGenericMessageOffer4(recipientId) {
@@ -1754,6 +1758,8 @@ function sendGenericMessageOffer4(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
+
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
 }
 //"1|4" / "2|4" ----> double checked | not charging price right
 function sendGenericMessageOffer5(recipientId) {
@@ -1872,6 +1878,9 @@ function sendGenericMessageOffer6(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
+
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"2\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
+
 }
 //"2|5" / "3|1" / "3|2" / "3|5" ----> double checked |
 function sendGenericMessageOffer7(recipientId) {
@@ -1929,6 +1938,8 @@ function sendGenericMessageOffer7(recipientId) {
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) * 2) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
+
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"2\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
 }
 //"3|3" ----> double checked |
 function sendGenericMessageOffer8(recipientId) {
@@ -1971,6 +1982,8 @@ function sendGenericMessageOffer8(recipientId) {
 
     exports.totalPrice = (priceAllNightsEinzelzimmerSommerstein);
 
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"3\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
+
 }
 //"4|1" / "4|2" / "4|3" / "4|4" ----> double checked |
 function sendGenericMessageOffer9(recipientId) {
@@ -2012,6 +2025,8 @@ function sendGenericMessageOffer9(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
+
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"4\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 }
 //"5|1" / "5|2" / "5|3" / "5|4" / "5|5" ----> double checked |
 function sendGenericMessageOffer10(recipientId) {
@@ -2053,6 +2068,8 @@ function sendGenericMessageOffer10(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
+
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"5\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 
 }
 //"3|4" ----> double checked |
@@ -2112,6 +2129,8 @@ function sendGenericMessageOffer11(recipientId) {
 
     exports.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 2));
 
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"2\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+
 }
 //"4|5" ----> double checked
 function sendGenericMessageOffer12(recipientId) {
@@ -2170,6 +2189,9 @@ function sendGenericMessageOffer12(recipientId) {
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 3));
+
+    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"3\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+
 }
 
 /*
