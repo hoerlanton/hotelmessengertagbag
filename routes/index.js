@@ -14,6 +14,8 @@ var errMsg = "";
 var successMsg = "";
 var resultTransferData2 = [];
 var totalPriceChargeReservation = 0;
+var totalPriceChargeReservationInt = 0;
+var totalPriceChargeReservationIntSliced = "";
 
 /* Get Form */
 router.get('/checkout', function(req, res, next) {
@@ -93,8 +95,11 @@ function sendHotelResRQ(checkoutDataName, checkoutDataAddress, checkoutDataCardN
 
 function assignTotalPriceReservation(resultTransferData2){
     setTimeout(function () {
-            totalPriceChargeReservation = parseInt(JSON.stringify(resultTransferData2[0].OTA_HotelResRS.HotelReservations[0].HotelReservation[0].RoomStays[0].RoomStay[0].Total[0].$.AmountAfterTax));
+            totalPriceChargeReservation = JSON.stringify(resultTransferData2[0].OTA_HotelResRS.HotelReservations[0].HotelReservation[0].RoomStays[0].RoomStay[0].Total[0].$.AmountAfterTax);
             console.log(totalPriceChargeReservation);
+            totalPriceChargeReservationIntSliced = totalPriceChargeReservation.slice(1, -1);
+            totalPriceChargeReservationInt = parseInt(totalPriceChargeReservationIntSliced);
+            console.log(totalPriceChargeReservationInt);
             console.log("TEST:" + (JSON.stringify(resultTransferData2[0].OTA_HotelResRS.HotelReservations[0].HotelReservation[0].RoomStays[0].RoomStay[0].Total[0].$.AmountAfterTax)));
         }
         , 15000);
@@ -129,12 +134,14 @@ router.post('/checkout', function(req, res, next){
     sendHotelResRQ(checkoutDataName, checkoutDataAddress, checkoutDataCardName, checkoutDataCardNumber, checkoutDataCardExpiryYear, checkoutDataCardCvc, numberOfPersonsReservation, numberOfRoomsReservation, arrivalDateReservation, departureDateReservation, ratePlanIDReservation);
     assignTotalPriceReservation(resultTransferData2);
 
+    setTimeout(function () {
+
     var stripe = require("stripe")(
         "sk_test_lt0sXEAzs52AA4Nh3PBc3fec"
     );
 
     stripe.charges.create({
-        amount: totalPriceChargeReservation * 100,
+        amount: totalPriceChargeReservationInt * 100,
         currency: "eur",
         source: req.body.stripeToken, // obtained with Stripe.js
         description: "Test charge"
@@ -148,6 +155,8 @@ router.post('/checkout', function(req, res, next){
             res.redirect('/bookingsuccess');
         }
     });
+    }, 20000);
 });
+
 
 module.exports = router;
