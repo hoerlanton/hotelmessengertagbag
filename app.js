@@ -271,6 +271,8 @@ function sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departu
     req.end();
 }
 
+
+
 /*
  * Verify that the callback came from Facebook. Using the App Secret from 
  * the App Dashboard, we can verify the signature that is sent with each 
@@ -424,7 +426,7 @@ function resetData(){
 function assigningNumberOfPersonsVar(quickReplyPayload){
     numberOfPersonsSplitted = quickReplyPayload.split(" ");
     numberOfPersons = parseInt(numberOfPersonsSplitted[0]);
-    app.locals.numberOfPersons = numberOfPersons;
+    exports.numberOfPersons = numberOfPersons;
 }
 
 function assigningNumberOfRoomsVar(quickReplyPayload) {
@@ -432,7 +434,7 @@ function assigningNumberOfRoomsVar(quickReplyPayload) {
     console.log("Number of rooms splitted: " + numberOfRoomsSplitted);
     numberOfRooms = parseInt(numberOfRoomsSplitted[0]);
     console.log("Number of rooms INT: " + numberOfRooms);
-    app.locals.numberOfRooms = numberOfRooms;
+    exports.numberOfRooms = numberOfRooms;
 }
 
 function assigningNumberOfMonthsVar(quickReplyPayload) {
@@ -445,7 +447,7 @@ function assigningArrivalDateVar(quickReplyPayload) {
     arrivalDateDay = arrivalDayDateSplitted[1];
     arrivalDateDayCalculations = parseInt(arrivalDayDateSplitted[1]);
     arrivalDate = "2017-" + arrivalDateMonth + "-" + arrivalDateDay;
-    app.locals.arrivalDate = arrivalDate;
+    exports.arrivalDate = arrivalDate;
 }
 
 function createDepartureDateSuggestion(){
@@ -518,7 +520,7 @@ function createDepartureDateSuggestion(){
 function assignDepartureDateVar(quickReplyPayload){
     departureDate = quickReplyPayload;
     console.log("Departure Date: " + departureDate);
-    app.locals.departureDate = departureDate;
+    exports.departureDate = departureDate;
 }
 
 function checkIfDateIsInPast(senderID){
@@ -1561,7 +1563,7 @@ function sendGenericMessageOffer1(recipientId) {
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 }
 //"1|2" ----> double checked | not charging price right
 function sendGenericMessageOffer2(recipientId) {
@@ -1697,8 +1699,7 @@ function sendGenericMessageOffer3(recipientId) {
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = priceAllNightsDoppelzimmerClassicSteinleo + priceAllNightsEinzelzimmerSommerstein;
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
 
 }
 //"2|3" ----> double checked |
@@ -1758,8 +1759,7 @@ function sendGenericMessageOffer4(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
 }
 //"1|4" / "2|4" ----> double checked | not charging price right
 function sendGenericMessageOffer5(recipientId) {
@@ -1878,8 +1878,7 @@ function sendGenericMessageOffer6(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"2\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"2\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 
 }
 //"2|5" / "3|1" / "3|2" / "3|5" ----> double checked |
@@ -1938,8 +1937,7 @@ function sendGenericMessageOffer7(recipientId) {
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) * 2) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"2\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"2\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
 }
 //"3|3" ----> double checked |
 function sendGenericMessageOffer8(recipientId) {
@@ -1981,8 +1979,7 @@ function sendGenericMessageOffer8(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
     exports.totalPrice = (priceAllNightsEinzelzimmerSommerstein);
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"3\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"3\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 
 }
 //"4|1" / "4|2" / "4|3" / "4|4" ----> double checked |
@@ -2025,8 +2022,7 @@ function sendGenericMessageOffer9(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"4\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"4\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 }
 //"5|1" / "5|2" / "5|3" / "5|4" / "5|5" ----> double checked |
 function sendGenericMessageOffer10(recipientId) {
@@ -2068,8 +2064,7 @@ function sendGenericMessageOffer10(recipientId) {
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
 
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"5\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"5\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 
 }
 //"3|4" ----> double checked |
@@ -2128,8 +2123,7 @@ function sendGenericMessageOffer11(recipientId) {
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 2));
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"2\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"2\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
 
 }
 //"4|5" ----> double checked
@@ -2189,8 +2183,7 @@ function sendGenericMessageOffer12(recipientId) {
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms + ((priceAllNightsEinzelzimmerSommerstein / numberOfRooms) * 3));
-
-    app.locals.ratePlanID = "<RoomRate NumberOfUnits=\"3\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"3\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
 
 }
 
