@@ -256,9 +256,11 @@ function sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departu
         console.log(res.statusCode);
         res.on("data", function (data) {
             buffer += data;
+            console.log(buffer);
         });
         res.on("end", function () {
             parseString(buffer, function (err, result) {
+                console.log(result);
                 (JSON.stringify(result));
                 resultTransferData.push(result);
             });
@@ -1419,10 +1421,10 @@ function checkTypeOfOffer(senderID) {
             sendGenericMessageOffer7(senderID);
             break;
         case "3|1":
-            sendGenericMessageOffer7(senderID);
+            sendGenericMessageOffer8(senderID);
             break;
         case "3|2":
-            sendGenericMessageOffer7(senderID);
+            sendGenericMessageOffer8(senderID);
             break;
         case "3|3":
             sendGenericMessageOffer8(senderID);
@@ -1522,7 +1524,7 @@ function sendPaymentButton(recipientId) {
 
     callSendAPI(messageData);
 }
-//"1|1" ----> double checked |
+//"1|1" ----> double checked | WORKS
 function sendGenericMessageOffer1(recipientId) {
     var messageData = {
         recipient: {
@@ -1565,7 +1567,7 @@ function sendGenericMessageOffer1(recipientId) {
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
     exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 }
-//"1|2" ----> double checked | not charging price right
+//"1|2" ----> double checked | DoppelzimmerHolzleo WORKS | DoppelzimmerSuperiorSteinleo WORKS | Classic Steinleo WORKS
 function sendGenericMessageOffer2(recipientId) {
    var messageData = {
         recipient: {
@@ -1642,7 +1644,7 @@ function sendGenericMessageOffer2(recipientId) {
 
 
 }
-//"1|3" ----> double checked |
+//"1|3" ----> double checked | WORKS
 function sendGenericMessageOffer3(recipientId) {
     var messageData = {
         recipient: {
@@ -1699,10 +1701,10 @@ function sendGenericMessageOffer3(recipientId) {
     app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = priceAllNightsDoppelzimmerClassicSteinleo + priceAllNightsEinzelzimmerSommerstein;
-    exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"432202\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
 
 }
-//"2|3" ----> double checked |
+//"2|3" ----> double checked | WORKS
 function sendGenericMessageOffer4(recipientId) {
     var messageData = {
         recipient: {
@@ -1755,13 +1757,13 @@ function sendGenericMessageOffer4(recipientId) {
 
     app.locals.titleSummary = messageData.message.attachment.payload.elements[0].title;
     app.locals.subTitleSummary = messageData.message.attachment.payload.elements[0].subtitle;
-    app.locals.titleSummary = messageData.message.attachment.payload.elements[1].title;
-    app.locals.subTitleSummary = messageData.message.attachment.payload.elements[1].subtitle;
+    app.locals.titleSummary2 = messageData.message.attachment.payload.elements[1].title;
+    app.locals.subTitleSummary2 = messageData.message.attachment.payload.elements[1].subtitle;
 
     exports.totalPrice = (priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
-    exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
+    exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420594\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 }
-//"1|4" / "2|4" ----> double checked | not charging price right
+//"1|4" / "2|4" ----> double checked | WORKS
 function sendGenericMessageOffer5(recipientId) {
     var messageData = {
         recipient: {
@@ -1838,7 +1840,7 @@ function sendGenericMessageOffer5(recipientId) {
 
 
 }
-//"2|1" / "2|2" ----> double checked |
+//"2|1" / "2|2" ----> double checked | WORKS
 function sendGenericMessageOffer6(recipientId) {
     var messageData = {
         recipient: {
@@ -1881,7 +1883,7 @@ function sendGenericMessageOffer6(recipientId) {
     exports.ratePlanID = "<RoomRate NumberOfUnits=\"2\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 
 }
-//"2|5" / "3|1" / "3|2" / "3|5" ----> double checked |
+//"2|5" / "3|5" ----> double checked | WORKS
 function sendGenericMessageOffer7(recipientId) {
     var messageData = {
         recipient: {
@@ -1909,7 +1911,7 @@ function sendGenericMessageOffer7(recipientId) {
                         }]
                     },
                         {
-                            title: String(numberOfRooms - 2) + " Einzelzimmer Sommerstein | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
+                            title: String(numberOfRooms / numberOfRooms ) + " Einzelzimmer Sommerstein | Von " + arrivalDateDayCalculations + "." + arrivalDateMonthCalculations + "." + "2017 bis " + departureDateSplitted[2] + "." + departureDateSplitted[1] + ".2017 | " + stayRange + " Übernachtung/en",
                             subtitle: String((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) * 2) + ",00 EUR + " + String(priceAllNightsEinzelzimmerSommerstein / numberOfRooms) + ",00 EUR = " + String(((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) * 2) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms)) + ",00 EUR | Preis ist kalkuliert für " + numberOfPersons + " Erwachsene",
                             item_url: "https://e42de8e8.ngrok.io/checkout",
                             image_url: "https://gettagbag.com/wp-content/uploads/2017/04/Einzelzimmer-Sommerstein1-1.9.png",
@@ -1939,7 +1941,7 @@ function sendGenericMessageOffer7(recipientId) {
     exports.totalPrice = ((priceAllNightsDoppelzimmerClassicSteinleo / numberOfRooms) * 2) + (priceAllNightsEinzelzimmerSommerstein / numberOfRooms);
     exports.ratePlanID = "<RoomRate NumberOfUnits=\"1\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"2\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
 }
-//"3|3" ----> double checked |
+//"3|3" / "3|2" / "3|1"----> double checked | WORKS
 function sendGenericMessageOffer8(recipientId) {
     var messageData = {
         recipient: {
@@ -1982,7 +1984,7 @@ function sendGenericMessageOffer8(recipientId) {
     exports.ratePlanID = "<RoomRate NumberOfUnits=\"3\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 
 }
-//"4|1" / "4|2" / "4|3" / "4|4" ----> double checked |
+//"4|1" / "4|2" / "4|3" / "4|4" ----> double checked | WORKS
 function sendGenericMessageOffer9(recipientId) {
     var messageData = {
         recipient: {
@@ -2024,7 +2026,7 @@ function sendGenericMessageOffer9(recipientId) {
     exports.totalPrice = priceAllNightsEinzelzimmerSommerstein;
     exports.ratePlanID = "<RoomRate NumberOfUnits=\"4\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 }
-//"5|1" / "5|2" / "5|3" / "5|4" / "5|5" ----> double checked |
+//"5|1" / "5|2" / "5|3" / "5|4" / "5|5" ----> double checked | WORKS
 function sendGenericMessageOffer10(recipientId) {
     var messageData = {
         recipient: {
@@ -2067,7 +2069,7 @@ function sendGenericMessageOffer10(recipientId) {
     exports.ratePlanID = "<RoomRate NumberOfUnits=\"5\" RatePlanID=\"420596\" RatePlanType=\"11\" />";
 
 }
-//"3|4" ----> double checked |
+//"3|4" ----> double checked | WORKS
 function sendGenericMessageOffer11(recipientId) {
     var messageData = {
         recipient: {
@@ -2126,7 +2128,7 @@ function sendGenericMessageOffer11(recipientId) {
     exports.ratePlanID = "<RoomRate NumberOfUnits=\"2\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
 
 }
-//"4|5" ----> double checked
+//"4|5" ----> double checked | WORKS
 function sendGenericMessageOffer12(recipientId) {
     var messageData = {
         recipient: {
