@@ -555,6 +555,13 @@ function checkIfHotelIsClosed(senderID) {
         hotelIsClosed = false;
     }
 }
+
+function exportSenderID(senderID){
+    console.log("Exporting senderID" + senderID);
+    exports.senderID = senderID;
+}
+
+
 /*
  * Message Event
  *
@@ -657,6 +664,7 @@ function receivedMessage(event) {
                         setTimeout(calculatePrice, 30, stayRange, numberOfRooms);
                         setTimeout(createBookingLink, 40, arrivalDateSplitted, departureDateSplitted, numberOfPersons);
                         setTimeout(checkTypeOfOffer, 100, senderID);
+                        exportSenderID(senderID);
                     }
                 }, 15000);
             }
@@ -673,7 +681,6 @@ function receivedMessage(event) {
         // the text we received.
 
         switch (messageText) {
-
 
             case 'Menü':
                 sendMenu(senderID);
@@ -2279,6 +2286,8 @@ function callSendAPI(messageData) {
     }
   });  
 }
+
+exports.callSendAPI = callSendAPI;
 
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 

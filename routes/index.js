@@ -18,6 +18,7 @@ var totalPriceChargeReservationIntSliced = "";
 var count = 0;
 var redirect = false;
 
+
 /* Get Form */
 router.get('/checkout', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
@@ -150,6 +151,7 @@ router.post('/checkout', function(req, res, next){
     var arrivalDateReservation = sourceFile.arrivalDate;
     var departureDateReservation = sourceFile.departureDate;
     var ratePlanIDReservation = sourceFile.ratePlanID;
+    var senderID = sourceFile.senderID;
     //console.log("1:" + checkoutDataName + "2:" + checkoutDataAddress + "3:" + checkoutDataCardName + "4:" + checkoutDataCardNumber +"5:" + checkoutDataCardExpiryYear + "6:" + checkoutDataCardCvc + "7:" + numberOfPersonsReservation + "8:" + numberOfRoomsReservation + "9:" + arrivalDateReservation + "10:" + departureDateReservation + "11:" + ratePlanIDReservation);
     resetData();
     sendHotelResRQ(checkoutDataName, checkoutDataAddress, checkoutDataCardName, checkoutDataCardNumber, checkoutDataCardExpiryYear, checkoutDataCardCvc, numberOfPersonsReservation, numberOfRoomsReservation, arrivalDateReservation, departureDateReservation, ratePlanIDReservation);
@@ -176,11 +178,51 @@ router.post('/checkout', function(req, res, next){
                 if (charge) {
                     successMsg = 'Sie haben erfolgreich die Buchung abgeschlossen';
                     res.redirect('/bookingsuccess');
+                    console.log(sourceFile.senderID);
+                    extractDataForBookingConfirmation();
+                    sendBookingConfirmation(sourceFile.senderID, checkoutDataName, checkoutDataAddress, numberOfPersonsReservation, numberOfRoomsReservation, arrivalDateReservation, departureDateReservation, totalPriceChargeReservationInt);
+                    sendPDF(sourceFile.senderID);
                 }
             });
         }
     }, 20000);
 });
+
+function extractDataForBookingConfirmation(){
+
+}
+
+function sendBookingConfirmation(recipientId, a, b, c, d, e, f, g) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Hier Ihre Buchungsbestätigung: \nName:" + a + "\nAdresse:" + b + "\nPersonenanzahl:" + c + "\nZimmeranzahl:" + d + "\nAnreisedatum:" + e + "\nAbreisedatum:" + f + "\nAbgebuchter Betrag:" + g,
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+};
+    sourceFile.callSendAPI(messageData);
+}
+
+
+function sendPDF(recipientId) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            attachment: {
+                type: "file",
+                payload: {
+                    url: "http://servicio.io/wp-content/uploads/2017/05/Buchungsbestätigung.pdf"
+                }
+            }
+        }
+    };
+    sourceFile.callSendAPI(messageData);
+}
+
 
 
 module.exports = router;

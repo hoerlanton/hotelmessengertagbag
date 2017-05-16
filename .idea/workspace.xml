@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15425070-098f-4404-9951-184bf0c07154" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/error.ejs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/form.ejs" afterPath="$PROJECT_DIR$/views/form.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/success.ejs" afterPath="$PROJECT_DIR$/views/success.ejs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,49 +22,32 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1095">
-              <caret line="101" column="0" lean-forward="true" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+            <state relative-caret-position="727">
+              <caret line="216" column="26" lean-forward="true" selection-start-line="216" selection-start-column="26" selection-end-line="216" selection-end-column="26" />
               <folding>
                 <element signature="e#0#44#0" expanded="false" />
+                <element signature="n#!!block;n#assignTotalPriceReservation#0" expanded="false" />
+                <element signature="n#!!block;n#resetData#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="error.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/error.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="form.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/form.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="53" lean-forward="true" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="2130" column="36" lean-forward="true" selection-start-line="2130" selection-start-column="36" selection-end-line="2130" selection-end-column="36" />
+            <state relative-caret-position="366">
+              <caret line="849" column="0" lean-forward="true" selection-start-line="849" selection-start-column="0" selection-end-line="849" selection-end-column="0" />
               <folding>
                 <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
                 <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
                 <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
                 <element signature="n#!!block;n#calculatePrice#0" expanded="false" />
                 <element signature="n#!!block;n#createBookingLink#0" expanded="false" />
+                <element signature="n#!!block;n#resetData#0" expanded="false" />
                 <element signature="n#!!block;n#assigningNumberOfPersonsVar#0" expanded="false" />
                 <element signature="n#!!block;n#assigningNumberOfRoomsVar#0" expanded="false" />
                 <element signature="n#!!block;n#assigningNumberOfMonthsVar#0" expanded="false" />
@@ -76,11 +56,11 @@
                 <element signature="n#!!block;n#assignDepartureDateVar#0" expanded="false" />
                 <element signature="n#!!block;n#checkIfDateIsInPast#0" expanded="false" />
                 <element signature="n#!!block;n#checkIfHotelIsClosed#0" expanded="false" />
+                <element signature="n#!!block;n#exportSenderID#0" expanded="false" />
                 <element signature="n#!!block;n#receivedDeliveryConfirmation#0" expanded="false" />
                 <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
                 <element signature="n#!!block;n#sendErrorMessageNoRoom#0" expanded="false" />
                 <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
-                <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
                 <element signature="n#!!block;n#sendWelcomeMessage#0" expanded="false" />
                 <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
                 <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
@@ -114,36 +94,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="authorize.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/authorize.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="formDoppelzimmerClassicSteinleo.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/formDoppelzimmerClassicSteinleo.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="16" column="70" lean-forward="false" selection-start-line="16" selection-start-column="70" selection-end-line="16" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="formDoppelzimmerSuperiorSteinleo.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/formDoppelzimmerSuperiorSteinleo.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="16" lean-forward="false" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="success.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/success.ejs">
           <provider selected="true" editor-type-id="text-editor">
@@ -173,6 +123,8 @@
       <find>priceAllNightsDoppelzimmerClassicSteinleo</find>
       <find>var resultTransferData</find>
       <find>resultTransferData</find>
+      <find>callSendAPI</find>
+      <find>sendBoo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -190,8 +142,8 @@
         <option value="$PROJECT_DIR$/views/formDoppelzimmerClassicSteinleo.ejs" />
         <option value="$PROJECT_DIR$/views/formDoppelzimmerSuperiorSteinleo.ejs" />
         <option value="$PROJECT_DIR$/views/error.ejs" />
-        <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/routes/index.js" />
       </list>
     </option>
   </component>
@@ -407,12 +359,12 @@
       <workItem from="1493661609052" duration="780000" />
       <workItem from="1493797904167" duration="58385000" />
       <workItem from="1494082599298" duration="20430000" />
-      <workItem from="1494235354563" duration="121093000" />
+      <workItem from="1494235354563" duration="135521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="201722000" />
+    <option name="totallyTimeSpent" value="216150000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
@@ -425,7 +377,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2009901" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2009901" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -445,7 +397,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="15" />
+      <option name="time" value="17" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -468,6 +420,7 @@
             <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
             <element signature="n#!!block;n#calculatePrice#0" expanded="false" />
             <element signature="n#!!block;n#createBookingLink#0" expanded="false" />
+            <element signature="n#!!block;n#resetData#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfPersonsVar#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfRoomsVar#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfMonthsVar#0" expanded="false" />
@@ -476,11 +429,11 @@
             <element signature="n#!!block;n#assignDepartureDateVar#0" expanded="false" />
             <element signature="n#!!block;n#checkIfDateIsInPast#0" expanded="false" />
             <element signature="n#!!block;n#checkIfHotelIsClosed#0" expanded="false" />
+            <element signature="n#!!block;n#exportSenderID#0" expanded="false" />
             <element signature="n#!!block;n#receivedDeliveryConfirmation#0" expanded="false" />
             <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
             <element signature="n#!!block;n#sendErrorMessageNoRoom#0" expanded="false" />
             <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
-            <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
             <element signature="n#!!block;n#sendWelcomeMessage#0" expanded="false" />
             <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
@@ -519,6 +472,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#44#0" expanded="false" />
+            <element signature="n#!!block;n#assignTotalPriceReservation#0" expanded="false" />
+            <element signature="n#!!block;n#resetData#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -588,6 +543,7 @@
             <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
             <element signature="n#!!block;n#calculatePrice#0" expanded="false" />
             <element signature="n#!!block;n#createBookingLink#0" expanded="false" />
+            <element signature="n#!!block;n#resetData#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfPersonsVar#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfRoomsVar#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfMonthsVar#0" expanded="false" />
@@ -596,11 +552,11 @@
             <element signature="n#!!block;n#assignDepartureDateVar#0" expanded="false" />
             <element signature="n#!!block;n#checkIfDateIsInPast#0" expanded="false" />
             <element signature="n#!!block;n#checkIfHotelIsClosed#0" expanded="false" />
+            <element signature="n#!!block;n#exportSenderID#0" expanded="false" />
             <element signature="n#!!block;n#receivedDeliveryConfirmation#0" expanded="false" />
             <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
             <element signature="n#!!block;n#sendErrorMessageNoRoom#0" expanded="false" />
             <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
-            <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
             <element signature="n#!!block;n#sendWelcomeMessage#0" expanded="false" />
             <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
@@ -740,6 +696,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/error.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/form.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -756,34 +720,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/error.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1095">
-          <caret line="101" column="0" lean-forward="true" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#44#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="2130" column="36" lean-forward="true" selection-start-line="2130" selection-start-column="36" selection-end-line="2130" selection-end-column="36" />
+        <state relative-caret-position="366">
+          <caret line="849" column="0" lean-forward="true" selection-start-line="849" selection-start-column="0" selection-end-line="849" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
             <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
             <element signature="n#!!block;n#calculateStayRange#0" expanded="false" />
             <element signature="n#!!block;n#calculatePrice#0" expanded="false" />
             <element signature="n#!!block;n#createBookingLink#0" expanded="false" />
+            <element signature="n#!!block;n#resetData#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfPersonsVar#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfRoomsVar#0" expanded="false" />
             <element signature="n#!!block;n#assigningNumberOfMonthsVar#0" expanded="false" />
@@ -792,11 +739,11 @@
             <element signature="n#!!block;n#assignDepartureDateVar#0" expanded="false" />
             <element signature="n#!!block;n#checkIfDateIsInPast#0" expanded="false" />
             <element signature="n#!!block;n#checkIfHotelIsClosed#0" expanded="false" />
+            <element signature="n#!!block;n#exportSenderID#0" expanded="false" />
             <element signature="n#!!block;n#receivedDeliveryConfirmation#0" expanded="false" />
             <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
             <element signature="n#!!block;n#sendErrorMessageNoRoom#0" expanded="false" />
             <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
-            <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
             <element signature="n#!!block;n#sendWelcomeMessage#0" expanded="false" />
             <element signature="n#!!block;n#sendStatusFeedbackRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendDepartureDateSuggestion#0" expanded="false" />
@@ -825,6 +772,18 @@
             <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
             <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
             <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="727">
+          <caret line="216" column="26" lean-forward="true" selection-start-line="216" selection-start-column="26" selection-end-line="216" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#44#0" expanded="false" />
+            <element signature="n#!!block;n#assignTotalPriceReservation#0" expanded="false" />
+            <element signature="n#!!block;n#resetData#0" expanded="false" />
           </folding>
         </state>
       </provider>
