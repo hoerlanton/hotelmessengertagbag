@@ -1553,8 +1553,6 @@ function sendGenericMessageOffer1(recipientId) {
                                 type: "web_url",
                                 url: "https://hotelmessengertagbag.herokuapp.com/checkout",
                                 title: "Buchen & Details",
-                                webview_height_ratio: "full",
-                                messenger_extensions: true
                             }, {
                                 type: "postback",
                                 title: "Persönliche Beratung",
