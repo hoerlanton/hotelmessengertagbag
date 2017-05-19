@@ -198,7 +198,7 @@ function sendBookingConfirmation(recipientId, a, b, c, d, e, f, g) {
             id: recipientId
         },
         message: {
-            text: "Sehr geehrte/r Frau Herr " + a + "\n Vielen Dank für Ihre Buchung im Hotel Salzburger Hof Leogang. Hiermit senden wir Ihnen die Buchungsbestätigung und freuen und bis bald im Hotel Salzburger Hof Leogang. \n \n Mit Freundlichen Grüßen \n Familie Hörl samt Team \n BeispielBuchungsbestätigung: \n Adresse: " + b + "\nPersonenanzahl: " + c + "\nZimmeranzahl: " + d + "\nAnreisedatum: " + e + "\nAbreisedatum: " + f + "\nAbgebuchter Betrag: " + g",00 EUR",
+            text: "Sehr geehrte/r Frau Herr " + a + "\n Vielen Dank für Ihre Buchung im Hotel Salzburger Hof Leogang. Hiermit senden wir Ihnen die Buchungsbestätigung und freuen und bis bald im Hotel Salzburger Hof Leogang. \n \n Mit Freundlichen Grüßen \n Familie Hörl samt Team \n BeispielBuchungsbestätigung: \n Adresse: " + b + "\nPersonenanzahl: " + c + "\nZimmeranzahl: " + d + "\nAnreisedatum: " + e + "\nAbreisedatum: " + f + "\nAbgebuchter Betrag: " + g + ",00 EUR",
             metadata: "DEVELOPER_DEFINED_METADATA"
         }
 };
