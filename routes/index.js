@@ -176,7 +176,7 @@ router.post('/checkout', function(req, res, next){
                     return res.redirect('/checkout');
                 }
                 if (charge) {
-                    successMsg = 'Sie haben erfolgreich die Buchung abgeschlossen';
+                    successMsg = 'Sie haben die Buchung erfolgreich abgeschlossen';
                     res.redirect('/bookingsuccess');
                     console.log(sourceFile.senderID);
                     extractDataForBookingConfirmation();
