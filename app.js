@@ -22,7 +22,7 @@ const
   parseString = require('xml2js').parseString;
 
 //var localStorage = require('node-localstorage');
-var flash = require('connect-flash');
+//var flash = require('connect-flash');
 var routes = require('./routes/index');
 var app = express();
 
@@ -33,7 +33,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 app.use('/', routes);
-app.use(flash());
+//app.use(flash());
 
 
 
@@ -102,8 +102,6 @@ app.locals.subTitleSummaryDoppelzimmerSuperiorSteinleo = "";
 app.locals.titleSummaryDoppelzimmerClassicSteinleo = "";
 app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = "";
 app.locals.totalPrice = 0;
-
-
 
 /*
  * Be sure to setup your config values before running this code. You can 
