@@ -316,13 +316,6 @@ function receivedAuthentication(event) {
   var recipientID = event.recipient.id;
   var timeOfAuth = event.timestamp;
 
-    var currentdate = new Date();
-    var datetime = "Last Sync: " + currentdate.getDate() + "/"
-        + (currentdate.getMonth()+1)  + "/"
-        + currentdate.getFullYear() + " @ "
-        + currentdate.getHours() + ":"
-        + currentdate.getMinutes() + ":"
-        + currentdate.getSeconds();
 
   // The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
   // The developer can set this to an arbitrary value to associate the 
@@ -339,14 +332,14 @@ function receivedAuthentication(event) {
   // to let them know it was successful.
   sendTextMessage(senderID, "Authentication successful");
 
-
+/*
     setTimeout(function () {
         sendTextMessage(senderID, "Hellooo again! :D");
         setTimeout(sendTextMessage, 10000, senderID, "Hellooo again1234! :D");
         setTimeout(sendTextMessage, 20000, senderID, "Hellooo again6798! :D");
     }, 10000);
 
-
+*/
 }
 
 //Stay range is the difference between arrivalday and departureday

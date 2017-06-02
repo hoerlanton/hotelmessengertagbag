@@ -24,6 +24,10 @@ router.get('/checkout', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
 });
 
+router.get('/wlanlandingpage', function(req, res, next) {
+    res.render('wlanlandingpage', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+});
+
 router.get('/DoppelzimmerDeluxeHolzleo', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
     if (req.route.path === "/DoppelzimmerDeluxeHolzleo") {
