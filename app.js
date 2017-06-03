@@ -103,6 +103,7 @@ app.locals.titleSummaryDoppelzimmerClassicSteinleo = "";
 app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = "";
 app.locals.totalPrice = 0;
 
+
 /*
  * Be sure to setup your config values before running this code. You can 
  * set them using environment variables or modifying the config file in /config.
@@ -316,7 +317,6 @@ function receivedAuthentication(event) {
   var recipientID = event.recipient.id;
   var timeOfAuth = event.timestamp;
 
-
   // The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
   // The developer can set this to an arbitrary value to associate the 
   // authentication callback with the 'Send to Messenger' click event. This is
@@ -330,7 +330,7 @@ function receivedAuthentication(event) {
 
   // When an authentication is received, we'll send a message back to the sender
   // to let them know it was successful.
-  sendTextMessage(senderID, "Authentication successful");
+  sendTextMessage(senderID, "Sie haben sich erfolgreich angemeldet. Sie erhalten nun Neuigkeiten via Facebook Messenger von Ihrem Salzburger Hof Leogang team. Viel Spaß!");
 
 /*
     setTimeout(function () {
@@ -338,8 +338,44 @@ function receivedAuthentication(event) {
         setTimeout(sendTextMessage, 10000, senderID, "Hellooo again1234! :D");
         setTimeout(sendTextMessage, 20000, senderID, "Hellooo again6798! :D");
     }, 10000);
-
 */
+    app.locals.profileInfo = "";
+    var buffer = "";
+    var a = "";
+    var optionsget = {
+        host: 'graph.facebook.com',
+        port: 443,
+        path: '/v2.6/998864263528551?fields=first_name,last_name,is_payment_enabled,locale,timezone,gender&access_token=EAAUv40NW3zMBAAdTfzQAegAv1KNh6Nxcmerwtn7dpjzc2UHspQbs4tOGpVrqcZC2rdgSoDSZANEw7Qbg7CVH60GUAigsbaVO83iBOGY2KYoOLEpe1mB8GzECPz2cLZBNTL0lqKMcPps2DD5q21hXGXPpnu149qXUoh1ehHfxAZDZD',
+        method: 'GET'
+    };
+
+    console.info('Options prepared:');
+    console.info(optionsget);
+    console.info('Do the GET call');
+
+// do the GET request
+    var reqGet = https.request(optionsget, function(res) {
+        console.log("statusCode: ", res.statusCode);
+        // uncomment it for header details
+//  console.log("headers: ", res.headers);
+
+        res.on('data', function(d) {
+            console.info('GET result:\n');
+            process.stdout.write(d);
+            buffer += d;
+            console.log(buffer);
+            a = JSON.parse(buffer);
+            console.log(a);
+            console.log(a.first_name);
+            app.locals.profileInfo = a.first_name + a.last_name + a.gender;
+            });
+    });
+
+    reqGet.end();
+    reqGet.on('error', function(e) {
+        console.error(e);
+    });
+
 }
 
 //Stay range is the difference between arrivalday and departureday
