@@ -30,7 +30,14 @@ router.get('/wlanlandingpage', function(req, res, next) {
 
 router.get('/dashboard', function(req, res, next) {
     res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    //sourceFile.getAnalytics();
 });
+
+router.post('/dashboard', function(req, res, next){
+    sendPDF(sourceFile.senderID);
+    return res.redirect('/dashboard');
+});
+
 
 router.get('/DoppelzimmerDeluxeHolzleo', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
@@ -187,7 +194,6 @@ router.post('/checkout', function(req, res, next){
                     successMsg = 'Sie haben die Buchung erfolgreich abgeschlossen';
                     res.redirect('/bookingsuccess');
                     console.log(sourceFile.senderID);
-                    extractDataForBookingConfirmation();
                     sendBookingConfirmation(sourceFile.senderID, checkoutDataName, checkoutDataAddress, numberOfPersonsReservation, numberOfRoomsReservation, arrivalDateReservation, departureDateReservation, totalPriceChargeReservationInt);
                     sendPDF(sourceFile.senderID);
                 }
@@ -195,10 +201,6 @@ router.post('/checkout', function(req, res, next){
         }
     }, 20000);
 });
-
-function extractDataForBookingConfirmation(){
-
-}
 
 function sendBookingConfirmation(recipientId, a, b, c, d, e, f, g) {
     var messageData = {
@@ -230,7 +232,5 @@ function sendPDF(recipientId) {
     };
     sourceFile.callSendAPI(messageData);
 }
-
-
 
 module.exports = router;

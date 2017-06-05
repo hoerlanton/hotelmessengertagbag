@@ -379,6 +379,44 @@ function receivedAuthentication(event) {
     });
 }
 
+function getAnalytics(){
+    var buffer = "";
+    var a = "";
+    var optionsget = {
+        host: 'graph.facebook.com',
+        port: 443,
+        path: '/v2.8/me/insights/page_messages_active_threads_unique&access_token=EAAUv40NW3zMBAIpTPoI73Q8mvPtZAZBQEi3usOTD6pZAZCSNZApFVictpz74mhIQOOyZAHM2UrNKbc8hk8NhGaSnEJYrQCKwMd7ZAIkoWZCsimnFUAamsQiNOP6dC2PhLvOsOPatn0fWvxXpCPltvU8INNj3vfBBjNG7S1VlPFTDwgZDZD',
+        method: 'GET'
+    };
+
+    console.info('Options prepared:');
+    console.info(optionsget);
+    console.info('Do the GET call');
+
+// do the GET request
+    var reqGet = https.request(optionsget, function(res) {
+        console.log("statusCode: ", res.statusCode);
+        // uncomment it for header details
+        //  console.log("headers: ", res.headers);
+
+        res.on('data', function(d) {
+            console.info('GET result:\n');
+            process.stdout.write(d);
+            buffer += d;
+            console.log(buffer);
+            a = JSON.parse(buffer);
+            console.log(a);
+        });
+    });
+
+    reqGet.end();
+    reqGet.on('error', function(e) {
+        console.error(e);
+    });
+}
+
+exports.getAnalytics = getAnalytics;
+
 //Stay range is the difference between arrivalday and departureday
 function calculateStayRange(arrivalDate, departureDate) {
     arrivalDateSplitted = arrivalDate.split("-");
