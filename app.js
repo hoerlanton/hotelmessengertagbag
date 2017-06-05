@@ -102,7 +102,8 @@ app.locals.subTitleSummaryDoppelzimmerSuperiorSteinleo = "";
 app.locals.titleSummaryDoppelzimmerClassicSteinleo = "";
 app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = "";
 app.locals.totalPrice = 0;
-
+app.locals.profileInfo = "";
+app.locals.profilepic = "";
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -339,13 +340,13 @@ function receivedAuthentication(event) {
         setTimeout(sendTextMessage, 20000, senderID, "Hellooo again6798! :D");
     }, 10000);
 */
-    app.locals.profileInfo = "";
+
     var buffer = "";
     var a = "";
     var optionsget = {
         host: 'graph.facebook.com',
         port: 443,
-        path: '/v2.6/998864263528551?fields=first_name,last_name,is_payment_enabled,locale,timezone,gender&access_token=EAAUv40NW3zMBAAdTfzQAegAv1KNh6Nxcmerwtn7dpjzc2UHspQbs4tOGpVrqcZC2rdgSoDSZANEw7Qbg7CVH60GUAigsbaVO83iBOGY2KYoOLEpe1mB8GzECPz2cLZBNTL0lqKMcPps2DD5q21hXGXPpnu149qXUoh1ehHfxAZDZD',
+        path: '/v2.6/' + senderID + '?fields=first_name,last_name,profile_pic,is_payment_enabled,locale,timezone,gender&access_token=EAAUv40NW3zMBAAdTfzQAegAv1KNh6Nxcmerwtn7dpjzc2UHspQbs4tOGpVrqcZC2rdgSoDSZANEw7Qbg7CVH60GUAigsbaVO83iBOGY2KYoOLEpe1mB8GzECPz2cLZBNTL0lqKMcPps2DD5q21hXGXPpnu149qXUoh1ehHfxAZDZD',
         method: 'GET'
     };
 
@@ -357,7 +358,7 @@ function receivedAuthentication(event) {
     var reqGet = https.request(optionsget, function(res) {
         console.log("statusCode: ", res.statusCode);
         // uncomment it for header details
-//  console.log("headers: ", res.headers);
+        //  console.log("headers: ", res.headers);
 
         res.on('data', function(d) {
             console.info('GET result:\n');
@@ -367,7 +368,8 @@ function receivedAuthentication(event) {
             a = JSON.parse(buffer);
             console.log(a);
             console.log(a.first_name);
-            app.locals.profileInfo = a.first_name + a.last_name + a.gender;
+            app.locals.profileInfo += a.first_name + a.last_name + a.gender + a.locale;
+            app.locals.profilepic = a.profile_pic;
             });
     });
 
@@ -375,7 +377,6 @@ function receivedAuthentication(event) {
     reqGet.on('error', function(e) {
         console.error(e);
     });
-
 }
 
 //Stay range is the difference between arrivalday and departureday
