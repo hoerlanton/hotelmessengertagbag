@@ -35,12 +35,14 @@ router.get('/dashboard', function(req, res, next) {
 
 router.post('/dashboard', function(req, res, next){
     var broadcast = JSON.stringify(req.body);
+    var broadcastDataSplitted = broadcast.split(":");
+    var broadcastText = broadcastDataSplitted[1].slice(1, -2);
     console.log(sourceFile.senderID);
     console.log(sourceFile.senderIDTransfer);
     console.log(broadcast);
     for (var i = 0; i < sourceFile.senderIDTransfer.length; i++) {
         console.log(sourceFile.senderIDTransfer[i]);
-        sendBroadcast(sourceFile.senderIDTransfer[i], broadcast);
+        sendBroadcast(sourceFile.senderIDTransfer[i], broadcastText);
     }
         return res.redirect('/dashboard');
 });
@@ -240,13 +242,13 @@ function sendPDF(recipientId) {
     sourceFile.callSendAPI(messageData);
 }
 
-function sendBroadcast(recipientId, broadcast) {
+function sendBroadcast(recipientId, broadcastText) {
     var messageData = {
         recipient: {
             id: recipientId
         },
         message: {
-            text: broadcast,
+            text: broadcastText,
             metadata: "DEVELOPER_DEFINED_METADATA"
         }
     };

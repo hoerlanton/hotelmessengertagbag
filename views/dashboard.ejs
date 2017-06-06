@@ -8,38 +8,56 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>
-    Users signed up
-</h1>
 
-<div class="row">
-    <% for (var i = 0; i < profilePic.length; i++) { %>
-    <div class="col-md-6">  <img src="<%= profilePic[i] %>" style=" width: 75px; height: 75px; position: relative; overflow: hidden; border-radius: 50%;  "></div>
-    <% } %>
-    <% for (var k = 0; k < profileInfo.length; k++) { %>
-    <div class="col-md-6"><%= profileInfo[k] %></div>
-    <% } %>
-</div>
-
-<div>
-
-
-    <BR/>
-
-</div>
-<form action="/dashboard" method="POST" id="postMessage">
-    <div class="col-xs-12">
-        <div class="form-group">
-            <label for="Nachricht senden">Nachricht senden</label>
-            <input type="text" name="nachrichtSenden" id="nachrichtSenden" class="form-control" required>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://servicio.io">
+                <img alt="Brand" src="http://servicio.io/wp-content/uploads/2016/05/servicio-logo-hellblau-auto-ohne-hintergrund-1.png" style="height: 25px; width: auto; margin-top: 0px">
+            </a>
         </div>
     </div>
+</nav>
 
-<div class="col-xs-12">
-    <div class="form-group">
-        <button style=" float: right" type="submit" class="btn btn-send">JETZT SENDEN</button> <!--Title for button is same as that of the page-->
+<div class="row">
+    <div class="col-md-4" style="background-color: #f3efe4; padding-top: 20px; "><h3><center>Angemeldete Gäste</center></h3>
+        <div class="row" style="padding-top: 20px">
+            <div class="col-md-6" style="float: left">
+            <% for (var i = 0; i < profilePic.length; i++) { %>
+                <img src="<%= profilePic[i] %>" style=" width: 60px; height: 60px; position: relative; border-radius: 50%; margin: 5px; margin-left: 70%">
+                <br>
+                <%  } %>
+            </div>
+            <div class="col-md-6" style="float: right">
+                <% for (var k = 0; k < profileInfo.length; k++) { %>
+                <%= profileInfo[k] %>
+                <br>
+                <br>
+                <br>
+                <%  } %>
+            </div>
+            </div>
+        </div>
+
+    <div class="col-md-4" style="background-color: #0a7a74; padding-top: 20px"><h3 style="color: white"><center>Nachricht an Gäste senden</center></center></h3>
+        <div class="row" style="padding-top: 20px">
+            <form action="/dashboard" method="POST" id="postMessage">
+                <div class="col-xs-12" style="padding: 40px">
+                    <div class="form-group">
+                        <input type="text"  name="nachrichtSenden" id="nachrichtSenden" class="form-control" required>
+                    </div>
+                </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <button style=" background-color: white; color: #0a7a74 " type="submit" class="btn btn-send">JETZT SENDEN</button> <!--Title for button is same as that of the page-->
+                        </div>
+                    </div>
+            </form>
+        </div>
     </div>
+    <div class="col-md-4"></div>
 </div>
+
 
 
 <script type="text/javascript" src="javascripts/dashboard.js"></script>
