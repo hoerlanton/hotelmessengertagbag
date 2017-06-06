@@ -34,8 +34,15 @@ router.get('/dashboard', function(req, res, next) {
 });
 
 router.post('/dashboard', function(req, res, next){
-    sendPDF(sourceFile.senderID);
-    return res.redirect('/dashboard');
+    var broadcast = JSON.stringify(req.body);
+    console.log(sourceFile.senderID);
+    console.log(sourceFile.senderIDTransfer);
+    console.log(broadcast);
+    for (var i = 0; i < sourceFile.senderIDTransfer.length; i++) {
+        console.log(sourceFile.senderIDTransfer[i]);
+        sendBroadcast(sourceFile.senderIDTransfer[i], broadcast);
+    }
+        return res.redirect('/dashboard');
 });
 
 
@@ -232,5 +239,19 @@ function sendPDF(recipientId) {
     };
     sourceFile.callSendAPI(messageData);
 }
+
+function sendBroadcast(recipientId, broadcast) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: broadcast,
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+    sourceFile.callSendAPI(messageData);
+}
+
 
 module.exports = router;

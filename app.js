@@ -10,7 +10,7 @@
 /* jshint node: true, devel: true */
 'use strict';
  
-const 
+const
   bodyParser = require('body-parser'),
   config = require('config'),
   crypto = require('crypto'),
@@ -104,6 +104,10 @@ app.locals.subTitleSummaryDoppelzimmerClassicSteinleo = "";
 app.locals.totalPrice = 0;
 app.locals.profileInfo = "";
 app.locals.profilepic = "";
+var senderIDTransfer = [];
+var profileInfo = [];
+var profilePic = [];
+
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -313,6 +317,8 @@ function verifyRequestSignature(req, res, buf) {
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/authentication
  *
  */
+
+//Send t
 function receivedAuthentication(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -332,7 +338,7 @@ function receivedAuthentication(event) {
   // When an authentication is received, we'll send a message back to the sender
   // to let them know it was successful.
   sendTextMessage(senderID, "Sie haben sich erfolgreich angemeldet. Sie erhalten nun Neuigkeiten via Facebook Messenger von Ihrem Salzburger Hof Leogang team. Viel Spaß!");
-
+  exportSenderID(senderID);
 /*
     setTimeout(function () {
         sendTextMessage(senderID, "Hellooo again! :D");
@@ -368,8 +374,11 @@ function receivedAuthentication(event) {
             a = JSON.parse(buffer);
             console.log(a);
             console.log(a.first_name);
-            app.locals.profileInfo += a.first_name + a.last_name + a.gender + a.locale;
-            app.locals.profilepic = a.profile_pic;
+            profileInfo.push(a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale);
+            app.locals.profileInfo = profileInfo;
+            profilePic.push(a.profile_pic);
+            app.locals.profilePic = profilePic;
+
             });
     });
 
@@ -638,9 +647,12 @@ function checkIfHotelIsClosed(senderID) {
         hotelIsClosed = false;
     }
 }
-
+//Export senderID (Exported to index.js / exportSenderID function used on lin 750 & 335
 function exportSenderID(senderID){
-    console.log("Exporting senderID" + senderID);
+    console.log("Exporting senderID " + senderID);
+    senderIDTransfer.push(senderID);
+    console.log(senderIDTransfer);
+    exports.senderIDTransfer = senderIDTransfer;
     exports.senderID = senderID;
 }
 
