@@ -375,8 +375,10 @@ function receivedAuthentication(event) {
             console.log(a);
             console.log(a.first_name);
             profileInfo.push(a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale);
+            console.log(profileInfo);
             app.locals.profileInfo = profileInfo;
             profilePic.push(a.profile_pic);
+            console.log(profilePic);
             app.locals.profilePic = profilePic;
 
             });

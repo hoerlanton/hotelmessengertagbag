@@ -20,6 +20,11 @@ var redirect = false;
 
 
 /* Get Form */
+router.get('/facebookLogin', function(req, res, next) {
+    res.render('facebookLogin', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    console.log("facebookLogin ejs rendered")
+});
+
 router.get('/checkout', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
 });
@@ -40,9 +45,16 @@ router.post('/dashboard', function(req, res, next){
     console.log(sourceFile.senderID);
     console.log(sourceFile.senderIDTransfer);
     console.log(broadcast);
-    for (var i = 0; i < sourceFile.senderIDTransfer.length; i++) {
-        console.log(sourceFile.senderIDTransfer[i]);
-        sendBroadcast(sourceFile.senderIDTransfer[i], broadcastText);
+    if (sourceFile.senderIDTransfer === undefined ) {
+        res.redirect('/dashboard');
+        errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
+    } else {
+        for (var i = 0; i < sourceFile.senderIDTransfer.length; i++) {
+            console.log(sourceFile.senderIDTransfer[i]);
+                sendBroadcast(sourceFile.senderIDTransfer[i], broadcastText);
+        }
+        errMsg = "";
+
     }
         return res.redirect('/dashboard');
 });
@@ -252,7 +264,10 @@ function sendBroadcast(recipientId, broadcastText) {
             metadata: "DEVELOPER_DEFINED_METADATA"
         }
     };
+
     sourceFile.callSendAPI(messageData);
+
+
 }
 
 
