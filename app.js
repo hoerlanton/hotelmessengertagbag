@@ -374,10 +374,12 @@ function receivedAuthentication(event) {
             a = JSON.parse(buffer);
             console.log(a);
             console.log(a.first_name);
-            profileInfo.push(a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale);
+            profileInfo.push(a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale + " " + senderID);
             console.log(profileInfo);
+            exports.profileInfo = profileInfo;
             app.locals.profileInfo = profileInfo;
             profilePic.push(a.profile_pic);
+            exports.profilePic = profilePic;
             console.log(profilePic);
             app.locals.profilePic = profilePic;
 
@@ -2376,6 +2378,7 @@ function sendAccountLinking(recipientId) {
  *
  */
 function callSendAPI(messageData) {
+    console.log("Recipient ID: top " + messageData.recipient.id);
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: PAGE_ACCESS_TOKEN },
@@ -2383,19 +2386,28 @@ function callSendAPI(messageData) {
     json: messageData
 
   }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id;
+        if (!error && response.statusCode == 200) {
+            var recipientId = body.recipient_id;
+            console.log("Recipient ID:" + recipientId);
       var messageId = body.message_id;
 
       if (messageId) {
         console.log("Successfully sent message with id %s to recipient %s", 
           messageId, recipientId);
+          //senderIDTransfer.splice((0), senderIDTransfer.length);
+          //senderIDTransfer.push(recipientId);
+          console.log("Console log in callSendAPI on line 2397 " + senderIDTransfer);
       } else {
       console.log("Successfully called Send API for recipient %s", 
         recipientId);
       }
     } else {
-      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error, messageData.recipient.id);
+      console.log(messageData.recipient.id);
+      var index = senderIDTransfer.indexOf(messageData.recipient.id);
+      console.log(index);
+        senderIDTransfer.splice(index, 1);
+        console.log(senderIDTransfer);
     }
   });  
 }

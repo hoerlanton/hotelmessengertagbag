@@ -34,7 +34,23 @@ router.get('/wlanlandingpage', function(req, res, next) {
 });
 
 router.get('/dashboard', function(req, res, next) {
-    res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    console.log("SenderID Array: " + sourceFile.senderIDTransfer);
+    if (sourceFile.profileInfo === undefined) {
+        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    } else {
+        for (var i = 0; i < sourceFile.profileInfo.length; i++) {
+            for (var j = 0; j < sourceFile.senderIDTransfer.length; j++) {
+                console.log("->>> else klausel " + " numberofloop: " + i + " profilInfo: " + sourceFile.profileInfo[i] + " senderIDTransfer: " + sourceFile.senderIDTransfer[j]);
+                console.log("->>> if check -> SenderID befindet sich nicht in profilInfo: " + (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0));
+                if (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0) {
+                    console.log("->>> if klausel runs === true | Sender ID befindet sich nicht in profilInfo");
+                    sourceFile.profileInfo.splice((i), i + 1);
+                }
+                console.log("->>> nach splice profilInfo = " + sourceFile.profileInfo +  "& senderID" + sourceFile.senderIDTransfer)
+            }
+        }
+        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    }
     //sourceFile.getAnalytics();
 });
 
@@ -46,7 +62,6 @@ router.post('/dashboard', function(req, res, next){
     console.log(sourceFile.senderIDTransfer);
     console.log(broadcast);
     if (sourceFile.senderIDTransfer === undefined ) {
-        res.redirect('/dashboard');
         errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
     } else {
         for (var i = 0; i < sourceFile.senderIDTransfer.length; i++) {
