@@ -17,7 +17,7 @@ var totalPriceChargeReservationInt = 0;
 var totalPriceChargeReservationIntSliced = "";
 var count = 0;
 var redirect = false;
-
+var k = 0;
 
 /* Get Form */
 router.get('/facebookLogin', function(req, res, next) {
@@ -42,12 +42,18 @@ router.get('/dashboard', function(req, res, next) {
             for (var j = 0; j < sourceFile.senderIDTransfer.length; j++) {
                 console.log("->>> else klausel " + " numberofloop: " + i + " profilInfo: " + sourceFile.profileInfo[i] + " senderIDTransfer: " + sourceFile.senderIDTransfer[j]);
                 console.log("->>> if check -> SenderID befindet sich nicht in profilInfo: " + (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0));
-                if (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0) {
+                if (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0 ) {
                     console.log("->>> if klausel runs === true | Sender ID befindet sich nicht in profilInfo");
-                    sourceFile.profileInfo.splice((i), i + 1);
+                    k++;
+                    console.log(k);
+                    if(k === sourceFile.senderIDTransfer.length) {
+                        sourceFile.profileInfo.splice((i), i + 1);
+                        sourceFile.profilePic.splice((i), i + 1);
+                    }
                 }
                 console.log("->>> nach splice profilInfo = " + sourceFile.profileInfo +  "& senderID" + sourceFile.senderIDTransfer)
             }
+            k = 0;
         }
         res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
     }
