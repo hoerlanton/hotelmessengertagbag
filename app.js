@@ -107,6 +107,8 @@ app.locals.profilePic = "";
 var senderIDTransfer = [];
 var profileInfo = [];
 var profilePic = [];
+exports.profileInfo = [];
+exports.profilePic = [];
 
 
 /*
@@ -374,14 +376,13 @@ function receivedAuthentication(event) {
             a = JSON.parse(buffer);
             console.log(a);
             console.log(a.first_name);
-            profileInfo.push(a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale + " " + senderID);
-            console.log(profileInfo);
-            exports.profileInfo = profileInfo;
-            app.locals.profileInfo = profileInfo;
-            profilePic.push(a.profile_pic);
-            exports.profilePic = profilePic;
-            console.log(profilePic);
-            app.locals.profilePic = profilePic;
+
+            exports.profileInfo.push( a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale + " " + senderID);
+            console.log("(app.js line 382) - profileinfo array:" + profileInfo);
+            //app.locals.profileInfo = profileInfo;
+            exports.profilePic.push(a.profile_pic);
+            console.log("(app.js line 387) - profilepic array:" + profilePic);
+            //app.locals.profilePic = profilePic;
 
             });
     });

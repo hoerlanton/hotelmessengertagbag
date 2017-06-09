@@ -35,8 +35,14 @@ router.get('/wlanlandingpage', function(req, res, next) {
 
 router.get('/dashboard', function(req, res, next) {
     console.log("SenderID Array: " + sourceFile.senderIDTransfer);
-    if (sourceFile.profileInfo === undefined) {
-        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    console.log("index.js line 38 | profileInfo " + sourceFile.profileInfo + " profilePic " + sourceFile.profilePic);
+    if (sourceFile.profileInfo === 'undefined' ||  sourceFile.senderIDTransfer === 'undefined' || sourceFile.profileInfo === 0 || sourceFile.senderIDTransfer === 0 || typeof sourceFile.senderIDTransfer === "undefined" || typeof sourceFile.profileInfo === "undefined" || sourceFile.profileInfo.length === 0 || sourceFile.senderIDTransfer.length === 0 ) {
+        console.log("else is not runned");
+        sourceFile.profileInfo = [];
+        sourceFile.profilePic = [];
+        console.log("SenderID Array: " + sourceFile.senderIDTransfer);
+        console.log("index.js line 38 | profileInfo " + sourceFile.profileInfo + " profilePic " + sourceFile.profilePic);
+        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, profileInfo: sourceFile.profileInfo, profilePic: sourceFile.profilePic});
     } else {
         for (var i = 0; i < sourceFile.profileInfo.length; i++) {
             for (var j = 0; j < sourceFile.senderIDTransfer.length; j++) {
@@ -55,7 +61,8 @@ router.get('/dashboard', function(req, res, next) {
             }
             k = 0;
         }
-        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+        console.log("no else or if");
+        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, profileInfo: sourceFile.profileInfo, profilePic: sourceFile.profilePic});
     }
     //sourceFile.getAnalytics();
 });
@@ -287,8 +294,6 @@ function sendBroadcast(recipientId, broadcastText) {
     };
 
     sourceFile.callSendAPI(messageData);
-
-
 }
 
 
