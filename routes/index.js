@@ -8,6 +8,8 @@ var request = require('request');
 var http = require('http');
 var parseString = require('xml2js').parseString;
 var sourceFile = require('../app');
+var mongojs = require('mongojs');
+var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
 
 var errMsg = "";
 var successMsg = "";
@@ -17,7 +19,8 @@ var totalPriceChargeReservationInt = 0;
 var totalPriceChargeReservationIntSliced = "";
 var count = 0;
 var redirect = false;
-var k = 0;
+//var k = 0;
+var guestsDb = {};
 
 /* Get Form */
 router.get('/facebookLogin', function(req, res, next) {
@@ -34,56 +37,77 @@ router.get('/wlanlandingpage', function(req, res, next) {
 });
 
 router.get('/dashboard', function(req, res, next) {
-    console.log("SenderID Array: " + sourceFile.senderIDTransfer);
-    console.log("index.js line 38 | profileInfo " + sourceFile.profileInfo + " profilePic " + sourceFile.profilePic);
+    //Get guests from Mongo DB
+    db.gaeste.find(function(err, gaeste){
+        if (err){
+            res.send(err);
+        }
+        guestsDb = gaeste;
+        //console.log(guestsDb);
+    });
+    res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, profileInfo: sourceFile.profileInfo, profilePic: sourceFile.profilePic, guests: guestsDb});
+
+    /*
+    //console.log("SenderID Array: " + sourceFile.senderIDTransfer);
+    //console.log("index.js line 38 | profileInfo " + sourceFile.profileInfo + " profilePic " + sourceFile.profilePic);
     if (sourceFile.profileInfo === 'undefined' ||  sourceFile.senderIDTransfer === 'undefined' || sourceFile.profileInfo === 0 || sourceFile.senderIDTransfer === 0 || typeof sourceFile.senderIDTransfer === "undefined" || typeof sourceFile.profileInfo === "undefined" || sourceFile.profileInfo.length === 0 || sourceFile.senderIDTransfer.length === 0 ) {
-        console.log("else is not runned");
+        //console.log("else is not runned");
         sourceFile.profileInfo = [];
         sourceFile.profilePic = [];
-        console.log("SenderID Array: " + sourceFile.senderIDTransfer);
-        console.log("index.js line 38 | profileInfo " + sourceFile.profileInfo + " profilePic " + sourceFile.profilePic);
-        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, profileInfo: sourceFile.profileInfo, profilePic: sourceFile.profilePic});
+        //console.log("SenderID Array: " + sourceFile.senderIDTransfer);
+        //console.log("index.js line 38 | profileInfo " + sourceFile.profileInfo + " profilePic " + sourceFile.profilePic);
+        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, profileInfo: sourceFile.profileInfo, profilePic: sourceFile.profilePic, guests: guestsDb});
     } else {
         for (var i = 0; i < sourceFile.profileInfo.length; i++) {
             for (var j = 0; j < sourceFile.senderIDTransfer.length; j++) {
-                console.log("->>> else klausel " + " numberofloop: " + i + " profilInfo: " + sourceFile.profileInfo[i] + " senderIDTransfer: " + sourceFile.senderIDTransfer[j]);
-                console.log("->>> if check -> SenderID befindet sich nicht in profilInfo: " + (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0));
+                //console.log("->>> else klausel " + " numberofloop: " + i + " profilInfo: " + sourceFile.profileInfo[i] + " senderIDTransfer: " + sourceFile.senderIDTransfer[j]);
+                //console.log("->>> if check -> SenderID befindet sich nicht in profilInfo: " + (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0));
                 if (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0 ) {
-                    console.log("->>> if klausel runs === true | Sender ID befindet sich nicht in profilInfo");
+                    //console.log("->>> if klausel runs === true | Sender ID befindet sich nicht in profilInfo");
                     k++;
-                    console.log(k);
+                    //console.log(k);
                     if(k === sourceFile.senderIDTransfer.length) {
                         sourceFile.profileInfo.splice((i), i + 1);
                         sourceFile.profilePic.splice((i), i + 1);
                     }
                 }
-                console.log("->>> nach splice profilInfo = " + sourceFile.profileInfo +  "& senderID" + sourceFile.senderIDTransfer)
+                //console.log("->>> nach splice profilInfo = " + sourceFile.profileInfo +  "& senderID" + sourceFile.senderIDTransfer)
             }
             k = 0;
         }
-        console.log("no else or if");
-        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, profileInfo: sourceFile.profileInfo, profilePic: sourceFile.profilePic});
+        //console.log("no else or if");
     }
-    //sourceFile.getAnalytics();
+    */
 });
 
 router.post('/dashboard', function(req, res, next){
     var broadcast = JSON.stringify(req.body);
     var broadcastDataSplitted = broadcast.split(":");
     var broadcastText = broadcastDataSplitted[1].slice(1, -2);
-    console.log(sourceFile.senderID);
-    console.log(sourceFile.senderIDTransfer);
-    console.log(broadcast);
-    if (sourceFile.senderIDTransfer === undefined ) {
-        errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
-    } else {
-        for (var i = 0; i < sourceFile.senderIDTransfer.length; i++) {
-            console.log(sourceFile.senderIDTransfer[i]);
-                sendBroadcast(sourceFile.senderIDTransfer[i], broadcastText);
+    db.gaeste.find(function(err, gaeste){
+        if (err){
+            errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
+        } else {
+            console.log(gaeste);
+            for (var i = 0; i < gaeste.length; i++) {
+                //console.log("senderIDs DB" + gaeste[i].senderId);
+                sendBroadcast(gaeste[i].senderId, broadcastText);
+            }
+            errMsg = "";
         }
-        errMsg = "";
+    });
+    //console.log(sourceFile.senderID);
+    //console.log(sourceFile.senderIDTransfer);
+    //console.log("Nachricht" + broadcast);
+    //console.log("Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet");
+    //} else {
+        //for (var i = 0; i < db.gaeste.senderId.length; i++) {
+            //console.log("senderIDs DB" + db.gaeste[i].senderId);
+                //sendBroadcast(sourceFile.senderIDTransfer[i], broadcastText);
+        //}
+        //errMsg = "";
 
-    }
+    //}
         return res.redirect('/dashboard');
 });
 

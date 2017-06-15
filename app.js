@@ -21,10 +21,10 @@ const
   http = require('http'),
   parseString = require('xml2js').parseString;
 
-//var localStorage = require('node-localstorage');
-//var flash = require('connect-flash');
 var routes = require('./routes/index');
 var app = express();
+var mongojs = require('mongojs');
+var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
 
 app.use(bodyParser.urlencoded({ extended: false}));
 
@@ -33,9 +33,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 app.use('/', routes);
-//app.use(flash());
-
-
 
 var resultTransferData = [];
 var doppelzimmerClassicSteinleo = "<RatePlanCandidate RatePlanType=\"11\" RatePlanID=\"420424\"/>";
@@ -320,7 +317,7 @@ function verifyRequestSignature(req, res, buf) {
  *
  */
 
-//Send t
+//Recieve authentication from wlanlandingpage when user click Send to messenger - Send data to mongoDB database.
 function receivedAuthentication(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -340,14 +337,8 @@ function receivedAuthentication(event) {
   // When an authentication is received, we'll send a message back to the sender
   // to let them know it was successful.
   sendTextMessage(senderID, "Sie haben sich erfolgreich angemeldet. Sie erhalten nun Neuigkeiten via Facebook Messenger von Ihrem Salzburger Hof Leogang team. Viel Spaß!");
+  //Function initialised on line 651
   exportSenderID(senderID);
-/*
-    setTimeout(function () {
-        sendTextMessage(senderID, "Hellooo again! :D");
-        setTimeout(sendTextMessage, 10000, senderID, "Hellooo again1234! :D");
-        setTimeout(sendTextMessage, 20000, senderID, "Hellooo again6798! :D");
-    }, 10000);
-*/
 
     var buffer = "";
     var a = "";
@@ -362,11 +353,11 @@ function receivedAuthentication(event) {
     console.info(optionsget);
     console.info('Do the GET call');
 
-// do the GET request
+    // do the GET request to retrieve data from the user's graph API
     var reqGet = https.request(optionsget, function(res) {
         console.log("statusCode: ", res.statusCode);
         // uncomment it for header details
-        //  console.log("headers: ", res.headers);
+        // console.log("headers: ", res.headers);
 
         res.on('data', function(d) {
             console.info('GET result:\n');
@@ -374,16 +365,25 @@ function receivedAuthentication(event) {
             buffer += d;
             console.log(buffer);
             a = JSON.parse(buffer);
-            console.log(a);
+            console.log("Data recieving from Send to messenger button" + a);
             console.log(a.first_name);
-
+            //Additionally senderID is added to the Javascript object, which is saved to the MongoDB
+            a["senderId"] = senderID;
+            //User is a "angemeldeter Gast" and is able to recieve messages
+            a["signed_up"] = true;
+            // save data to the database
+            db.gaeste.save(a, function(err, a) {
+                if(err) {
+                    res.send(err);
+                }
+                console.log("Database entry saved" + a);
+            });
+            /*
             exports.profileInfo.push( a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale + " " + senderID);
             console.log("(app.js line 382) - profileinfo array:" + profileInfo);
-            //app.locals.profileInfo = profileInfo;
             exports.profilePic.push(a.profile_pic);
             console.log("(app.js line 387) - profilepic array:" + profilePic);
-            //app.locals.profilePic = profilePic;
-
+            */
             });
     });
 
@@ -428,7 +428,6 @@ function getAnalytics(){
         console.error(e);
     });
 }
-
 exports.getAnalytics = getAnalytics;
 
 //Stay range is the difference between arrivalday and departureday
@@ -2405,14 +2404,24 @@ function callSendAPI(messageData) {
     } else {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error, messageData.recipient.id);
       console.log(messageData.recipient.id);
+      db.gaeste.update({ senderId:  messageData.recipient.id  },
+          {
+              $set: { signed_up: false }
+          }, function (err, gaeste){
+          if(err) {
+              console.log("error: " + err);
+          } else {
+              console.log(gaeste);
+          }});
+      /*
       var index = senderIDTransfer.indexOf(messageData.recipient.id);
       console.log(index);
         senderIDTransfer.splice(index, 1);
         console.log(senderIDTransfer);
-    }
-  });  
+        */
+      }
+    });
 }
-
 exports.callSendAPI = callSendAPI;
 
 // Start server
