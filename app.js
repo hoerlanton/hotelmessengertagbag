@@ -338,7 +338,7 @@ function receivedAuthentication(event) {
   // to let them know it was successful.
   sendTextMessage(senderID, "Sie haben sich erfolgreich angemeldet. Sie erhalten nun Neuigkeiten via Facebook Messenger von Ihrem Salzburger Hof Leogang team. Viel Spaß!");
   //Function initialised on line 651
-  exportSenderID(senderID);
+  //exportSenderID(senderID);
 
     var buffer = "";
     var a = "";
@@ -371,6 +371,8 @@ function receivedAuthentication(event) {
             a["senderId"] = senderID;
             //User is a "angemeldeter Gast" and is able to recieve messages
             a["signed_up"] = true;
+            a["signed_up_at"] = new Date();
+            console.log(new Date());
             // save data to the database
             db.gaeste.save(a, function(err, a) {
                 if(err) {

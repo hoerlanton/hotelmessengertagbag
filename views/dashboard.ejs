@@ -34,7 +34,7 @@
             <div class="col-md-6" style="float: right">
                 <% for (var l = 0; l < guests.length; l++) { %>
                     <% if (guests[l].signed_up === true) { %>
-                        <%= guests[l].senderId + " " + guests[l].first_name + " " + " " + guests[l].last_name + " " + guests[l].locale + " " + guests[l].gender %>
+                        <%= guests[l].senderId + " " + guests[l].first_name + " " + " " + guests[l].last_name + " " + guests[l].locale + " " + guests[l].gender + " " + guests[l].signed_up_at%>
                         <br>
                         <br>
                         <br>
@@ -74,7 +74,7 @@
             <div class="col-md-6" style="float: right">
                 <% for (var n = 0; n < guests.length; n++) { %>
                     <% if (guests[n].signed_up === false) { %>
-                        <%= guests[n].senderId + " " + guests[n].first_name + " " + " " + guests[n].last_name + " " + guests[n].locale + " " + guests[n].gender %>
+                        <%= guests[n].senderId + " " + guests[n].first_name + " " + " " + guests[n].last_name + " " + guests[n].locale + " " + guests[n].gender + " " + guests[n].signed_up_at %>
                         <br>
                         <br>
                         <br>
@@ -84,6 +84,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 

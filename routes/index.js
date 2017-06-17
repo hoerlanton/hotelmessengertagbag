@@ -45,7 +45,7 @@ router.get('/dashboard', function(req, res, next) {
         guestsDb = gaeste;
         //console.log(guestsDb);
     });
-    res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, profileInfo: sourceFile.profileInfo, profilePic: sourceFile.profilePic, guests: guestsDb});
+    res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, guests: guestsDb});
 
     /*
     //console.log("SenderID Array: " + sourceFile.senderIDTransfer);
