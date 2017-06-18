@@ -82,7 +82,10 @@ router.get('/dashboard', function(req, res, next) {
 
 router.post('/dashboard', function(req, res, next){
     var broadcast = JSON.stringify(req.body.nachrichtSenden);
+    var broadcastText = broadcast.splice(1, -1);
     console.log(broadcast);
+    console.log(broadcastText);
+
     db.gaeste.find(function(err, gaeste){
         if (err){
             errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
@@ -90,7 +93,7 @@ router.post('/dashboard', function(req, res, next){
             console.log(gaeste);
             for (var i = 0; i < gaeste.length; i++) {
                 //console.log("senderIDs DB" + gaeste[i].senderId);
-                sendBroadcast(gaeste[i].senderId, broadcast);
+                sendBroadcast(gaeste[i].senderId, broadcastText);
             }
             errMsg = "";
         }
