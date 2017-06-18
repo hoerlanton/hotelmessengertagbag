@@ -82,7 +82,8 @@ router.get('/dashboard', function(req, res, next) {
 
 router.post('/dashboard', function(req, res, next){
     var broadcast = JSON.stringify(req.body.nachrichtSenden);
-    var broadcastText = broadcast.splice(1, -1);
+    var broadcastText = broadcast.slice(1, -1);
+
     console.log(broadcast);
     console.log(broadcastText);
 
