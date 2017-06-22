@@ -7,6 +7,7 @@ var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['
 
 //Get all guests
 router.get('/guests', function(req, res, next) {
+    console.log("guests get called");
     //Get guests from Mongo DB
     db.gaeste.find(function(err, gaeste){
         if (err){
@@ -30,7 +31,6 @@ router.post('/guests', function(req, res, next) {
                 res.send(err);
             }
             res.json(guest);
-
         });
     }
 });
@@ -57,4 +57,4 @@ router.put('/guests', function(req, res, next) {
 
 module.exports = router;
 
-    */
+ */

@@ -1,15 +1,18 @@
-/**
- * Created by antonhorl on 05.05.17.
- */
 var express = require('express');
 var router = express.Router();
 var https = require('https');
 var request = require('request');
 var http = require('http');
+const cors = require('cors');
 var parseString = require('xml2js').parseString;
 var sourceFile = require('../app');
 var mongojs = require('mongojs');
+var bodyParser = require('body-parser');
+
 var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
+
+router.use(bodyParser.urlencoded({ extended: false}));
+router.use(cors());
 
 var errMsg = "";
 var successMsg = "";
@@ -19,13 +22,12 @@ var totalPriceChargeReservationInt = 0;
 var totalPriceChargeReservationIntSliced = "";
 var count = 0;
 var redirect = false;
-//var k = 0;
 var guestsDb = {};
 
 /* Get Form */
 router.get('/facebookLogin', function(req, res, next) {
     res.render('facebookLogin', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
-    console.log("facebookLogin ejs rendered")
+    console.log("facebookLogin ejs rendered");
 });
 
 router.get('/checkout', function(req, res, next) {
@@ -38,6 +40,7 @@ router.get('/wlanlandingpage', function(req, res, next) {
 
 router.get('/dashboard', function(req, res, next) {
     //Get guests from Mongo DB
+    console.log("dashboard get!");
     db.gaeste.find(function(err, gaeste){
         if (err){
             res.send(err);
@@ -80,6 +83,92 @@ router.get('/dashboard', function(req, res, next) {
     */
 });
 
+//----->REST-ful API<------//
+
+//Get all guests
+router.get('/guests', function(req, res, next) {
+    console.log("guests get called");
+    //Get guests from Mongo DB
+    db.gaeste.find(function(err, gaeste){
+        if (err){
+            res.send(err);
+        }
+        res.json(gaeste);
+    });
+});
+
+//Save new guests
+router.post('/guests', function(req, res, next) {
+    var guest = req.body;
+    if(!guest.first_name || !guest.second_name){
+        res.status(400);
+        res.json({
+            error: "Bad data"
+        });
+    } else {
+        db.gaeste.save(guest, function (err, guest) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(guest);
+        });
+    }
+});
+
+//Update guest
+router.put('/guests', function(req, res, next) {
+    db.gaeste.update({ senderId:  messageData.recipient.id  },
+        {
+            $set: { signed_up: false }
+        }, function (err, gaeste){
+            if(err) {
+                console.log("error: " + err);
+            } else {
+                console.log(gaeste);
+            }});
+});
+
+router.post('/guestsMessage', function(req, res, next){
+    //console.log(req);
+    console.log("Message recieved");
+    console.log(req.body);
+    var broadcast = req.body;
+    console.log(broadcast);
+    var broadcastText = JSON.stringify(broadcast);
+    var broadcastTextHoi = broadcastText.slice(4, -7);
+
+    //var broadcast = JSON.stringify(req.body.nachrichtSenden);
+    //console.log(req.body.nachrichtSenden);
+    console.log(broadcastTextHoi);
+
+    db.gaeste.find(function(err, gaeste){
+        if (err){
+            errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
+        } else {
+            //console.log(gaeste);
+            for (var i = 0; i < gaeste.length; i++) {
+                //console.log("senderIDs DB" + gaeste[i].senderId);
+                sendBroadcast(gaeste[i].senderId, broadcastTextHoi);
+            }
+            errMsg = "";
+        }
+    });
+    //console.log(sourceFile.senderID);
+    //console.log(sourceFile.senderIDTransfer);
+    //console.log("Nachricht" + broadcast);
+    //console.log("Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet");
+    //} else {
+    //for (var i = 0; i < db.gaeste.senderId.length; i++) {
+    //console.log("senderIDs DB" + db.gaeste[i].senderId);
+    //sendBroadcast(sourceFile.senderIDTransfer[i], broadcastText);
+    //}
+    //errMsg = "";
+
+    //}
+    return res.redirect('/guests');
+});
+
+/*
 router.post('/dashboard', function(req, res, next){
     var broadcast = JSON.stringify(req.body.nachrichtSenden);
     var broadcastText = broadcast.slice(1, -1);
@@ -114,7 +203,7 @@ router.post('/dashboard', function(req, res, next){
         return res.redirect('/dashboard');
 });
 
-
+*/
 router.get('/DoppelzimmerDeluxeHolzleo', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
     if (req.route.path === "/DoppelzimmerDeluxeHolzleo") {

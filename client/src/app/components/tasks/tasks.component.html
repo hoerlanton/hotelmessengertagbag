@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+                <img alt="Brand" href="http://servicio.io" src="http://servicio.io/wp-content/uploads/2016/05/servicio-logo-hellblau-auto-ohne-hintergrund-1.png" style="height: 45px; width: auto; margin-top: 0px">
+        </div>
+    </div>
+</nav>
+
+<div id="charge-error" class="alert alert-danger <% if ( !errMsg ) { %> hidden <% } %>">
+    <%= errMsg  %>
+</div>
+
+<div class="row">
+    <div class="col-md-4" style="background-color: #f3efe4; padding-top: 20px; "><h3>Angemeldete Gäste</h3>
+        <div class="row" style="padding-top: 20px">
+            <div class="col-md-6" style="float: left">
+                <div *ngFor="let task of tasks">
+                    <div *ngIf="task.signed_up">
+                        <img src="{{task.profile_pic}}" style=" width: 60px; height: 60px; position: relative; border-radius: 50%; margin: 5px; margin-left: 60%">
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="float: right">
+                <div *ngFor="let task of tasks">
+                    <div *ngIf="task.signed_up">
+                        <p>{{"Name: " + task.first_name + " "}}{{task.last_name}}<br>{{"Geschlecht: " + task.gender}}<br>{{"Kann zahlen: " + task.is_payment_enabled}}<br>{{"Heimat: " + task.locale}}<br>{{"FacebookID: " + task.senderId}}<br>{{"Angemeldet am: " + task.signed_up_at}}<br>{{"Zeitzone: " + task.timezone}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4" style="background-color: #0a7a74; padding-top: 20px"><h3 style="color: white">Nachricht an Gäste senden</h3>
+        <div class="row" style="padding-top: 20px">
+            <form class="SendMessage" (submit)="addTask($event)">
+                <div class="col-xs-12" style="padding: 40px">
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="title" name="title" id="nachrichtSenden" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <button style=" background-color: white; color: #0a7a74 " type="submit" class="btn btn-send">JETZT SENDEN</button> <!--Title for button is same as that of the page-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+        <div class="col-md-4" style="background-color: #f3efe4; padding-top: 20px; "><h3>Abgemeldete Gäste</h3>
+            <div class="row" style="padding-top: 20px">
+                <div class="col-md-6" style="float: left">
+                    <div *ngFor="let task of tasks">
+                        <div *ngIf="!task.signed_up">
+                            <img src="{{task.profile_pic}}" style=" width: 60px; height: 60px; position: relative; border-radius: 50%; margin: 5px; margin-left: 60%">
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="float: right">
+                    <div *ngFor="let task of tasks">
+                        <div *ngIf="!task.signed_up">
+                            <p>{{"Name: " + task.first_name + " "}}{{task.last_name}}<br>{{"Geschlecht: " + task.gender}}<br>{{"Kann zahlen: " + task.is_payment_enabled}}<br>{{"Heimat: " + task.locale}}<br>{{"FacebookID: " + task.senderId}}<br>{{"Angemeldet am: " + task.signed_up_at}}<br>{{"Zeitzone: " + task.timezone}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

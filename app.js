@@ -372,7 +372,36 @@ function receivedAuthentication(event) {
             //User is a "angemeldeter Gast" and is able to recieve messages
             a["signed_up"] = true;
             a["signed_up_at"] = new Date();
-            console.log(new Date());
+
+            // Build the post string from an object
+            var post_data = a;
+
+            // An object of options to indicate where to post to
+            var post_options = {
+                host: '',
+                port: '80',
+                path: '/guests',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Length': Buffer.byteLength(post_data)
+                }
+            };
+
+            // Set up the request
+            var post_req = http.request(post_options, function(res) {
+                res.setEncoding('utf8');
+                res.on('data', function (chunk) {
+                    console.log('Response: ' + chunk);
+                });
+            });
+
+            // post the data
+            post_req.write(post_data);
+            post_req.end();
+
+            /*
+             console.log(new Date());
             // save data to the database
             db.gaeste.save(a, function(err, a) {
                 if(err) {
@@ -380,12 +409,14 @@ function receivedAuthentication(event) {
                 }
                 console.log("Database entry saved" + a);
             });
-            /*
+
+
             exports.profileInfo.push( a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale + " " + senderID);
             console.log("(app.js line 382) - profileinfo array:" + profileInfo);
             exports.profilePic.push(a.profile_pic);
             console.log("(app.js line 387) - profilepic array:" + profilePic);
             */
+
             });
     });
 
@@ -2406,6 +2437,34 @@ function callSendAPI(messageData) {
     } else {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error, messageData.recipient.id);
       console.log(messageData.recipient.id);
+/*
+      var put_data = messageData.recipient.id;
+
+            // An object of options to indicate where to post to
+            var put_options = {
+                host: '',
+                port: '80',
+                path: '/guests',
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Length': Buffer.byteLength(put_data)
+                }
+            };
+
+            // Set up the request
+            var put_req = http.request(put_options, function(res) {
+                res.setEncoding('utf8');
+                res.on('data', function (chunk) {
+                    console.log('Response: ' + chunk);
+                });
+            });
+
+            // post the data
+            put_req.write(put_data);
+            put_req.end();
+
+            */
       db.gaeste.update({ senderId:  messageData.recipient.id  },
           {
               $set: { signed_up: false }
@@ -2415,12 +2474,12 @@ function callSendAPI(messageData) {
           } else {
               console.log(gaeste);
           }});
-      /*
+
       var index = senderIDTransfer.indexOf(messageData.recipient.id);
       console.log(index);
         senderIDTransfer.splice(index, 1);
         console.log(senderIDTransfer);
-        */
+
       }
     });
 }
