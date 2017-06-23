@@ -3,17 +3,20 @@ var router = express.Router();
 var https = require('https');
 var request = require('request');
 var http = require('http');
-const cors = require('cors');
 var parseString = require('xml2js').parseString;
 var sourceFile = require('../app');
-var mongojs = require('mongojs');
+var cors = require('cors');
 var bodyParser = require('body-parser');
-
+var mongojs = require('mongojs');
 var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
 
+//Bodyparser middleware
 router.use(bodyParser.urlencoded({ extended: false}));
+
+//Cors middleware
 router.use(cors());
 
+//Global variables
 var errMsg = "";
 var successMsg = "";
 var resultTransferData2 = [];
@@ -22,66 +25,6 @@ var totalPriceChargeReservationInt = 0;
 var totalPriceChargeReservationIntSliced = "";
 var count = 0;
 var redirect = false;
-var guestsDb = {};
-
-/* Get Form */
-router.get('/facebookLogin', function(req, res, next) {
-    res.render('facebookLogin', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
-    console.log("facebookLogin ejs rendered");
-});
-
-router.get('/checkout', function(req, res, next) {
-    res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
-});
-
-router.get('/wlanlandingpage', function(req, res, next) {
-    res.render('wlanlandingpage', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
-});
-
-router.get('/dashboard', function(req, res, next) {
-    //Get guests from Mongo DB
-    console.log("dashboard get!");
-    db.gaeste.find(function(err, gaeste){
-        if (err){
-            res.send(err);
-        }
-        guestsDb = gaeste;
-        //console.log(guestsDb);
-    });
-    res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, guests: guestsDb});
-
-    /*
-    //console.log("SenderID Array: " + sourceFile.senderIDTransfer);
-    //console.log("index.js line 38 | profileInfo " + sourceFile.profileInfo + " profilePic " + sourceFile.profilePic);
-    if (sourceFile.profileInfo === 'undefined' ||  sourceFile.senderIDTransfer === 'undefined' || sourceFile.profileInfo === 0 || sourceFile.senderIDTransfer === 0 || typeof sourceFile.senderIDTransfer === "undefined" || typeof sourceFile.profileInfo === "undefined" || sourceFile.profileInfo.length === 0 || sourceFile.senderIDTransfer.length === 0 ) {
-        //console.log("else is not runned");
-        sourceFile.profileInfo = [];
-        sourceFile.profilePic = [];
-        //console.log("SenderID Array: " + sourceFile.senderIDTransfer);
-        //console.log("index.js line 38 | profileInfo " + sourceFile.profileInfo + " profilePic " + sourceFile.profilePic);
-        res.render('dashboard', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg, profileInfo: sourceFile.profileInfo, profilePic: sourceFile.profilePic, guests: guestsDb});
-    } else {
-        for (var i = 0; i < sourceFile.profileInfo.length; i++) {
-            for (var j = 0; j < sourceFile.senderIDTransfer.length; j++) {
-                //console.log("->>> else klausel " + " numberofloop: " + i + " profilInfo: " + sourceFile.profileInfo[i] + " senderIDTransfer: " + sourceFile.senderIDTransfer[j]);
-                //console.log("->>> if check -> SenderID befindet sich nicht in profilInfo: " + (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0));
-                if (sourceFile.profileInfo[i].indexOf(sourceFile.senderIDTransfer[j]) < 0 ) {
-                    //console.log("->>> if klausel runs === true | Sender ID befindet sich nicht in profilInfo");
-                    k++;
-                    //console.log(k);
-                    if(k === sourceFile.senderIDTransfer.length) {
-                        sourceFile.profileInfo.splice((i), i + 1);
-                        sourceFile.profilePic.splice((i), i + 1);
-                    }
-                }
-                //console.log("->>> nach splice profilInfo = " + sourceFile.profileInfo +  "& senderID" + sourceFile.senderIDTransfer)
-            }
-            k = 0;
-        }
-        //console.log("no else or if");
-    }
-    */
-});
 
 //----->REST-ful API<------//
 
@@ -128,82 +71,37 @@ router.put('/guests', function(req, res, next) {
             }});
 });
 
+//Post message to guests
 router.post('/guestsMessage', function(req, res, next){
-    //console.log(req);
-    console.log("Message recieved");
-    console.log(req.body);
     var broadcast = req.body;
-    console.log(broadcast);
     var broadcastText = JSON.stringify(broadcast);
     var broadcastTextHoi = broadcastText.slice(4, -7);
-
-    //var broadcast = JSON.stringify(req.body.nachrichtSenden);
-    //console.log(req.body.nachrichtSenden);
-    console.log(broadcastTextHoi);
 
     db.gaeste.find(function(err, gaeste){
         if (err){
             errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
         } else {
-            //console.log(gaeste);
             for (var i = 0; i < gaeste.length; i++) {
-                //console.log("senderIDs DB" + gaeste[i].senderId);
                 sendBroadcast(gaeste[i].senderId, broadcastTextHoi);
             }
             errMsg = "";
         }
     });
-    //console.log(sourceFile.senderID);
-    //console.log(sourceFile.senderIDTransfer);
-    //console.log("Nachricht" + broadcast);
-    //console.log("Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet");
-    //} else {
-    //for (var i = 0; i < db.gaeste.senderId.length; i++) {
-    //console.log("senderIDs DB" + db.gaeste[i].senderId);
-    //sendBroadcast(sourceFile.senderIDTransfer[i], broadcastText);
-    //}
-    //errMsg = "";
 
-    //}
     return res.redirect('/guests');
 });
 
-/*
-router.post('/dashboard', function(req, res, next){
-    var broadcast = JSON.stringify(req.body.nachrichtSenden);
-    var broadcastText = broadcast.slice(1, -1);
-
-    console.log(broadcast);
-    console.log(broadcastText);
-
-    db.gaeste.find(function(err, gaeste){
-        if (err){
-            errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
-        } else {
-            console.log(gaeste);
-            for (var i = 0; i < gaeste.length; i++) {
-                //console.log("senderIDs DB" + gaeste[i].senderId);
-                sendBroadcast(gaeste[i].senderId, broadcastText);
-            }
-            errMsg = "";
-        }
-    });
-    //console.log(sourceFile.senderID);
-    //console.log(sourceFile.senderIDTransfer);
-    //console.log("Nachricht" + broadcast);
-    //console.log("Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet");
-    //} else {
-        //for (var i = 0; i < db.gaeste.senderId.length; i++) {
-            //console.log("senderIDs DB" + db.gaeste[i].senderId);
-                //sendBroadcast(sourceFile.senderIDTransfer[i], broadcastText);
-        //}
-        //errMsg = "";
-
-    //}
-        return res.redirect('/dashboard');
+//Get W-Lan-landingpage
+router.get('/wlanlandingpage', function(req, res, next) {
+    res.render('wlanlandingpage', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
 });
 
-*/
+//Get checkout form page
+router.get('/checkout', function(req, res, next) {
+    res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+});
+
+//Get checkout form page for room type Doppelzimmer Deluxe Holzleo
 router.get('/DoppelzimmerDeluxeHolzleo', function(req, res, next) {
     res.render('form', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
     if (req.route.path === "/DoppelzimmerDeluxeHolzleo") {
@@ -212,6 +110,7 @@ router.get('/DoppelzimmerDeluxeHolzleo', function(req, res, next) {
     }
 });
 
+//Get checkout form page for room type Doppelzimmer Superior Steinleo
 router.get('/DoppelzimmerSuperiorSteinleo', function(req, res, next) {
     res.render('formDoppelzimmerSuperiorSteinleo', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
     if (req.route.path === "/DoppelzimmerSuperiorSteinleo") {
@@ -220,6 +119,7 @@ router.get('/DoppelzimmerSuperiorSteinleo', function(req, res, next) {
     }
 });
 
+//Get checkout form page for room type Doppelzimmer Classic Steinleo
 router.get('/DoppelzimmerClassicSteinleo', function(req, res, next) {
     res.render('formDoppelzimmerClassicSteinleo', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
     if (req.route.path === "/DoppelzimmerClassicSteinleo") {
@@ -228,14 +128,23 @@ router.get('/DoppelzimmerClassicSteinleo', function(req, res, next) {
     }
 });
 
+//Buchungsserfolg page
 router.get('/bookingsuccess', function(req, res, next) {
     res.render('success', { title: 'Jetzt buchen', successMsg: successMsg, noMessage: !successMsg });
 });
 
+//Buchungsfehlschlag page
 router.get('/bookingfailure', function(req, res, next) {
     res.render('error', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
 });
 
+//Facebook Login Test page
+router.get('/facebookLogin', function(req, res, next) {
+    res.render('facebookLogin', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    console.log("facebookLogin ejs rendered");
+});
+
+//Sending Hotel Reservation Request -> HotelResRQ
 function sendHotelResRQ(checkoutDataName, checkoutDataAddress, checkoutDataCardName, checkoutDataCardNumber, checkoutDataCardExpiryYear, checkoutDataCardCvc, numberOfPersonsReservation, numberOfRoomsReservation, arrivalDateReservation, departureDateReservation, ratePlanIDReservation) {
     var buffer = '';
     var postRequest = {
@@ -281,6 +190,7 @@ function sendHotelResRQ(checkoutDataName, checkoutDataAddress, checkoutDataCardN
     req.end();
 }
 
+//Assigning Total Prize to Reservation
 function assignTotalPriceReservation(){
             totalPriceChargeReservation = JSON.stringify(resultTransferData2[0].OTA_HotelResRS.HotelReservations[0].HotelReservation[0].RoomStays[0].RoomStay[0].Total[0].$.AmountAfterTax);
             console.log(totalPriceChargeReservation);
@@ -300,10 +210,8 @@ function resetData() {
     }
 }
 
+//Recieve Checkout Form data, Make Reservation request and charge the Credit card via Stripe
 router.post('/checkout', function(req, res, next){
-    //console.log(req.body.stripeToken);
-    //console.log(req.body);
-
     var checkoutData = JSON.stringify(req.body);
     var checkoutDataSplitted = checkoutData.split(",");
     var checkoutDataSplittedTwiceName = checkoutDataSplitted[0].split(":");
@@ -367,6 +275,7 @@ router.post('/checkout', function(req, res, next){
     }, 20000);
 });
 
+//Buchungsbestätigung via Facebook messenger senden
 function sendBookingConfirmation(recipientId, a, b, c, d, e, f, g) {
     var messageData = {
         recipient: {
@@ -380,7 +289,7 @@ function sendBookingConfirmation(recipientId, a, b, c, d, e, f, g) {
     sourceFile.callSendAPI(messageData);
 }
 
-
+//Beispiel PDF als Buchungsbestätigung via Facebook Messenger senden
 function sendPDF(recipientId) {
     var messageData = {
         recipient: {
@@ -398,6 +307,7 @@ function sendPDF(recipientId) {
     sourceFile.callSendAPI(messageData);
 }
 
+//Broadcast gesendet von Dashboard to all angemeldete Gäste
 function sendBroadcast(recipientId, broadcastText) {
     var messageData = {
         recipient: {

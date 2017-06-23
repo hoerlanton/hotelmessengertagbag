@@ -15,25 +15,32 @@ const
   config = require('config'),
   crypto = require('crypto'),
   express = require('express'),
-
   https = require('https'),  
   request = require('request'),
   http = require('http'),
-  parseString = require('xml2js').parseString;
+  parseString = require('xml2js').parseString,
+  routes = require('./routes/index'),
+  app = express(),
+  mongojs = require('mongojs'),
+  db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
 
-var routes = require('./routes/index');
-var app = express();
-var mongojs = require('mongojs');
-var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
-
+//Bodyparser middleware
 app.use(bodyParser.urlencoded({ extended: false}));
-
-app.set('port', process.env.PORT || 8000);
-app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
+
+//Set Port
+app.set('port', process.env.PORT || 8000);
+
+//View engine middleware
+app.set('view engine', 'ejs');
+
+//Set static file folder
 app.use(express.static('public'));
+
+//Set routes/index.js file as routes directory starting from / URL
 app.use('/', routes);
 
+//Global variables
 var resultTransferData = [];
 var doppelzimmerClassicSteinleo = "<RatePlanCandidate RatePlanType=\"11\" RatePlanID=\"420424\"/>";
 var einzelzimmerSommerstein = "<RatePlanCandidate RatePlanType=\"11\" RatePlanID=\"420596\"/>";
@@ -102,8 +109,6 @@ app.locals.totalPrice = 0;
 app.locals.profileInfo = "";
 app.locals.profilePic = "";
 var senderIDTransfer = [];
-var profileInfo = [];
-var profilePic = [];
 exports.profileInfo = [];
 exports.profilePic = [];
 
@@ -227,19 +232,6 @@ app.get('/authorize', function(req, res) {
   });
 });
 
-
-//localStorage Setup
-/*
-if (typeof localStorage === "undefined" || localStorage === null) {
-    var LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
-}
-
-localStorage.setItem('myFirstKey', 'myFirstValue');
-console.log(localStorage.getItem('myFirstKey'));
-*/
-
-
 //send XML post request to Cultswitch channel manager. Recieved data is pushed to resultTransferData
 function sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departureDate, doppelzimmerClassicSteinleo, einzelzimmerSommerstein, doppelzimmerDeluxeHolzleo, doppelzimmerSuperiorSteinleo) {
 
@@ -348,7 +340,6 @@ function receivedAuthentication(event) {
         path: '/v2.6/' + senderID + '?fields=first_name,last_name,profile_pic,is_payment_enabled,locale,timezone,gender&access_token=EAAUv40NW3zMBAAdTfzQAegAv1KNh6Nxcmerwtn7dpjzc2UHspQbs4tOGpVrqcZC2rdgSoDSZANEw7Qbg7CVH60GUAigsbaVO83iBOGY2KYoOLEpe1mB8GzECPz2cLZBNTL0lqKMcPps2DD5q21hXGXPpnu149qXUoh1ehHfxAZDZD',
         method: 'GET'
     };
-
     console.info('Options prepared:');
     console.info(optionsget);
     console.info('Do the GET call');
@@ -363,14 +354,12 @@ function receivedAuthentication(event) {
             console.info('GET result:\n');
             process.stdout.write(d);
             buffer += d;
-            console.log(buffer);
             a = JSON.parse(buffer);
-            console.log("Data recieving from Send to messenger button" + a);
-            console.log(a.first_name);
             //Additionally senderID is added to the Javascript object, which is saved to the MongoDB
             a["senderId"] = senderID;
             //User is a "angemeldeter Gast" and is able to recieve messages
             a["signed_up"] = true;
+            //Point of time user signed up added
             a["signed_up_at"] = new Date();
 
             // Build the post string from an object
@@ -399,33 +388,15 @@ function receivedAuthentication(event) {
             // post the data
             post_req.write(post_data);
             post_req.end();
-
-            /*
-             console.log(new Date());
-            // save data to the database
-            db.gaeste.save(a, function(err, a) {
-                if(err) {
-                    res.send(err);
-                }
-                console.log("Database entry saved" + a);
-            });
-
-
-            exports.profileInfo.push( a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale + " " + senderID);
-            console.log("(app.js line 382) - profileinfo array:" + profileInfo);
-            exports.profilePic.push(a.profile_pic);
-            console.log("(app.js line 387) - profilepic array:" + profilePic);
-            */
-
             });
     });
-
     reqGet.end();
     reqGet.on('error', function(e) {
         console.error(e);
     });
 }
 
+/*
 function getAnalytics(){
     var buffer = "";
     var a = "";
@@ -462,6 +433,7 @@ function getAnalytics(){
     });
 }
 exports.getAnalytics = getAnalytics;
+*/
 
 //Stay range is the difference between arrivalday and departureday
 function calculateStayRange(arrivalDate, departureDate) {
@@ -672,7 +644,6 @@ function checkIfDateIsInPast(senderID){
         dateIsInThePast = false;
     }
 }
-
 //If hotel is closed or if there are no availabilities the rest of the receivedMessage is not executed
 function checkIfHotelIsClosed(senderID) {
     console.log(resultTransferData[0].OTA_HotelAvailRS.RoomStays[0].RoomStay[0].RoomRates[0].RoomRate[1].Rates[0].Rate[0].Base[0].$.AmountAfterTax);
@@ -2492,9 +2463,5 @@ exports.callSendAPI = callSendAPI;
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
-// app.listen(8000, function () {
-//   console.log('Example app listening on port 8000!');
-// });
 
 module.exports = app;

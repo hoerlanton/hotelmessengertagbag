@@ -4,7 +4,6 @@
     <title><%= title %></title>
     <meta name="viewport" content="width-device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
 </head>
 <body>
@@ -82,7 +81,41 @@
 
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script type="text/javascript" src="javascripts/checkout.js"></script>
+<script>
+    Stripe.setPublishableKey('pk_test_Tu42rf3j1x3PI1ZR5pLickf3');
+
+    var $form = $('#checkout-form');
+
+    $form.submit(function(event){
+        $('#charge-error').addClass('hidden');
+        $form.find('button').prop('disabled', true);
+        Stripe.card.createToken({
+            number: $('#card-number').val(),
+            cvc: $('#card-cvc').val(),
+            exp_month: $('#card-expiry-month').val(),
+            exp_year: $('#card-expiry-year').val(),
+            name: $('#card-name').val()
+        }, stripeResponseHandler);
+        return false;
+    });
+
+    function stripeResponseHandler(status, response) {
+        if (response.error) { // Problem!
+            // Show the errors on the form
+            $('#charge-error').text(response.error.message);
+            $('#charge-error').removeClass('hidden');
+            $form.find('button').prop('disabled', false); // Re-enable submission
+            console.log("Token nont even created");
+        } else { // Token was created!
+            // Get the token ID:
+            var token = response.id;
+            // Insert the token into the form so it gets submitted to the server:
+            $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+            // Submit the form:
+            $form.get(0).submit();
+        }
+    }
+</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </body>
