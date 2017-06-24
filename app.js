@@ -25,14 +25,23 @@ const
 var mongojs = require('mongojs');
 var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
 
+//Bodyparser middleware
 app.use(bodyParser.urlencoded({ extended: false}));
-
-app.set('port', process.env.PORT || 8000);
-app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
+
+//Setting port
+app.set('port', process.env.PORT || 8000);
+
+//Setting view engine
+app.set('view engine', 'ejs');
+
+//Set Public folder as static folder
 app.use(express.static('public'));
+
+//Use ./routes/index.js as routes root /
 app.use('/', routes);
 
+//Global variables
 var resultTransferData = [];
 var doppelzimmerClassicSteinleo = "<RatePlanCandidate RatePlanType=\"11\" RatePlanID=\"420424\"/>";
 var einzelzimmerSommerstein = "<RatePlanCandidate RatePlanType=\"11\" RatePlanID=\"420596\"/>";
@@ -101,12 +110,11 @@ app.locals.totalPrice = 0;
 app.locals.profileInfo = "";
 app.locals.profilePic = "";
 var senderIDTransfer = [];
-var profileInfo = [];
-var profilePic = [];
 exports.profileInfo = [];
 exports.profilePic = [];
 var a = {};
 var b = "";
+var c = "";
 
 
 /*
@@ -392,6 +400,7 @@ function postNewUserToDB() {
     console.log(b);
         // An object of options to indicate where to post to
         var post_options = {
+            //Change URL to hotelmessengertagbag.herokuapp.com if deploying
             host: 'hotelmessengertagbag.herokuapp.com',
             port: '80',
             path: '/guests',
@@ -413,26 +422,6 @@ function postNewUserToDB() {
         post_req.write(b);
         post_req.end();
 }
-
-
-
-            /*
-             console.log(new Date());
-            // save data to the database
-            db.gaeste.save(a, function(err, a) {
-                if(err) {
-                    res.send(err);
-                }
-                console.log("Database entry saved" + a);
-            });
-
-
-            exports.profileInfo.push( a.first_name + " " + a.last_name + " " + a.gender + " " + a.locale + " " + senderID);
-            console.log("(app.js line 382) - profileinfo array:" + profileInfo);
-            exports.profilePic.push(a.profile_pic);
-            console.log("(app.js line 387) - profilepic array:" + profilePic);
-            */
-
 
 function getAnalytics(){
     var buffer = "";
@@ -2437,7 +2426,6 @@ function callSendAPI(messageData) {
           messageId, recipientId);
           //senderIDTransfer.splice((0), senderIDTransfer.length);
           //senderIDTransfer.push(recipientId);
-          console.log("Console log in callSendAPI on line 2397 " + senderIDTransfer);
       } else {
       console.log("Successfully called Send API for recipient %s", 
         recipientId);
@@ -2445,52 +2433,42 @@ function callSendAPI(messageData) {
     } else {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error, messageData.recipient.id);
       console.log(messageData.recipient.id);
-
-      db.gaeste.update({ senderId:  messageData.recipient.id  },
-          {
-              $set: { signed_up: false }
-          }, function (err, gaeste){
-          if(err) {
-              console.log("error: " + err);
-          } else {
-              console.log(gaeste);
-          }});
-
-      var index = senderIDTransfer.indexOf(messageData.recipient.id);
-      console.log(index);
-        senderIDTransfer.splice(index, 1);
-        console.log(senderIDTransfer);
-
+      //var index = senderIDTransfer.indexOf(messageData.recipient.id);
+      //console.log(index);
+      //senderIDTransfer.splice(index, 1);
+      //console.log(senderIDTransfer);
+      c = JSON.stringify(messageData.recipient.id);
+      setTimeout(updateDB, 20000);
       }
     });
 }
 
 //Send update to REST-ful API in index.js if signed-out, change signed-up field to false
 function updateDB(){
-     var put_data = messageData.recipient.id;
+    console.log("updateDB function called" + c);
 
      // An object of options to indicate where to post to
      var put_options = {
-        host: '',
+        //Change URL to hotelmessengertagbag.herokuapp.com if deploying
+        host: 'hotelmessengertagbag.herokuapp.com',
         port: '80',
         path: '/guests',
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': Buffer.byteLength(put_data)
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
      };
 
      // Set up the request
      var put_req = http.request(put_options, function(res) {
-     res.setEncoding('utf8');
-     res.on('data', function (chunk) {
-     console.log('Response: ' + chunk);
-     });
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+            console.log('Response: ' + chunk);
+        });
      });
 
      // post the data
-     put_req.write(put_data);
+     put_req.write(c);
      put_req.end();
 }
 

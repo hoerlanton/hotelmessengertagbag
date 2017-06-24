@@ -64,10 +64,17 @@ router.post('/guests', function(req, res, next) {
 
 //Update guest
 router.put('/guests', function(req, res, next) {
-    db.gaeste.update({ senderId:  messageData.recipient.id  },
+    console.log("Put request made to ****Guest*****");
+    console.log(req.body);
+    var guestUpdate = req.body;
+    var guestUpdateString = JSON.stringify(guestUpdate);
+    var guestUpdateHoi = guestUpdateString.slice(4, -7);
+    console.log(guestUpdateHoi);
+    db.gaeste.update({
+        senderId:  guestUpdateHoi  },
         {
             $set: { signed_up: false }
-        }, function (err, gaeste){
+        }, { multi: true }, function (err, gaeste){
             if(err) {
                 console.log("error: " + err);
             } else {
@@ -86,7 +93,9 @@ router.post('/guestsMessage', function(req, res, next){
             errMsg = "Das senden der Nachricht ist nicht möglich. Es sind keine Gäste angemeldet.";
         } else {
             for (var i = 0; i < gaeste.length; i++) {
-                sendBroadcast(gaeste[i].senderId, broadcastTextHoi);
+                if(gaeste[i].signed_up === true) {
+                    sendBroadcast(gaeste[i].senderId, broadcastTextHoi);
+                }
             }
             errMsg = "";
         }
