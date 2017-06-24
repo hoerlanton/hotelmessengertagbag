@@ -42,8 +42,12 @@ router.get('/guests', function(req, res, next) {
 
 //Save new guests
 router.post('/guests', function(req, res, next) {
+    //JSON string is parsed to a JSON object
+    console.log("Post request made to ****Guest*****");
+    console.dir(req.body);
     var guest = req.body;
-    if(!guest.first_name || !guest.second_name){
+    console.dir(guest);
+    if(!guest.first_name || !guest.last_name){
         res.status(400);
         res.json({
             error: "Bad data"
