@@ -392,7 +392,7 @@ function postNewUserToDB() {
     console.log(b);
         // An object of options to indicate where to post to
         var post_options = {
-            host: 'd5429eb4.ngrok.io',
+            host: 'hotelmessengertagbag.herokuapp.com',
             port: '80',
             path: '/guests',
             method: 'POST',
@@ -2445,34 +2445,7 @@ function callSendAPI(messageData) {
     } else {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error, messageData.recipient.id);
       console.log(messageData.recipient.id);
-/*
-      var put_data = messageData.recipient.id;
 
-            // An object of options to indicate where to post to
-            var put_options = {
-                host: '',
-                port: '80',
-                path: '/guests',
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Content-Length': Buffer.byteLength(put_data)
-                }
-            };
-
-            // Set up the request
-            var put_req = http.request(put_options, function(res) {
-                res.setEncoding('utf8');
-                res.on('data', function (chunk) {
-                    console.log('Response: ' + chunk);
-                });
-            });
-
-            // post the data
-            put_req.write(put_data);
-            put_req.end();
-
-            */
       db.gaeste.update({ senderId:  messageData.recipient.id  },
           {
               $set: { signed_up: false }
@@ -2491,6 +2464,36 @@ function callSendAPI(messageData) {
       }
     });
 }
+
+//Send update to REST-ful API in index.js if signed-out, change signed-up field to false
+function updateDB(){
+     var put_data = messageData.recipient.id;
+
+     // An object of options to indicate where to post to
+     var put_options = {
+        host: '',
+        port: '80',
+        path: '/guests',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(put_data)
+        }
+     };
+
+     // Set up the request
+     var put_req = http.request(put_options, function(res) {
+     res.setEncoding('utf8');
+     res.on('data', function (chunk) {
+     console.log('Response: ' + chunk);
+     });
+     });
+
+     // post the data
+     put_req.write(put_data);
+     put_req.end();
+}
+
 exports.callSendAPI = callSendAPI;
 
 // Start server
