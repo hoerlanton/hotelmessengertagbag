@@ -2,4 +2,4 @@
 
 ##Hotel Messenger Bot
 
-More information on: www.gettagbag.com
+More information on: www.servicio.io
