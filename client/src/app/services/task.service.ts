@@ -11,14 +11,16 @@ export class TaskService{
         return this.http.get('guests')
             .map(res => res.json());
     }
-
-    addTask(newTask){
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        console.log(headers);
-        return this.http.post('guestsMessage', JSON.stringify(newTask), {headers: headers} )
+    getMessages(){
+        return this.http.get('guestsMessages')
             .map(res => res.json());
     }
 
-
+    addTask(newTask){
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        console.log(headers);
+        return this.http.post('guestsMessage', newTask, {headers: headers} )
+            .map(res => res.json());
+    }
 }

@@ -8,7 +8,7 @@ var sourceFile = require('../app');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var mongojs = require('mongojs');
-var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
+var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['Messages']);
 
 //Bodyparser middleware
 router.use(bodyParser.urlencoded({ extended: false}));
@@ -27,6 +27,18 @@ var count = 0;
 var redirect = false;
 
 //----->REST-ful API<------//
+
+//Get all messages
+router.get('/guestsMessages', function(req, res, next) {
+    console.log("guestsMessages get called");
+    //Get guests from Mongo DB
+    db.Messages.find(function(err, message){
+        if (err){
+            res.send(err);
+        }
+        res.json(message);
+    });
+});
 
 //Get all guests
 router.get('/guests', function(req, res, next) {
@@ -84,7 +96,10 @@ router.put('/guests', function(req, res, next) {
 
 //Post message to guests
 router.post('/guestsMessage', function(req, res, next){
-    var broadcast = req.body;
+    console.log(req.body);
+    var message = req.body;
+    console.log(message);
+    var broadcast = req.body.text;
     var broadcastText = JSON.stringify(broadcast);
     var broadcastTextHoi = broadcastText.slice(4, -7);
 
@@ -100,8 +115,14 @@ router.post('/guestsMessage', function(req, res, next){
             errMsg = "";
         }
     });
-
-    return res.redirect('/guests');
+    //Save Message to DB
+    db.Messages.save(message, function (err, message) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(message);
+    });
+    //return res.redirect('/');
 });
 
 //Get W-Lan-landingpage

@@ -20,11 +20,15 @@ var TaskService = (function () {
         return this.http.get('guests')
             .map(function (res) { return res.json(); });
     };
+    TaskService.prototype.getMessages = function () {
+        return this.http.get('guestsMessages')
+            .map(function (res) { return res.json(); });
+    };
     TaskService.prototype.addTask = function (newTask) {
         var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'application/json');
         console.log(headers);
-        return this.http.post('guestsMessage', JSON.stringify(newTask), { headers: headers })
+        return this.http.post('guestsMessage', newTask, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     TaskService = __decorate([

@@ -18,15 +18,25 @@ var TasksComponent = (function () {
             .subscribe(function (tasks) {
             _this.tasks = tasks;
         });
+        this.taskService.getMessages()
+            .subscribe(function (sentMessages) {
+            _this.sentMessages = sentMessages;
+        });
     }
     TasksComponent.prototype.addTask = function (event) {
         var _this = this;
         event.preventDefault();
-        var newTask = this.title;
+        this.dateGenerated = new Date();
+        var newTask = {
+            text: this.title,
+            date: this.dateGenerated
+        };
         console.log(newTask);
+        //this.sentMessages.push(newTask);
+        //console.log(Messages);
         this.taskService.addTask(newTask)
-            .subscribe(function (task) {
-            _this.tasks.push(task);
+            .subscribe(function (Messages) {
+            _this.sentMessages.push(Messages);
             _this.title = "";
         });
     };
