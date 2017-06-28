@@ -22,20 +22,11 @@
 
 <div class="row">
     <div class="col-md-4" style="background-color: #f3efe4; padding-top: 20px; "><h3>Angemeldete Gäste</h3>
-        <div class="row" style="padding-top: 20px">
-            <div class="col-md-6" style="float: left">
-                <div *ngFor="let task of tasks">
-                    <div *ngIf="task.signed_up">
-                        <img src="{{task.profile_pic}}" style=" width: 60px; height: 60px; position: relative; border-radius: 50%; margin: 5px; margin-left: 60%">
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6" style="float: right">
-                <div *ngFor="let task of tasks">
-                    <div *ngIf="task.signed_up">
-                        <p>{{"Name: " + task.first_name + " "}}{{task.last_name}}<br>{{"Geschlecht: " + task.gender}}<br>{{"Kann zahlen: " + task.is_payment_enabled}}<br>{{"Heimat: " + task.locale}}<br>{{"FacebookID: " + task.senderId}}<br>{{"Angemeldet am: " + task.signed_up_at}}<br>{{"Zeitzone: " + task.timezone}}</p>
-                    </div>
+        <div class="row1" style="padding-top: 20px">
+            <div *ngFor="let task of tasks">
+                <div *ngIf="task.signed_up">
+                    <img src="{{task.profile_pic}}" style=" width: 60px; height: 60px; position: relative; border-radius: 50%; margin: 5px; margin-left: 60%">
+                    <p style="padding-left:20px">{{"Name: " + task.first_name + " "}}{{task.last_name}}<br>{{"Geschlecht: " + task.gender}}<br>{{"Kann zahlen: " + task.is_payment_enabled}}<br>{{"Heimat: " + task.locale}}<br>{{"FacebookID: " + task.senderId}}<br>{{"Angemeldet am: " + task.signed_up_at}}<br>{{"Zeitzone: " + task.timezone}}<br></p>
                 </div>
             </div>
         </div>
@@ -56,37 +47,20 @@
                 </div>
             </form>
         </div>
-        <div class="messages"><h3 style="color: white; text-align: center">Bisher gesendete Nachrichten</h3>
-            <div class="row1" style="padding-top: 20px">
-                <div class="col-md-6">
-                    <div *ngFor="let Messages of sentMessages">
-                        <p style="color: #ffffff; padding-left: 30px; padding-top: 30px">Nachricht gesendet am: {{Messages.date}} </p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div *ngFor="let Messages of sentMessages">
-                        <p style="color: #ffffff; padding-left: 30px; padding-top: 30px">Nachricht: {{Messages.text}}</p>
-                    </div>
-                </div>
+        <h3 style="color: white; text-align: center">Bisher gesendete Nachrichten</h3>
+        <div class="form-group1" style="padding-top: 20px;">
+            <div *ngFor="let Messages of sentMessages">
+                <p style="color: #ffffff; padding-top: 30px">Nachricht gesendet am: {{Messages.date}}<br><br>Nachricht: {{Messages.text}}</p>
             </div>
         </div>
     </div>
 
     <div class="col-md-4" style="background-color: #f3efe4; padding-top: 20px; "><h3>Abgemeldete Gäste</h3>
-        <div class="row" style="padding-top: 20px">
-            <div class="col-md-6" style="float: left">
-                <div *ngFor="let task of tasks">
-                    <div *ngIf="!task.signed_up">
-                        <img src="{{task.profile_pic}}" style=" width: 60px; height: 60px; position: relative; border-radius: 50%; margin: 5px; margin-left: 60%">
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6" style="float: right">
-                <div *ngFor="let task of tasks">
-                    <div *ngIf="!task.signed_up">
-                        <p>{{"Name: " + task.first_name + " "}}{{task.last_name}}<br>{{"Geschlecht: " + task.gender}}<br>{{"Kann zahlen: " + task.is_payment_enabled}}<br>{{"Heimat: " + task.locale}}<br>{{"FacebookID: " + task.senderId}}<br>{{"Angemeldet am: " + task.signed_up_at}}<br>{{"Zeitzone: " + task.timezone}}</p>
-                    </div>
+        <div class="row1" style="padding-top: 20px">
+            <div *ngFor="let task of tasks">
+                <div *ngIf="!task.signed_up">
+                    <img src="{{task.profile_pic}}" style=" width: 60px; height: 60px; position: relative; border-radius: 50%; margin: 5px; margin-left: 60%">
+                    <p style="padding-left:20px">{{"Name: " + task.first_name + " "}}{{task.last_name}}<br>{{"Geschlecht: " + task.gender}}<br>{{"Kann zahlen: " + task.is_payment_enabled}}<br>{{"Heimat: " + task.locale}}<br>{{"FacebookID: " + task.senderId}}<br>{{"Angemeldet am: " + task.signed_up_at}}<br>{{"Zeitzone: " + task.timezone}}<br></p>
                 </div>
             </div>
         </div>

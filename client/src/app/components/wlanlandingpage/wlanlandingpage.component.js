@@ -8,22 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
 var WlanlandingpageComponent = (function () {
     function WlanlandingpageComponent() {
     }
     WlanlandingpageComponent.prototype.ngOnInit = function () {
     };
-    WlanlandingpageComponent = __decorate([
-        core_1.Component({
-            selector: 'app-wlanlandingpage',
-            templateUrl: './wlanlandingpage.component.html',
-            styleUrls: ['./wlanlandingpage.component.css'],
-        }), 
-        __metadata('design:paramtypes', [])
-    ], WlanlandingpageComponent);
     return WlanlandingpageComponent;
 }());
+WlanlandingpageComponent = __decorate([
+    core_1.Component({
+        selector: 'app-wlanlandingpage',
+        templateUrl: './wlanlandingpage.component.html',
+        styleUrls: ['./wlanlandingpage.component.css'],
+    }),
+    __metadata("design:paramtypes", [])
+], WlanlandingpageComponent);
 exports.WlanlandingpageComponent = WlanlandingpageComponent;
 /*
 

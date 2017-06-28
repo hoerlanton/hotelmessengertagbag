@@ -1,6 +1,7 @@
 "use strict";
-var testing_1 = require('@angular/core/testing');
-var wlanlandingpage_component_1 = require('./wlanlandingpage.component');
+Object.defineProperty(exports, "__esModule", { value: true });
+var testing_1 = require("@angular/core/testing");
+var wlanlandingpage_component_1 = require("./wlanlandingpage.component");
 describe('WlanlandingpageComponent', function () {
     var component;
     var fixture;

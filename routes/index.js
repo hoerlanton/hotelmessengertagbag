@@ -100,8 +100,6 @@ router.post('/guestsMessage', function(req, res, next){
     var message = req.body;
     console.log(message);
     var broadcast = req.body.text;
-    //var broadcastText = JSON.stringify(broadcast);
-    //var broadcastTextHoi = broadcastText.slice(4, -7);
 
     db.gaeste.find(function(err, gaeste){
         if (err){
@@ -122,7 +120,6 @@ router.post('/guestsMessage', function(req, res, next){
         }
         res.json(message);
     });
-    //return res.redirect('/');
 });
 
 //Get W-Lan-landingpage

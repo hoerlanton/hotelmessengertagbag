@@ -297,11 +297,11 @@ function sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departu
  */
 function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
-
+    console.log(signature);
   if (!signature) {
     // For testing, let's log an error. In production, you should throw an 
     // error.
-    console.error("Couldn't validate the signature.");
+    console.error("Couldn't validate the signature. Line 304 app.js // Callback from Facebook. If Server URL is not the same as webhook URL on facebook");
   } else {
     var elements = signature.split('=');
     var method = elements[0];
@@ -2408,6 +2408,7 @@ function sendAccountLinking(recipientId) {
  *
  */
 function callSendAPI(messageData) {
+    console.log("SEND API CALLLED <------------");
     console.log("Recipient ID: top " + messageData.recipient.id);
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
