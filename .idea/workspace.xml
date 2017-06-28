@@ -3,42 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="15425070-098f-4404-9951-184bf0c07154" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/Messages.js" afterPath="$PROJECT_DIR$/client/Messages.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/Messages.js.map" afterPath="$PROJECT_DIR$/client/Messages.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/Task.js" afterPath="$PROJECT_DIR$/client/Task.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/Task.js.map" afterPath="$PROJECT_DIR$/client/Task.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/app.component.js" afterPath="$PROJECT_DIR$/client/src/app/app.component.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/app.component.js.map" afterPath="$PROJECT_DIR$/client/src/app/app.component.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/app.component.spec.js" afterPath="$PROJECT_DIR$/client/src/app/app.component.spec.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/app.component.spec.js.map" afterPath="$PROJECT_DIR$/client/src/app/app.component.spec.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/app.module.js" afterPath="$PROJECT_DIR$/client/src/app/app.module.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/app.module.js.map" afterPath="$PROJECT_DIR$/client/src/app/app.module.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.css" afterPath="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.html" afterPath="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.js" afterPath="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.js.map" afterPath="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/components/wlanlandingpage/wlanlandingpage.component.js" afterPath="$PROJECT_DIR$/client/src/app/components/wlanlandingpage/wlanlandingpage.component.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/components/wlanlandingpage/wlanlandingpage.component.js.map" afterPath="$PROJECT_DIR$/client/src/app/components/wlanlandingpage/wlanlandingpage.component.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/components/wlanlandingpage/wlanlandingpage.component.spec.js" afterPath="$PROJECT_DIR$/client/src/app/components/wlanlandingpage/wlanlandingpage.component.spec.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/components/wlanlandingpage/wlanlandingpage.component.spec.js.map" afterPath="$PROJECT_DIR$/client/src/app/components/wlanlandingpage/wlanlandingpage.component.spec.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/services/task.service.js" afterPath="$PROJECT_DIR$/client/src/app/services/task.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/app/services/task.service.js.map" afterPath="$PROJECT_DIR$/client/src/app/services/task.service.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/environments/environment.js" afterPath="$PROJECT_DIR$/client/src/environments/environment.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/environments/environment.js.map" afterPath="$PROJECT_DIR$/client/src/environments/environment.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/environments/environment.prod.js" afterPath="$PROJECT_DIR$/client/src/environments/environment.prod.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/environments/environment.prod.js.map" afterPath="$PROJECT_DIR$/client/src/environments/environment.prod.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/main.js" afterPath="$PROJECT_DIR$/client/src/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/main.js.map" afterPath="$PROJECT_DIR$/client/src/main.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/polyfills.js" afterPath="$PROJECT_DIR$/client/src/polyfills.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/polyfills.js.map" afterPath="$PROJECT_DIR$/client/src/polyfills.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/test.js" afterPath="$PROJECT_DIR$/client/src/test.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/test.js.map" afterPath="$PROJECT_DIR$/client/src/test.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/default.json" afterPath="$PROJECT_DIR$/config/default.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/inline.bundle.js.map" afterPath="$PROJECT_DIR$/public/inline.bundle.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.bundle.js" afterPath="$PROJECT_DIR$/public/main.bundle.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.bundle.js.map" afterPath="$PROJECT_DIR$/public/main.bundle.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -126,21 +95,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="default.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="default.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/default.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="75">
+              <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tasks.component.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tasks.component.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+            <state relative-caret-position="825">
+              <caret line="55" column="10" lean-forward="false" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="10" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -165,8 +134,8 @@
       <file leaf-file-name="tasks.component.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+            <state relative-caret-position="240">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -256,9 +225,9 @@
         <option value="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.ts" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/app.js" />
-        <option value="$PROJECT_DIR$/config/default.json" />
         <option value="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.css" />
         <option value="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.html" />
+        <option value="$PROJECT_DIR$/config/default.json" />
       </list>
     </option>
   </component>
@@ -332,60 +301,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hotel-messenger-tagbag" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hotel-messenger-tagbag" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hotel-messenger-tagbag" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hotel-messenger-tagbag" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hotel-messenger-tagbag" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hotel-messenger-tagbag" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -506,12 +421,12 @@
       <workItem from="1497956106002" duration="32374000" />
       <workItem from="1498221215488" duration="38039000" />
       <workItem from="1498480907627" duration="35713000" />
-      <workItem from="1498656392322" duration="7608000" />
+      <workItem from="1498656392322" duration="8468000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="516924000" />
+    <option name="totallyTimeSpent" value="517784000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -524,6 +439,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18746708" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -533,7 +449,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33465347" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33465347" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -890,14 +806,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/default.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -910,16 +818,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+        <state relative-caret-position="825">
+          <caret line="55" column="10" lean-forward="false" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="10" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -937,6 +845,14 @@
             <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/default.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
