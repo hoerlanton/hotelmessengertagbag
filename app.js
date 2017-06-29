@@ -2434,12 +2434,15 @@ function callSendAPI(messageData) {
     } else {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error, messageData.recipient.id);
       console.log(messageData.recipient.id);
+      // var c is assigned to the current recipient id
+      c = messageData.recipient.id;
+      //updateDB  is called with current reciüinet id value -> c which is a global variable
+      updateDB();
       //var index = senderIDTransfer.indexOf(messageData.recipient.id);
       //console.log(index);
       //senderIDTransfer.splice(index, 1);
       //console.log(senderIDTransfer);
-      c = JSON.stringify(messageData.recipient.id);
-      setTimeout(updateDB, 20000);
+      //Problem with c = is changed everytime the function Call send api is called - when updateDB function is called the value is the same as the call send api is called the last time
       }
     });
 }
