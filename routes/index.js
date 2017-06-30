@@ -80,7 +80,7 @@ router.put('/guests', function(req, res, next) {
     console.log(req.body);
     var guestUpdate = req.body;
     var guestUpdateString = JSON.stringify(guestUpdate);
-    var guestUpdateHoi = guestUpdateString.slice(4, -7);
+    var guestUpdateHoi = guestUpdateString.slice(2, -5);
     console.log(guestUpdateHoi);
     db.gaeste.update({
         senderId:  guestUpdateHoi  },
