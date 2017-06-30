@@ -840,9 +840,9 @@ function receivedMessage(event) {
                 break;
 
             default:
-                if (typeof quickReplyPayload === "undefined") {
-                    sendMenu(senderID);
-                }
+                //if (typeof quickReplyPayload === "undefined") {
+                //   sendMenu(senderID);
+                //}
             }
         }
 }
