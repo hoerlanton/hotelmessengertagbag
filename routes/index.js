@@ -124,7 +124,8 @@ router.post('/guestsMessage', function(req, res, next){
 
 //Get W-Lan-landingpage
 router.get('/wlanlandingpage', function(req, res, next) {
-    res.render('wlanlandingpage', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
+    res.redirect('https://hotelmessenger.herokuapp.com/wlanlandingpage');
+    //res.render('wlanlandingpage', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
 });
 
 //Get checkout form page
