@@ -124,7 +124,7 @@ router.post('/guestsMessage', function(req, res, next){
 
 //Get W-Lan-landingpage
 router.get('/wlanlandingpage', function(req, res, next) {
-    res.redirect('https://hotelmessenger.herokuapp.com/wlanlandingpage');
+    res.redirect('https://www.salzburgerhof.servicio.io/wlanlandingpage');
     //res.render('wlanlandingpage', { title: 'Jetzt buchen', errMsg: errMsg, noError: !errMsg});
 });
 
