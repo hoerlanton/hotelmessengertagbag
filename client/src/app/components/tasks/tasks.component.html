@@ -20,9 +20,15 @@
     <%= errMsg  %>
 </div>
 
+
+
 <div class="row">
     <div class="col-md-4" style="background-color: #f3efe4; padding-top: 20px; "><h3>Angemeldete Gäste</h3>
+
         <div class="row1" style="padding-top: 20px">
+            <div id="wrapper">
+                <div class="scrollbar" id="style-1">
+                    <div class="force-overflow">
             <div *ngFor="let task of tasks">
                 <div *ngIf="task.signed_up">
                     <img src="{{task.profile_pic}}" style=" width: 60px; height: 60px; position: relative; border-radius: 50%; margin: 5px; margin-left: 60%">
@@ -31,6 +37,9 @@
             </div>
         </div>
     </div>
+</div>
+    </div>
+</div>
 
     <div class="col-md-4" style="background-color: #0a7a74; padding-top: 20px"><h3 style="color: white">Nachricht an Gäste senden</h3>
         <div class="row" style="padding-top: 20px; padding-bottom: 10px; border-bottom: 10px; border-bottom-color: #ffffff">
