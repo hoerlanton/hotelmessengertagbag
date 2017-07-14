@@ -339,20 +339,4 @@ function sendPDF(recipientId) {
     sourceFile.callSendAPI(messageData);
 }
 
-//Broadcast gesendet von Dashboard to all angemeldete Gäste
-function sendBroadcast(recipientId, broadcastText) {
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            text: broadcastText,
-            metadata: "DEVELOPER_DEFINED_METADATA"
-        }
-    };
-
-    sourceFile.callSendAPI(messageData);
-}
-
-
 module.exports = router;

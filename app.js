@@ -22,9 +22,6 @@ const
   routes = require('./routes/index'),
   app = express();
 
-var mongojs = require('mongojs');
-var db = mongojs('mongodb://anton:b2d4f6h8@ds127132.mlab.com:27132/servicio', ['gaeste']);
-
 //Bodyparser middleware
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
@@ -114,13 +111,6 @@ exports.profileInfo = [];
 exports.profilePic = [];
 var a = {};
 var b = "";
-
-/*
- * If setting up a new app, change serverURL and pageAccessToken according to config.js file
- */
-
-var serverUrl = "https://hotelmessengertagbag.herokuapp.com";
-var pageAccessToken = "EAAUv40NW3zMBAHogZCCHgz7THZAoZBPSlEyZAvh5Obvf8m1MNitzIGgdfypSmJHN9UDAPveLSEWu62iUh0wcPGth6X9xYQyWlOhZA6pxgXT16y6GwxTZCgfDfPoOBlLheu5a4QnH0VmLPZBHRZAuH2tfoc57RpGowpvTYI9ZAgs3N3AZDZD";
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -217,7 +207,6 @@ app.post('/webhook', function (req, res) {
 });
 
 
-
 /*
  * This path is used for account linking. The account linking call-to-action
  * (sendAccountLinking) is pointed to this URL.
@@ -242,17 +231,94 @@ app.get('/authorize', function(req, res) {
 });
 
 
-//localStorage Setup
-/*
-if (typeof localStorage === "undefined" || localStorage === null) {
-    var LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
+//New test function -> beds24 API -> getDescriptions
+function sendJSONRequestBeds24Descriptions(senderId){
+
+    // JSON to be passed to the QPX Express API
+    var requestData = {
+        "roomId": "6027",
+        "lang": "en"
+    };
+
+    // QPX REST API URL (I censored my api key)
+    var url = "https://api.beds24.com/json/getDescriptions";
+
+    // fire request
+    request({
+        url: url,
+        method: "POST",
+        json: true,
+        headers: {
+            "content-type": "application/x-www-form-urlencoded"
+        },
+        body: JSON.stringify(requestData)
+    },
+    function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            console.log(body);
+            var responseString = JSON.stringify(response);
+            console.log(response.toString());
+            console.log(parseString(response));
+            var length = 620;
+            var trimmedResponse = responseString.substring(0, length);
+            sendTextMessage(senderId, trimmedResponse);
+        }
+        else {
+            console.log("error: " + error);
+            console.log("response.statusCode: " + response.statusCode);
+            console.log("response.statusText: " + response.statusText);
+            console.log(JSON.stringify(response));
+            console.log(response.toString());
+            console.log(parseString(response));
+        }
+    });
 }
 
-localStorage.setItem('myFirstKey', 'myFirstValue');
-console.log(localStorage.getItem('myFirstKey'));
-*/
+//New test function -> new API -> getAvailabilities
+function sendJSONRequestBeds24Availabilities(senderId){
 
+    // JSON to be passed to the QPX Express API
+    var requestData = {
+        "checkIn": "20170901",
+        "checkOut": "20170903",
+        "propId": "3103",
+        "numAdult": "2",
+        "numChild": "0"
+    };
+
+    // QPX REST API URL (I censored my api key)
+    var url = "https://api.beds24.com/json/getAvailabilities";
+
+    // fire request
+    request({
+            url: url,
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/x-www-form-urlencoded"
+            },
+            body: JSON.stringify(requestData)
+        },
+        function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                console.log(body);
+                var responseString = JSON.stringify(response);
+                console.log(response.toString());
+                console.log(parseString(response));
+                var length = 620;
+                var trimmedResponse = responseString.substring(0, length);
+                sendTextMessage(senderId, trimmedResponse);
+            }
+            else {
+                console.log("error: " + error);
+                console.log("response.statusCode: " + response.statusCode);
+                console.log("response.statusText: " + response.statusText);
+                console.log(JSON.stringify(response));
+                console.log(response.toString());
+                console.log(parseString(response));
+            }
+        });
+}
 
 //send XML post request to Cultswitch channel manager. Recieved data is pushed to resultTransferData
 function sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departureDate, doppelzimmerClassicSteinleo, einzelzimmerSommerstein, doppelzimmerDeluxeHolzleo, doppelzimmerSuperiorSteinleo) {
@@ -291,7 +357,6 @@ function sendXmlPostRequest(numberOfRooms, numberOfPersons, arrivalDate, departu
 }
 
 
-
 /*
  * Verify that the callback came from Facebook. Using the App Secret from 
  * the App Dashboard, we can verify the signature that is sent with each 
@@ -322,6 +387,7 @@ function verifyRequestSignature(req, res, buf) {
   }
 }
 
+
 /*
  * Authorization Event
  *
@@ -330,6 +396,7 @@ function verifyRequestSignature(req, res, buf) {
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/authentication
  *
  */
+
 
 //Recieve authentication from wlanlandingpage when user click Send to messenger - Send data to mongoDB database.
 function receivedAuthentication(event) {
@@ -401,6 +468,7 @@ function receivedAuthentication(event) {
     setTimeout(postNewUserToDB, 30000);
 }
 
+
 function postNewUserToDB() {
     console.log(b);
         // An object of options to indicate where to post to
@@ -427,43 +495,6 @@ function postNewUserToDB() {
         post_req.write(b);
         post_req.end();
 }
-
-function getAnalytics(){
-    var buffer = "";
-    var a = "";
-    var optionsget = {
-        host: 'graph.facebook.com',
-        port: 443,
-        path: '/v2.8/me/insights/page_messages_active_threads_unique&access_token=EAAUv40NW3zMBAIpTPoI73Q8mvPtZAZBQEi3usOTD6pZAZCSNZApFVictpz74mhIQOOyZAHM2UrNKbc8hk8NhGaSnEJYrQCKwMd7ZAIkoWZCsimnFUAamsQiNOP6dC2PhLvOsOPatn0fWvxXpCPltvU8INNj3vfBBjNG7S1VlPFTDwgZDZD',
-        method: 'GET'
-    };
-
-    console.info('Options prepared:');
-    console.info(optionsget);
-    console.info('Do the GET call');
-
-// do the GET request
-    var reqGet = https.request(optionsget, function(res) {
-        console.log("statusCode: ", res.statusCode);
-        // uncomment it for header details
-        //  console.log("headers: ", res.headers);
-
-        res.on('data', function(d) {
-            console.info('GET result:\n');
-            process.stdout.write(d);
-            buffer += d;
-            console.log(buffer);
-            a = JSON.parse(buffer);
-            console.log(a);
-        });
-    });
-
-    reqGet.end();
-    reqGet.on('error', function(e) {
-        console.error(e);
-    });
-}
-exports.getAnalytics = getAnalytics;
 
 //Stay range is the difference between arrivalday and departureday
 function calculateStayRange(arrivalDate, departureDate) {
@@ -842,6 +873,14 @@ function receivedMessage(event) {
 
             case "pay":
                 sendPaymentButton(senderID);
+                break;
+
+            case "test1":
+                sendJSONRequestBeds24Descriptions(senderID);
+                break;
+
+            case "test2":
+                sendJSONRequestBeds24Availabilities(senderID);
                 break;
 
             default:
@@ -1689,7 +1728,6 @@ function sendPaymentButton(recipientId) {
  * item_url - Link image links to
  * serverUrl - global variable, same as in config.json
  */
-
 function sendGenericMessageOffer1(recipientId) {
     var messageData = {
         recipient: {
@@ -2351,7 +2389,6 @@ function sendGenericMessageOffer12(recipientId) {
     exports.ratePlanID = "<RoomRate NumberOfUnits=\"3\" RatePlanID=\"420596\" RatePlanType=\"11\" /><RoomRate NumberOfUnits=\"1\" RatePlanID=\"420594\" RatePlanType=\"11\" />";
 
 }
-
 
 /*
  * Turn typing indicator on
