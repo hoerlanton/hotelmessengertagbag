@@ -4,7 +4,6 @@
     <list default="true" id="15425070-098f-4404-9951-184bf0c07154" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/default.json" afterPath="$PROJECT_DIR$/config/default.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,22 +20,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-590">
-              <caret line="959" column="0" lean-forward="true" selection-start-line="959" selection-start-column="0" selection-end-line="959" selection-end-column="0" />
+            <state relative-caret-position="296">
+              <caret line="986" column="1" lean-forward="true" selection-start-line="986" selection-start-column="1" selection-end-line="986" selection-end-column="1" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <element signature="e#2715#3038#0" expanded="false" />
+                <element signature="e#3357#4657#0" expanded="false" />
+                <element signature="e#4838#5390#0" expanded="false" />
+                <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
                 <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
                 <element signature="n#!!block;n#postNewUserToDB#0" expanded="false" />
+                <element signature="n#!!block;n#receivedMessage#0" expanded="false" />
+                <element signature="n#!!block;n#receiveInputCuisine#0" expanded="false" />
+                <element signature="n#!!block;n#recieveInputDiet#0" expanded="false" />
+                <element signature="n#!!block;n#recieveInputIntolerances#0" expanded="false" />
+                <element signature="n#!!block;n#recieveInputTypes#0" expanded="false" />
+                <element signature="n#!!block;n#recieveInputQuery#0" expanded="false" />
                 <element signature="n#!!block;n#resetValues#0" expanded="false" />
                 <element signature="n#!!block;n#sendFirstRecipeQuestion#0" expanded="false" />
                 <element signature="n#!!block;n#sendSecondRecipeQuestion#0" expanded="false" />
                 <element signature="n#!!block;n#sendThirdRecipeQuestion#0" expanded="false" />
                 <element signature="n#!!block;n#sendFourthRecipeQuestion#0" expanded="false" />
                 <element signature="n#!!block;n#sendFifthRecipeQuestion#0" expanded="false" />
+                <element signature="n#!!block;n#foodAPIRecipeRequest#0" expanded="false" />
+                <element signature="n#!!block;n#foodAPIRecipeDetailRequest#0" expanded="false" />
+                <element signature="n#!!block;n#foodAPIRecipeDetailStepsRequest#0" expanded="false" />
                 <element signature="n#!!block;n#receivedDeliveryConfirmation#0" expanded="false" />
+                <element signature="n#!!block;n#receivedPostback#0" expanded="false" />
                 <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
                 <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
                 <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
@@ -46,6 +59,10 @@
                 <element signature="n#!!block;n#sendGenericRequest#0" expanded="false" />
                 <element signature="n#!!block;n#sendGenericRequest2#0" expanded="false" />
                 <element signature="n#!!block;n#sendGenericRequest3#0" expanded="false" />
+                <element signature="n#!!block;n#sendListReceiptDetail#0" expanded="false" />
+                <element signature="n#!!block;n#sendListReceiptDetail2#0" expanded="false" />
+                <element signature="n#!!block;n#sendListReceiptDetail3#0" expanded="false" />
+                <element signature="n#!!block;n#sendListReceiptDetail4#0" expanded="false" />
                 <element signature="n#!!block;n#sendStepDescription#0" expanded="false" />
                 <element signature="n#!!block;n#sendStepDescription2#0" expanded="false" />
                 <element signature="n#!!block;n#sendStepDescription3#0" expanded="false" />
@@ -62,7 +79,6 @@
                 <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
                 <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
                 <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
-                <element signature="e#80284#81161#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -80,7 +96,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="default.json" pinned="false" current-in-tab="true">
+      <file leaf-file-name="default.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/default.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
@@ -103,8 +119,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Auto</find>
-      <find>reset</find>
       <find>checkIfHotelIsClosed</find>
       <find>priceAllNightsDoppelzimmerSuperiorSteinleo</find>
       <find>priceAllNightsDoppelzimmerClassicSteinleo</find>
@@ -133,6 +147,8 @@
       <find>diet</find>
       <find>quick</find>
       <find>id</find>
+      <find>c</find>
+      <find>b</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -172,8 +188,8 @@
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.html" />
         <option value="$PROJECT_DIR$/client/src/app/components/tasks/tasks.component.css" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/config/default.json" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -364,12 +380,12 @@
       <workItem from="1500375762286" duration="6732000" />
       <workItem from="1500627730873" duration="552000" />
       <workItem from="1500883954386" duration="812000" />
-      <workItem from="1500924189274" duration="49739000" />
+      <workItem from="1500924189274" duration="50818000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="608202000" />
+    <option name="totallyTimeSpent" value="609281000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -385,7 +401,7 @@
     <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13164824" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19747235" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970297" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -420,7 +436,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="23" />
+      <option name="time" value="24" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -701,21 +717,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/default.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="61" lean-forward="true" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-590">
-          <caret line="959" column="0" lean-forward="true" selection-start-line="959" selection-start-column="0" selection-end-line="959" selection-end-column="0" />
+        <state relative-caret-position="296">
+          <caret line="986" column="1" lean-forward="true" selection-start-line="986" selection-start-column="1" selection-end-line="986" selection-end-column="1" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="e#2715#3038#0" expanded="false" />
+            <element signature="e#3357#4657#0" expanded="false" />
+            <element signature="e#4838#5390#0" expanded="false" />
+            <element signature="n#!!block;n#verifyRequestSignature#0" expanded="false" />
             <element signature="n#!!block;n#receivedAuthentication#0" expanded="false" />
             <element signature="n#!!block;n#postNewUserToDB#0" expanded="false" />
+            <element signature="n#!!block;n#receivedMessage#0" expanded="false" />
+            <element signature="n#!!block;n#receiveInputCuisine#0" expanded="false" />
+            <element signature="n#!!block;n#recieveInputDiet#0" expanded="false" />
+            <element signature="n#!!block;n#recieveInputIntolerances#0" expanded="false" />
+            <element signature="n#!!block;n#recieveInputTypes#0" expanded="false" />
+            <element signature="n#!!block;n#recieveInputQuery#0" expanded="false" />
             <element signature="n#!!block;n#resetValues#0" expanded="false" />
             <element signature="n#!!block;n#sendFirstRecipeQuestion#0" expanded="false" />
             <element signature="n#!!block;n#sendSecondRecipeQuestion#0" expanded="false" />
             <element signature="n#!!block;n#sendThirdRecipeQuestion#0" expanded="false" />
             <element signature="n#!!block;n#sendFourthRecipeQuestion#0" expanded="false" />
             <element signature="n#!!block;n#sendFifthRecipeQuestion#0" expanded="false" />
+            <element signature="n#!!block;n#foodAPIRecipeRequest#0" expanded="false" />
+            <element signature="n#!!block;n#foodAPIRecipeDetailRequest#0" expanded="false" />
+            <element signature="n#!!block;n#foodAPIRecipeDetailStepsRequest#0" expanded="false" />
             <element signature="n#!!block;n#receivedDeliveryConfirmation#0" expanded="false" />
+            <element signature="n#!!block;n#receivedPostback#0" expanded="false" />
             <element signature="n#!!block;n#receivedMessageRead#0" expanded="false" />
             <element signature="n#!!block;n#receivedAccountLink#0" expanded="false" />
             <element signature="n#!!block;n#sendPersonalFeedback#0" expanded="false" />
@@ -725,6 +763,10 @@
             <element signature="n#!!block;n#sendGenericRequest#0" expanded="false" />
             <element signature="n#!!block;n#sendGenericRequest2#0" expanded="false" />
             <element signature="n#!!block;n#sendGenericRequest3#0" expanded="false" />
+            <element signature="n#!!block;n#sendListReceiptDetail#0" expanded="false" />
+            <element signature="n#!!block;n#sendListReceiptDetail2#0" expanded="false" />
+            <element signature="n#!!block;n#sendListReceiptDetail3#0" expanded="false" />
+            <element signature="n#!!block;n#sendListReceiptDetail4#0" expanded="false" />
             <element signature="n#!!block;n#sendStepDescription#0" expanded="false" />
             <element signature="n#!!block;n#sendStepDescription2#0" expanded="false" />
             <element signature="n#!!block;n#sendStepDescription3#0" expanded="false" />
@@ -741,16 +783,7 @@
             <element signature="n#!!block;n#sendTypingOff#0" expanded="false" />
             <element signature="n#!!block;n#sendAccountLinking#0" expanded="false" />
             <element signature="n#!!block;n#callSendAPI#0" expanded="false" />
-            <element signature="e#80284#81161#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/default.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="61" lean-forward="true" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>

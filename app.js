@@ -53,9 +53,13 @@ var bookingLink = "";
 var autoAnswerIsOn = true;
 var a = {};
 var b = "";
-var c = "";
 var ids = [];
 var id = 0;
+var inputCuisine;
+var inputDiet;
+var inputIntolerance;
+var inputQuery;
+var inputType;
 
 /*
  * Be sure to setup your config values before running this code. You can
@@ -175,252 +179,6 @@ app.get('/authorize', function(req, res) {
   });
 });
 
-/*
-//New test function -> beds24 API -> getDescriptions
-function sendJSONRequestBeds24Descriptions(senderId){
-
-    // JSON to be passed to the QPX Express API
-    var requestData = {
-        "roomId": "6027",
-        "lang": "en"
-
-    };
-
-    // QPX REST API URL (I censored my api key)
-    var url = "https://api.beds24.com/json/getDescriptions";
-
-    // fire request
-    request({
-        url: url,
-        method: "POST",
-        json: true,
-        headers: {
-            "content-type": "application/x-www-form-urlencoded"
-        },
-        body: JSON.stringify(requestData)
-    },
-    function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            console.log(body);
-            var responseString = JSON.stringify(response);
-            console.log(response.toString());
-            console.log(parseString(response));
-            var length = 620;
-            var trimmedResponse = responseString.substring(0, length);
-            sendTextMessage(senderId, trimmedResponse);
-        }
-        else {
-            console.log("error: " + error);
-            console.log("response.statusCode: " + response.statusCode);
-            console.log("response.statusText: " + response.statusText);
-            console.log(JSON.stringify(response));
-            console.log(response.toString());
-            console.log(parseString(response));
-        }
-    });
-}
-
-//New test function -> new API -> getAvailabilities
-function sendJSONRequestBeds24Availabilities(senderId){
-
-    // JSON to be passed to the QPX Express API
-    var requestData = {
-        "checkIn": "20170901",
-        "checkOut": "20170903",
-        "propId": "36591",
-        "numAdult": "2",
-        "numChild": "0"
-    };
-
-    // QPX REST API URL (I censored my api key)
-    var url = "https://api.beds24.com/json/getAvailabilities";
-
-    // fire request
-    request({
-            url: url,
-            method: "POST",
-            json: true,
-            headers: {
-                "content-type": "application/x-www-form-urlencoded"
-            },
-            body: JSON.stringify(requestData)
-        },
-        function (error, response, body) {
-            if (!error && response.statusCode === 200) {
-                console.log(body);
-                var responseString = JSON.stringify(response);
-                console.log(response.toString());
-                console.log(parseString(response));
-                var length = 620;
-                var trimmedResponse = responseString.substring(0, length);
-                sendTextMessage(senderId, trimmedResponse);
-            }
-            else {
-                console.log("error: " + error);
-                console.log("response.statusCode: " + response.statusCode);
-                console.log("response.statusText: " + response.statusText);
-                console.log(JSON.stringify(response));
-                console.log(response.toString());
-                console.log(parseString(response));
-            }
-        });
-}
-
-//New test function -> new API -> bookRoom
-function sendJSONRequestBeds24BookRoom(senderId){
-
-    // JSON to be passed to the QPX Express API
-    var requestData = {
-        "authentication": {
-            "apiKey": "anton6789123456789",
-            "propKey": "anton6789123456789"
-        },
-        "roomId": "12345",
-        "unitId": "1",
-        "roomQty": "1",
-        "status": "1",
-        "firstNight": "2014-10-01",
-        "lastNight": "2014-10-01",
-        "numAdult": "2",
-        "numChild": "0",
-        "guestTitle": "Mr",
-        "guestFirstName": "Joe",
-        "guestName": "Smith",
-        "guestEmail": "joe@example.com",
-        "guestPhone": "+123456789",
-        "guestMobile": "09 87654321",
-        "guestFax": "0123456",
-        "guestAddress": "1 Big Street",
-        "guestCity": "London",
-        "guestPostcode": "EX 1234",
-        "guestCountry": "United_Kingdom",
-        "guestArrivalTime": "late, very late",
-        "guestVoucher": "give me discount",
-        "guestComments": "Non smoking please",
-        "guestCardType": "VISA",
-        "guestCardNumber": "0000000000000000",
-        "guestCardName": "Mr Smith",
-        "guestCardExpiry": "01\/17",
-        "guestCardCVV": "000",
-        "message": "text",
-        "custom1": "text",
-        "custom2": "text",
-        "custom3": "text",
-        "custom4": "text",
-        "custom5": "text",
-        "custom6": "text",
-        "custom7": "text",
-        "custom8": "text",
-        "custom9": "text",
-        "custom10": "text",
-        "notes": "VIP",
-        "flagColor": "ff0000",
-        "flagText": "Show booking in red",
-        "price": "100.00",
-        "deposit": "10.00",
-        "tax": "5.00",
-        "commission": "15.00",
-        "refererEditable": "online",
-        "notifyUrl": "true",
-        "notifyGuest": "false",
-        "notifyHost": "false",
-        "assignBooking": "false",
-        "invoice": [
-            {
-                "description": "lodging",
-                "status": "",
-                "qty": "1",
-                "price": "123.45",
-                "vatRate": "10",
-                "type": "0"
-            }
-        ],
-        "infoItems": [
-            {
-                "code": "PAYMENT",
-                "text": "Paid $100"
-            }
-        ]
-    };
-
-    // QPX REST API URL (I censored my api key)
-    var url = "https://api.beds24.com/json/setBooking";
-
-    // fire request
-    request({
-            url: url,
-            method: "POST",
-            json: true,
-            headers: {
-                "content-type": "application/x-www-form-urlencoded"
-            },
-            body: JSON.stringify(requestData)
-        },
-        function (error, response, body) {
-            if (!error && response.statusCode === 200) {
-                console.log(body);
-                var responseString = JSON.stringify(response);
-                console.log(response.toString());
-                console.log(parseString(response));
-                var length = 620;
-                var trimmedResponse = responseString.substring(0, length);
-                sendTextMessage(senderId, trimmedResponse);
-            }
-            else {
-                console.log("error: " + error);
-                console.log("response.statusCode: " + response.statusCode);
-                console.log("response.statusText: " + response.statusText);
-                console.log(JSON.stringify(response));
-                console.log(response.toString());
-                console.log(parseString(response));
-            }
-        });
-}
-
-//New test function -> beds24 API -> getPropertyDescription
-function sendJSONRequestBeds24PropDescr(senderId){
-
-    // JSON to be passed to the QPX Express API
-    var requestData = {
-        "propId": "36591"
-    };
-
-    // QPX REST API URL (I censored my api key)
-    var url = "https://api.beds24.com/json/getDescriptions";
-
-    // fire request
-    request({
-            url: url,
-            method: "POST",
-            json: true,
-            headers: {
-                "content-type": "application/x-www-form-urlencoded"
-            },
-            body: JSON.stringify(requestData)
-        },
-        function (error, response, body) {
-            if (!error && response.statusCode === 200) {
-                console.log(body);
-                var responseString = JSON.stringify(response);
-                console.log(response.toString());
-                console.log(parseString(response));
-                var length = 620;
-                var trimmedResponse = responseString.substring(0, length);
-                sendTextMessage(senderId, trimmedResponse);
-            }
-            else {
-                console.log("error: " + error);
-                console.log("response.statusCode: " + response.statusCode);
-                console.log("response.statusText: " + response.statusText);
-                console.log(JSON.stringify(response));
-                console.log(response.toString());
-                console.log(parseString(response));
-            }
-        });
-}
-*/
-
-
 
 /*
  * Verify that the callback came from Facebook. Using the App Secret from
@@ -533,7 +291,6 @@ function receivedAuthentication(event) {
     setTimeout(postNewUserToDB, 30000);
 }
 
-
 function postNewUserToDB() {
     console.log(b);
         // An object of options to indicate where to post to
@@ -561,7 +318,6 @@ function postNewUserToDB() {
         post_req.end();
 }
 
-
 /*
  * Message Event
  *
@@ -576,9 +332,8 @@ function postNewUserToDB() {
  * then we'll simply confirm that we've received the attachment.
  *
  */
-
-
 function receivedMessage(event) {
+
     var senderID = event.sender.id;
     var recipientID = event.recipient.id;
     var timeOfMessage = event.timestamp;
@@ -671,7 +426,7 @@ function receivedMessage(event) {
 
             case "get recipe":
                 sendFirstRecipeQuestion(senderID);
-                resetValues(inputCuisine, inputDiet, inputIntolerance, inputQuery, inputType);
+                resetValues();
                 break;
 
             case "african":
@@ -749,13 +504,6 @@ function receivedMessage(event) {
         }
 }
 
-var inputCuisine;
-var inputDiet;
-var inputIntolerance;
-var inputQuery;
-var inputType;
-
-
 function receiveInputCuisine(messageText){
     inputCuisine = messageText
 }
@@ -776,14 +524,14 @@ function recieveInputQuery(messageText){
     inputQuery = messageText;
 }
 
-function resetValues(inputCuisine, inputDiet, inputIntolerance, inputQuery, inputType){
+function resetValues(){
     inputCuisine = "";
     inputDiet = "";
     inputIntolerance = "";
     inputQuery = "";
     inputType = "";
+    ids = [];
 }
-
 
 function sendFirstRecipeQuestion(recipientId) {
     var messageData = {
@@ -799,7 +547,6 @@ function sendFirstRecipeQuestion(recipientId) {
     callSendAPI(messageData);
 }
 
-
 function sendSecondRecipeQuestion(recipientId){
     var messageData = {
         recipient: {
@@ -813,7 +560,6 @@ function sendSecondRecipeQuestion(recipientId){
 
     callSendAPI(messageData);
 }
-
 
 function sendThirdRecipeQuestion(recipientId){
     var messageData = {
@@ -857,16 +603,12 @@ function sendFifthRecipeQuestion(recipientId){
     callSendAPI(messageData);
 }
 
-
-
 function foodAPIRecipeRequest(senderId, inputCuisine, inputDiet, inputIntolerance, inputType, inputQuery) {
 
     var imageUrlCombined = [];
     var title = [];
     var readyInMinutes = [];
     var recipeNumberLength = 0;
-
-
 
     // These code snippets use an open-source library. http://unirest.io/nodejs
     // 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?cuisine=italian&diet=vegetarian&excludeIngredients=coconut&instructionsRequired=false&intolerances=egg&limitLicense=false&number=10&offset=0&query=pasta&type=main+course'
@@ -934,6 +676,7 @@ function foodAPIRecipeRequest(senderId, inputCuisine, inputDiet, inputIntoleranc
 }
 
 function foodAPIRecipeDetailRequest(senderId, id) {
+
     var receiptDetail = [];
     var title = [];
     var images = [];
@@ -2030,12 +1773,6 @@ function sendStepDescription9(recipientId, instructionStepsDetail, instructionSt
 }
 
 
-
-
-
-
-
-
 //Send Payment button
 function sendPaymentButton(recipientId) {
     var messageData = {
@@ -2246,38 +1983,6 @@ function callSendAPI(messageData) {
     });
 }
 
-/*
-//Send update to REST-ful API in index.js if signed-out, change signed-up field to false
-function updateDB(){
-    console.log("updateDB function called" + c);
-
-     // An object of options to indicate where to post to
-     var put_options = {
-        //Change URL to hotelmessengertagbag.herokuapp.com if deploying
-        host: 'hotelmessengertagbag.herokuapp.com',
-        port: '80',
-        path: '/guests',
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-     };
-
-     // Set up the request
-     var put_req = http.request(put_options, function(res) {
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            console.log('Response: ' + chunk);
-        });
-     });
-
-     // post the data
-     put_req.write(c);
-     put_req.end();
-}
-
-exports.callSendAPI = callSendAPI;
-*/
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid
 // certificate authority.
