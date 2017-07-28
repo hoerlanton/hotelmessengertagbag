@@ -55,6 +55,7 @@ var a = {};
 var b = "";
 var c = "";
 var ids = [];
+var id = 0;
 
 /*
  * Be sure to setup your config values before running this code. You can
@@ -863,6 +864,8 @@ function foodAPIRecipeRequest(senderId, inputCuisine, inputDiet, inputIntoleranc
     var imageUrlCombined = [];
     var title = [];
     var readyInMinutes = [];
+    var recipeNumberLength = 0;
+
 
 
     // These code snippets use an open-source library. http://unirest.io/nodejs
@@ -893,7 +896,7 @@ function foodAPIRecipeRequest(senderId, inputCuisine, inputDiet, inputIntoleranc
         .header("Accept", "application/json")
         .end(function (result) {
             console.log(result.status, result.headers, result.body);
-            console.log("--------------------->>>>>>>>>>>>:" + JSON.stringify(result.body));
+            //console.log("--------------------->>>>>>>>>>>>:" + JSON.stringify(result.body));
             for (var x = 0; x < result.body.results.length; x++) {
                 var imageUrl = result.body.baseUri;
                 ids.push(result.body.results[x].id);
@@ -907,41 +910,164 @@ function foodAPIRecipeRequest(senderId, inputCuisine, inputDiet, inputIntoleranc
                 console.log(imageUrlCombined[x]);
                 console.log(readyInMinutes[x]);
             }
+
+            if (title.length === 0) {
+                sendTextMessage(senderId, "There are no recipies for this request available");
+            }
             console.log(title);
             console.log(imageUrlCombined);
             console.log(readyInMinutes);
-            //sendQuickRequest(senderId, imageUrlCombined, title, readyInMinutes);
+
+            recipeNumberLength = result.body.results.length;
+            console.log("recipeNumberLength ---->" + recipeNumberLength);
+
             sendGenericRequest(senderId, imageUrlCombined, title, readyInMinutes, ids);
-            sendGenericRequest2(senderId, imageUrlCombined, title, readyInMinutes, ids);
-            sendGenericRequest3(senderId, imageUrlCombined, title, readyInMinutes, ids);
+
+            if (recipeNumberLength > 4 ) {
+                sendGenericRequest2(senderId, imageUrlCombined, title, readyInMinutes, ids);
+            }
+            else if (recipeNumberLength > 8 && recipeNumberLength < 12) {
+                sendGenericRequest2(senderId, imageUrlCombined, title, readyInMinutes, ids);
+                sendGenericRequest3(senderId, imageUrlCombined, title, readyInMinutes, ids);
+            }
         })
 }
 
 function foodAPIRecipeDetailRequest(senderId, id) {
+    var receiptDetail = [];
+    var title = [];
+    var images = [];
+    var ingridientsLength = 0;
+    id = id
+
+    console.log("---->" + id);
+
 // These code snippets use an open-source library. http://unirest.io/nodejs
     unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + id + "/information?includenutrition=false")
         .header("X-Mashape-Key", "M0WkYkVSuvmshQP7S6BBF9BdI3I5p1wSLh3jsnXUQkJCIBbL7d")
         .header("Accept", "application/json")
         .end(function (result) {
             console.log(result.status, result.headers, result.body);
-            console.log("--------------------->>>>>>>>>>>>:" + JSON.stringify(result.body));
+            //console.log("--------------------->>>>>>>>>>>>:" + JSON.stringify(result.body));
             for (var y = 0; y < result.body.extendedIngredients.length; y++) {
-                var receiptDetail = JSON.stringify(result.body.extendedIngredients[y]);
-                sendTextMessage(senderId, receiptDetail);
+                receiptDetail.push(result.body.extendedIngredients[y]);
+                title.push(receiptDetail[y].originalString);
+                images.push(receiptDetail[y].image);
+
+                console.log(receiptDetail[y].originalString);
+                console.log(receiptDetail[y].image);
             }
-            for (var z = 0; z < result.body.analyzedInstructions[0].steps.length; z++) {
-                var instructionStepsDetail = JSON.stringify(result.body.analyzedInstructions[0].steps[z]);
-                var instructionStepsDetailTrimmed = instructionStepsDetail.substring(0, 620);
-                sendTextMessage(senderId, instructionStepsDetailTrimmed);
+
+            ingridientsLength = result.body.extendedIngredients.length;
+
+            console.log("Receiptdetail: ----->>>>" + receiptDetail);
+            console.log("title: ----->>>>" + title);
+            console.log("images: ----->>>>" + images);
+            console.log("ingredients length ---->>>>>" + ingridientsLength);
+
+            sendListReceiptDetail(senderId, title, images);
+
+            if (ingridientsLength > 4 ) {
+                sendListReceiptDetail2(senderId, title, images);
+            }
+            else if (ingridientsLength > 8 && ingridientsLength < 12) {
+                sendListReceiptDetail2(senderId, title, images);
+                sendListReceiptDetail3(senderId, title, images);
+            }
+            else if (ingridientsLength > 12) {
+                sendListReceiptDetail2(senderId, title, images);
+                sendListReceiptDetail3(senderId, title, images);
+                sendListReceiptDetail4(senderId, title, images);
             }
                     //var fullInfo = receiptDetail + instructionStepsDetail;
                     //sendTextMessage(senderId, JSON.stringify(result.body.analyzedInstructions[0].steps[z]));
         });
 }
 
+function foodAPIRecipeDetailStepsRequest(senderId, id) {
 
+    var instructionStepsDetail = [];
+    var instructionStepsDetailString = [];
+    var instructionStepsNumber = [];
 
+// These code snippets use an open-source library. http://unirest.io/nodejs
+    unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + id + "/information?includenutrition=false")
+        .header("X-Mashape-Key", "M0WkYkVSuvmshQP7S6BBF9BdI3I5p1wSLh3jsnXUQkJCIBbL7d")
+        .header("Accept", "application/json")
+        .end(function (result) {
+            console.log("--------------------------------------------------------------------------------------------");
+            //console.log(result.status, result.headers, result.body);
+            for (var z = 0; z < result.body.analyzedInstructions[0].steps.length; z++) {
+                    instructionStepsDetail.push(result.body.analyzedInstructions[0].steps[z].step);
+                    instructionStepsNumber.push(result.body.analyzedInstructions[0].steps[z].number);
+                    //sendStepDescription(senderId, instructionStepsDetail[z], instructionStepsNumber[z]);
+                    //console.log(instructionStepsDetail);
+                }
+                instructionStepsDetailString = JSON.stringify(instructionStepsDetail);
+                //var instr1 = JSON.stringify(instructionStepsDetail[0]);
 
+                //console.log(instructionStepsDetail);
+                console.log("instructionStepsDetailString: " + instructionStepsDetailString);
+                //console.log(instr1);
+                console.log("instructionStepsDetail: "  + instructionStepsDetail.length);
+
+                sendStepDescription(senderId, instructionStepsDetail, instructionStepsNumber);
+
+            if (instructionStepsDetail.length > 1 && instructionStepsDetail.length < 3) {
+                setTimeout(sendStepDescription2, 100, senderId, instructionStepsDetail, instructionStepsNumber);
+
+            }
+            else if (instructionStepsDetail.length > 2 && instructionStepsDetail.length < 4) {
+                setTimeout(sendStepDescription2, 100, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription3, 200, senderId, instructionStepsDetail, instructionStepsNumber);
+            }
+                else if (instructionStepsDetail.length > 3 && instructionStepsDetail.length < 5) {
+                setTimeout(sendStepDescription2, 100, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription3, 200, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription4, 300, senderId, instructionStepsDetail, instructionStepsNumber);
+            }
+                    else if (instructionStepsDetail.length > 4 && instructionStepsDetail.length < 6) {
+                setTimeout(sendStepDescription2, 100, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription3, 200, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription4, 300, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription5, 400, senderId, instructionStepsDetail, instructionStepsNumber);
+            }
+                        else if (instructionStepsDetail.length > 5 && instructionStepsDetail.length < 7) {
+                setTimeout(sendStepDescription2, 100, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription3, 200, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription4, 300, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription5, 400, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription6, 500, senderId, instructionStepsDetail, instructionStepsNumber);
+            }
+                             else if (instructionStepsDetail.length > 6 && instructionStepsDetail.length < 8) {
+                setTimeout(sendStepDescription2, 100, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription3, 200, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription4, 300, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription5, 400, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription6, 500, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription7, 600, senderId, instructionStepsDetail, instructionStepsNumber);
+            }
+                                    else if (instructionStepsDetail.length > 8 && instructionStepsDetail.length < 10) {
+                setTimeout(sendStepDescription2, 100, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription3, 200, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription4, 300, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription5, 400, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription6, 500, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription7, 600, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription8, 700, senderId, instructionStepsDetail, instructionStepsNumber);
+            }
+                                                else if (instructionStepsDetail.length > 9 && instructionStepsDetail.length < 11) {
+                setTimeout(sendStepDescription2, 100, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription3, 200, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription4, 300, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription5, 400, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription6, 500, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription7, 600, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription8, 700, senderId, instructionStepsDetail, instructionStepsNumber);
+                setTimeout(sendStepDescription9, 800, senderId, instructionStepsDetail, instructionStepsNumber);
+            }
+        });
+}
 
 /*
  * Delivery Confirmation Event
@@ -989,26 +1115,38 @@ function receivedPostback(event) {
     // When a postback is called, we'll send a message back to the sender to
     // let them know it was successful
    if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[0]) {
-       foodAPIRecipeDetailRequest(senderID, ids[0])
+       foodAPIRecipeDetailRequest(senderID, ids[0]);
+       id = ids[0]
    }
    else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[1]) {
-       foodAPIRecipeDetailRequest(senderID, ids[1])
+       foodAPIRecipeDetailRequest(senderID, ids[1]);
+       id = ids[1]
    } else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[2]) {
-       foodAPIRecipeDetailRequest(senderID, ids[2])
+       foodAPIRecipeDetailRequest(senderID, ids[2]);
+       id = ids[2]
    } else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[3]) {
-       foodAPIRecipeDetailRequest(senderID, ids[3])
+       foodAPIRecipeDetailRequest(senderID, ids[3]);
+       id = ids[3]
    } else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[4]) {
-       foodAPIRecipeDetailRequest(senderID, ids[4])
+       foodAPIRecipeDetailRequest(senderID, ids[4]);
+       id = ids[4]
    } else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[5]) {
-       foodAPIRecipeDetailRequest(senderID, ids[5])
+       foodAPIRecipeDetailRequest(senderID, ids[5]);
+       id = ids[5]
    } else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[6]) {
-       foodAPIRecipeDetailRequest(senderID, ids[6])
+       foodAPIRecipeDetailRequest(senderID, ids[6]);
+       id = ids[6]
    } else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[7]) {
-       foodAPIRecipeDetailRequest(senderID, ids[7])
+       foodAPIRecipeDetailRequest(senderID, ids[7]);
+       id = ids[7]
    } else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[8]) {
-       foodAPIRecipeDetailRequest(senderID, ids[8])
+       foodAPIRecipeDetailRequest(senderID, ids[8]);
+       id = ids[8]
    } else if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[9]) {
-       foodAPIRecipeDetailRequest(senderID, ids[9])
+       foodAPIRecipeDetailRequest(senderID, ids[9]);
+       id = ids[9]
+   } else if (payload === "Checkout Steps") {
+       foodAPIRecipeDetailStepsRequest(senderID, id)
    }
 }
 
@@ -1196,9 +1334,9 @@ function sendGenericRequest(recipientId, imageUrlCombined, title, readyInMinutes
                     "template_type": "generic",
                     "elements": [
                         {
-                            "title": title[0] + readyInMinutes[0],
+                            "title": title[0],
                             "image_url": imageUrlCombined[0],
-                            "subtitle": "We\'ve got the right hat for everyone.",
+                            "subtitle": readyInMinutes[0],
                             "default_action": {
                                 "type": "web_url",
                                 "url": "https://servicio.io",
@@ -1213,67 +1351,75 @@ function sendGenericRequest(recipientId, imageUrlCombined, title, readyInMinutes
                                     "payload": "DEVELOPER_DEFINED_PAYLOAD-" + ids[0]
                                 }
                             ]
-                        },
-                        {
-                            "title": title[1] + readyInMinutes[1],
-                            "image_url": imageUrlCombined[1],
-                            "subtitle": "We\'ve got the right hat for everyone.",
-                            "default_action": {
-                                "type": "web_url",
-                                "url": "https://servicio.io",
-                                "messenger_extensions": true,
-                                "webview_height_ratio": "tall",
-                                "fallback_url": "https://servicio.io"
-                            },
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "title": "Checkout recipe",
-                                    "payload": "DEVELOPER_DEFINED_PAYLOAD-" + ids[1]
-                                }
-                            ]
-                        },
-                        {
-                            "title": title[2] + readyInMinutes[2],
-                            "image_url": imageUrlCombined[2],
-                            "subtitle": "We\'ve got the right hat for everyone.",
-                            "default_action": {
-                                "type": "web_url",
-                                "url": "https://servicio.io",
-                                "messenger_extensions": true,
-                                "webview_height_ratio": "tall",
-                                "fallback_url": "https://servicio.io"
-                            },
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "title": "Checkout recipe",
-                                    "payload": "DEVELOPER_DEFINED_PAYLOAD-" + ids[2]
-                                }
-                            ]
-                        },
-                        {
-                            "title": title[3] + readyInMinutes[3],
-                            "image_url": imageUrlCombined[3],
-                            "subtitle": "We\'ve got the right hat for everyone.",
-                            "default_action": {
-                                "type": "web_url",
-                                "url": "https://servicio.io",
-                                "messenger_extensions": true,
-                                "webview_height_ratio": "tall",
-                                "fallback_url": "https://servicio.io"
-                            },
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "title": "Checkout recipe",
-                                    "payload": "DEVELOPER_DEFINED_PAYLOAD-" + ids[3]
-                                }
-                            ]
                         }
                     ]
                 }
             }
+        }
+    };
+
+
+    if(title[1]){
+        messageData.message.attachment.payload.elements[1] =  {
+            "title": title[1] ,
+            "image_url": imageUrlCombined[1],
+            "subtitle": readyInMinutes[1],
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            },
+            "buttons": [
+                {
+                    "type": "postback",
+                    "title": "Checkout recipe",
+                    "payload": "DEVELOPER_DEFINED_PAYLOAD-" + ids[1]
+                }
+            ]
+        }
+    }
+    if(title[2]){
+        messageData.message.attachment.payload.elements[2] =  {
+            "title": title[2] ,
+            "image_url": imageUrlCombined[2],
+            "subtitle": readyInMinutes[2],
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            },
+            "buttons": [
+                {
+                    "type": "postback",
+                    "title": "Checkout recipe",
+                    "payload": "DEVELOPER_DEFINED_PAYLOAD-" + ids[1]
+                }
+            ]
+        }
+    }
+    if(title[3]){
+        messageData.message.attachment.payload.elements[3] =  {
+            "title": title[3] ,
+            "image_url": imageUrlCombined[3],
+            "subtitle": readyInMinutes[3],
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            },
+            "buttons": [
+                {
+                    "type": "postback",
+                    "title": "Checkout recipe",
+                    "payload": "DEVELOPER_DEFINED_PAYLOAD-" + ids[1]
+                }
+            ]
         }
     }
     callSendAPI(messageData);
@@ -1292,9 +1438,9 @@ function sendGenericRequest2(recipientId, imageUrlCombined, title, readyInMinute
                     "template_type": "generic",
                     "elements": [
                         {
-                            "title": title[4] + readyInMinutes[4],
+                            "title": title[4],
                             "image_url": imageUrlCombined[4],
-                            "subtitle": "We\'ve got the right hat for everyone.",
+                            "subtitle": readyInMinutes[4],
                             "default_action": {
                                 "type": "web_url",
                                 "url": "https://servicio.io",
@@ -1311,9 +1457,9 @@ function sendGenericRequest2(recipientId, imageUrlCombined, title, readyInMinute
                             ]
                         },
                         {
-                            "title": title[5] + readyInMinutes[5],
+                            "title": title[5],
                             "image_url": imageUrlCombined[5],
-                            "subtitle": "We\'ve got the right hat for everyone.",
+                            "subtitle": readyInMinutes[5],
                             "default_action": {
                                 "type": "web_url",
                                 "url": "https://servicio.io",
@@ -1330,9 +1476,9 @@ function sendGenericRequest2(recipientId, imageUrlCombined, title, readyInMinute
                             ]
                         },
                         {
-                            "title": title[6] + readyInMinutes[6],
+                            "title": title[6],
                             "image_url": imageUrlCombined[6],
-                            "subtitle": "We\'ve got the right hat for everyone.",
+                            "subtitle": readyInMinutes[6],
                             "default_action": {
                                 "type": "web_url",
                                 "url": "https://servicio.io",
@@ -1349,9 +1495,9 @@ function sendGenericRequest2(recipientId, imageUrlCombined, title, readyInMinute
                             ]
                         },
                         {
-                            "title": title[7] + readyInMinutes[7],
+                            "title": title[7],
                             "image_url": imageUrlCombined[7],
-                            "subtitle": "We\'ve got the right hat for everyone.",
+                            "subtitle": readyInMinutes[7],
                             "default_action": {
                                 "type": "web_url",
                                 "url": "https://servicio.io",
@@ -1388,9 +1534,9 @@ function sendGenericRequest3(recipientId, imageUrlCombined, title, readyInMinute
                     "template_type": "generic",
                     "elements": [
                         {
-                            "title": title[8] + readyInMinutes[8],
+                            "title": title[8],
                             "image_url": imageUrlCombined[8],
-                            "subtitle": "We\'ve got the right hat for everyone.",
+                            "subtitle": readyInMinutes[8],
                             "default_action": {
                                 "type": "web_url",
                                 "url": "https://servicio.io",
@@ -1407,9 +1553,9 @@ function sendGenericRequest3(recipientId, imageUrlCombined, title, readyInMinute
                             ]
                         },
                         {
-                            "title": title[9] + readyInMinutes[9],
+                            "title": title[9],
                             "image_url": imageUrlCombined[9],
-                            "subtitle": "We\'ve got the right hat for everyone.",
+                            "subtitle": readyInMinutes[9],
                             "default_action": {
                                 "type": "web_url",
                                 "url": "https://servicio.io",
@@ -1432,6 +1578,462 @@ function sendGenericRequest3(recipientId, imageUrlCombined, title, readyInMinute
     }
     callSendAPI(messageData);
 }
+
+function sendListReceiptDetail(recipientId, title, images){
+
+var messageData = {
+    "recipient":{
+    "id":recipientId
+    }, "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "list",
+                    "top_element_style": "compact",
+                    "elements": [
+                        {
+                            "title": title[0],
+                            "image_url": images[0],
+                            "subtitle": "100% Cotton, 200% Comfortable",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://servicio.io",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://servicio.io"
+                            }
+                        }
+                    ],
+                    "buttons": [
+                        {
+                            "title": "Checkout Steps",
+                            "type": "postback",
+                            "payload": "Checkout Steps"
+                        }
+                    ]
+                }
+            }
+        }
+    };
+    if(title[1]){
+        messageData.message.attachment.payload.elements[1] = {
+            "title": title[1],
+            "image_url": images[1],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    if(title[2]){
+        messageData.message.attachment.payload.elements[2] =  {
+            "title": title[2] ,
+            "image_url": images[2],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    if(title[3]){
+        messageData.message.attachment.payload.elements[3] =  {
+            "title": title[3] ,
+            "image_url": images[3],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    callSendAPI(messageData);
+}
+
+function sendListReceiptDetail2(recipientId, title, images){
+
+    var messageData = {
+        "recipient":{
+            "id":recipientId
+        }, "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "list",
+                    "top_element_style": "compact",
+                    "elements": [
+                        {
+                            "title": title[4],
+                            "image_url": images[4],
+                            "subtitle": "100% Cotton, 200% Comfortable",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://servicio.io",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://servicio.io"
+                            }
+                        }
+                    ],
+                    "buttons": [
+                        {
+                            "title": "Checkout Steps",
+                            "type": "postback",
+                            "payload": "Checkout Steps"
+                        }
+                    ]
+                }
+            }
+        }
+    };
+    if(title[5]){
+        messageData.message.attachment.payload.elements[1] = {
+            "title": title[5],
+            "image_url": images[5],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    if(title[6]){
+        messageData.message.attachment.payload.elements[2] =  {
+            "title": title[6] ,
+            "image_url": images[6],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    if(title[7]){
+        messageData.message.attachment.payload.elements[3] =  {
+            "title": title[7] ,
+            "image_url": images[7],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    callSendAPI(messageData);
+}
+
+function sendListReceiptDetail3(recipientId, title, images){
+
+    var messageData = {
+        "recipient":{
+            "id":recipientId
+        }, "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "list",
+                    "top_element_style": "compact",
+                    "elements": [
+                        {
+                            "title": title[8],
+                            "image_url": images[8],
+                            "subtitle": "100% Cotton, 200% Comfortable",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://servicio.io",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://servicio.io"
+                            }
+                        }
+                    ],
+                    "buttons": [
+                        {
+                            "title": "Checkout Steps",
+                            "type": "postback",
+                            "payload": "Checkout Steps"
+                        }
+                    ]
+                }
+            }
+        }
+    };
+    if(title[9]){
+        messageData.message.attachment.payload.elements[1] = {
+            "title": title[9],
+            "image_url": images[9],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    if(title[10]){
+        messageData.message.attachment.payload.elements[2] =  {
+            "title": title[10] ,
+            "image_url": images[10],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    if(title[11]){
+        messageData.message.attachment.payload.elements[3] =  {
+            "title": title[11] ,
+            "image_url": images[11],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    callSendAPI(messageData);
+}
+
+function sendListReceiptDetail4(recipientId, title, images){
+
+    var messageData = {
+        "recipient":{
+            "id":recipientId
+        }, "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "list",
+                    "top_element_style": "compact",
+                    "elements": [
+                        {
+                            "title": title[12],
+                            "image_url": images[12],
+                            "subtitle": "100% Cotton, 200% Comfortable",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://servicio.io",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://servicio.io"
+                            }
+                        }
+                    ],
+                    "buttons": [
+                        {
+                            "title": "Checkout Steps",
+                            "type": "postback",
+                            "payload": "Checkout Steps"
+                        }
+                    ]
+                }
+            }
+        }
+    };
+    if(title[13]){
+        messageData.message.attachment.payload.elements[1] = {
+            "title": title[13],
+            "image_url": images[13],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    if(title[14]){
+        messageData.message.attachment.payload.elements[2] =  {
+            "title": title[14] ,
+            "image_url": images[14],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    if(title[15]){
+        messageData.message.attachment.payload.elements[3] =  {
+            "title": title[15] ,
+            "image_url": images[15],
+            "subtitle": "",
+            "default_action": {
+                "type": "web_url",
+                "url": "https://servicio.io",
+                "messenger_extensions": true,
+                "webview_height_ratio": "tall",
+                "fallback_url": "https://servicio.io"
+            }
+        }
+    }
+    callSendAPI(messageData);
+}
+
+function sendStepDescription(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text:  "Step " + instructionStepsNumber[0] + ": " + instructionStepsDetail[0],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+callSendAPI(messageData);
+}
+
+function sendStepDescription2(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Step " + instructionStepsNumber[1] + ": " + instructionStepsDetail[1],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+function sendStepDescription3(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Step " + instructionStepsNumber[2] + ": " + instructionStepsDetail[2],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+function sendStepDescription4(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Step " + instructionStepsNumber[3] + ": " + instructionStepsDetail[3],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+function sendStepDescription5(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Step " + instructionStepsNumber[4] + ": " + instructionStepsDetail[4],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+function sendStepDescription6(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Step " + instructionStepsNumber[5] + ": " + instructionStepsDetail[5],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+function sendStepDescription7(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Step " + instructionStepsNumber[6] + ": " + instructionStepsDetail[6],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+function sendStepDescription8(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Step " + instructionStepsNumber[7] + ": " + instructionStepsDetail[7],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+function sendStepDescription9(recipientId, instructionStepsDetail, instructionStepsNumber) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: "Step " + instructionStepsNumber[8] + ": " + instructionStepsDetail[8],
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+
+
+
+
+
 
 
 //Send Payment button
