@@ -857,6 +857,11 @@ function receivedPostback(event) {
 
     // When a postback is called, we'll send a message back to the sender to
     // let them know it was successful
+
+    if (payload === "GET_STARTED_PAYLOAD" || "search") {
+        sendFirstRecipeQuestion(senderID);
+        resetValues();
+    }
    if (payload === "DEVELOPER_DEFINED_PAYLOAD-" + ids[0]) {
        foodAPIRecipeDetailRequest(senderID, ids[0]);
        id = ids[0]
