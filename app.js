@@ -18,8 +18,6 @@ const
   https = require('https'),
   request = require('request'),
   http = require('http'),
-  parseString = require('xml2js').parseString,
-  routes = require('./routes/index'),
   app = express();
 
 var unirest = require('unirest');
@@ -37,20 +35,7 @@ app.set('view engine', 'ejs');
 //Set Public folder as static folder
 app.use(express.static('public'));
 
-//Use ./routes/index.js as routes root /
-app.use('/', routes);
-
 //Global variables
-var numberOfPersons = 0;
-var numberOfRooms = 0;
-var arrivalDateDayCalculations = 0;
-var arrivalDateMonthCalculations = 0;
-var i = 0;
-var stayRange = 0;
-var departureDateSplitted = [];
-var priceAllNightsEinzelzimmerSommerstein = 0;
-var bookingLink = "";
-var autoAnswerIsOn = true;
 var a = {};
 var b = "";
 var ids = [];
@@ -186,7 +171,6 @@ app.get('/authorize', function(req, res) {
  * callback in the x-hub-signature field, located in the header.
  *
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
- *
  */
 function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
@@ -217,11 +201,8 @@ function verifyRequestSignature(req, res, buf) {
  * The value for 'optin.ref' is defined in the entry point. For the "Send to
  * Messenger" plugin, it is the 'data-ref' field. Read more at
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/authentication
- *
+ * Recieve authentication from wlanlandingpage when user click Send to messenger - Send data to mongoDB database.
  */
-
-
-//Recieve authentication from wlanlandingpage when user click Send to messenger - Send data to mongoDB database.
 function receivedAuthentication(event) {
     var senderID = event.sender.id;
     var recipientID = event.recipient.id;
@@ -330,7 +311,6 @@ function postNewUserToDB() {
  * examples of those bubbles to illustrate the special message bubbles we've
  * created. If we receive a message with an attachment (image, video, audio),
  * then we'll simply confirm that we've received the attachment.
- *
  */
 function receivedMessage(event) {
 
@@ -362,7 +342,7 @@ function receivedMessage(event) {
         var quickReplyPayload = quickReply.payload;
         console.log("Quick reply for message %s with payload %s",
             messageId, quickReplyPayload);
-        //First question is how many persons are joining the requested stay.
+            //First question is how many persons are joining the requested stay.
     }
 
     if (messageText) {
@@ -371,7 +351,7 @@ function receivedMessage(event) {
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
 
-        switch (messageText) {
+        switch (messageText.toLowerCase()) {
 
             case 'Menü':
                 break;
@@ -386,14 +366,6 @@ function receivedMessage(event) {
 
             case 'account linking':
                 sendAccountLinking(senderID);
-                break;
-
-            case 'Zimmer Anfrage':
-                sendPersonRequest(senderID);
-                break;
-
-            case 'Persönliche Beratung':
-                sendPersonalFeedback(senderID);
                 break;
 
             case "pay":
@@ -925,7 +897,6 @@ function receivedMessageRead(event) {
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/account-linking
  *
  */
-
 function receivedAccountLink(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -938,26 +909,8 @@ function receivedAccountLink(event) {
 }
 //Employee will soon take care of users request
 
-function sendPersonalFeedback(recipientId) {
-
-    autoAnswerIsOn = false;
-
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            text: "Es wird sich ehestmöglich einer unserer Mitarbeiter um Ihre Anfrage kümmern.",
-            metadata: "DEVELOPER_DEFINED_METADATA"
-        }
-    };
-
-    callSendAPI(messageData);
-}
-
 /*
  * Send a text message using the Send API.
- *
  */
 function sendTextMessage(recipientId, messageText) {
     var messageData = {
@@ -969,102 +922,6 @@ function sendTextMessage(recipientId, messageText) {
             metadata: "DEVELOPER_DEFINED_METADATA"
         }
     };
-
-    callSendAPI(messageData);
-}
-
-function sendImageMessage(recipientId, imageUrl) {
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            attachment: {
-                type: "image",
-                payload: {
-                    url: imageUrl
-                }
-            }
-        }
-    };
-
-    callSendAPI(messageData);
-}
-
-function sendQuickRequest(recipientId, imageUrlCombined, title, readyInMinutes) {
-
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-                  message: {
-                      "text": "choose recipe",
-                      "quick_replies":[
-                          {
-                              "content_type":"text",
-                              "title": title[0] + readyInMinutes[0],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[0]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[1] + readyInMinutes[1],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[1]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[2] + readyInMinutes[2],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[2]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[3] + readyInMinutes[3],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[3]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[4] + readyInMinutes[4],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[4]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[5] + readyInMinutes[5],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[5]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[6] + readyInMinutes[6],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[6]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[7] + readyInMinutes[7],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[7]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[8] + readyInMinutes[8],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[8]
-                          },
-                          {
-                              "content_type":"text",
-                              "title": title[9] + readyInMinutes[9],
-                              "payload":"1 person",
-                              "image_url": imageUrlCombined[9]
-                          }
-
-
-                      ]
-                  }
-              };
 
     callSendAPI(messageData);
 }
@@ -1777,7 +1634,6 @@ function sendStepDescription9(recipientId, instructionStepsDetail, instructionSt
     callSendAPI(messageData);
 }
 
-
 //Send Payment button
 function sendPaymentButton(recipientId) {
     var messageData = {
@@ -1835,7 +1691,6 @@ function sendPaymentButton(recipientId) {
     callSendAPI(messageData);
 }
 
-
 function sendWelcomeMessage(recipientId) {
     var messageData = {
         recipient: {
@@ -1856,34 +1711,6 @@ function sendWelcomeMessage(recipientId) {
                         title: "Persönliche Beratung",
                         payload: "personal"
                     }]
-                }
-            }
-        }
-    };
-
-    callSendAPI(messageData);
-}
-
-function sendMenu(recipientId) {
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            attachment: {
-                type: "template",
-                payload: {
-                    template_type: "button",
-                    text: "Menü - Wollen Sie eine Zimmer Anfrage erstellen, oder persönlich beraten werden? Schreiben Sie oder wählen Sie aus.",
-                    buttons:[ {
-                        type: "postback",
-                        title: "Zimmer Anfrage",
-                        payload: "Zimmer Anfrage"
-                    }, {
-                        type: "postback",
-                        title: "Persönliche Beratung",
-                        payload: "personal"
-                    } ]
                 }
             }
         }
@@ -1995,9 +1822,5 @@ function callSendAPI(messageData) {
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
-// app.listen(8000, function () {
-//   console.log('Example app listening on port 8000!');
-// });
 
 module.exports = app;
